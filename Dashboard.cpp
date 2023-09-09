@@ -1,9 +1,9 @@
-#include "MainWindow.h"
+#include "Dashboard.h"
 
 #include <QLayout>
 #include <QPushButton>
 
-MainWindow::MainWindow(QWidget *parent)
+Dashboard::Dashboard(QWidget *parent)
     : QMainWindow(parent) {
 
     setWindowTitle("Luna");
@@ -25,6 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(button5, 2, 1);
 }
 
-MainWindow::~MainWindow() { 
+Dashboard::~Dashboard() { 
 }
 
