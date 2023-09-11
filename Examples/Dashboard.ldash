@@ -10,4 +10,13 @@
             </Field>
         </Topic>
     </MQTTBroker>
+    <Label text="Top Left">
+        <GridPos row="0" col="0"/>
+    </Label>
+    <Label text="Bottom Right">
+        <GridPos row="2" col="2"/>
+    </Label>
+    <Label text="Middle">
+        <GridPos row="1" col="1"/>
+    </Label>
 </Dashboard>

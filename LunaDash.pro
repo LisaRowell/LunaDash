@@ -10,10 +10,18 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
     Dashboard.cpp \
+    GridPos.cpp \
+    Label.cpp \
+    Widget.cpp \
+    XMLSourcedEntity.cpp \
     main.cpp
 
 HEADERS += \
-    Dashboard.h
+    Dashboard.h \
+    GridPos.h \
+    Label.h \
+    Widget.h \
+    XMLSourcedEntity.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
