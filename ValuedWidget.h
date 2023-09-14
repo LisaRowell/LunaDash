@@ -14,7 +14,10 @@ class ValuedWidget : public Widget {
     Q_OBJECT
 
 private:
-    void unknownVariableWarning();
+    void unknownVariableWarning(const QString &widgetType,
+                                const QString &variableName,
+                                const QXmlStreamReader &xmlReader,
+                                const QString &fileName) const;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
@@ -25,8 +28,8 @@ protected:
     virtual void setValue() = 0;
 
 public:
-    ValuedWidget(QXmlStreamReader &xmlReader, const QString &fileName,
-                 const Variables &variables);
+    ValuedWidget(const QString &widgetType, QXmlStreamReader &xmlReader,
+                 const QString &fileName, const Variables &variables);
 
 public slots:
     void valueChanged();

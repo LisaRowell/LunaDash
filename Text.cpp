@@ -7,9 +7,11 @@
 #include <QVector>
 #include <QString>
 
+const QString Text::typeName("Text");
+
 Text::Text(QXmlStreamReader &xmlReader, const QString &fileName,
            const Variables &variables)
-    : ValuedWidget(xmlReader, fileName, variables) {
+    : ValuedWidget(typeName, xmlReader, fileName, variables) {
 
     if (variable != NULL) {
         setText(variable->string());
