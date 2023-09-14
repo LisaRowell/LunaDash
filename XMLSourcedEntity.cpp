@@ -10,7 +10,7 @@
 
 XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
                                    const QVector<QString> &requiredAttrs)
-    : allowedAttrs(allowedAttrs), requiredAttrs(requiredAttrs){
+    : allowedAttrs(allowedAttrs), requiredAttrs(requiredAttrs) {
 }
 
 void XMLSourcedEntity::checkAttrs(const QXmlStreamAttributes &attributes,
@@ -43,9 +43,10 @@ void XMLSourcedEntity::ignoreChildElements(QXmlStreamReader &xmlReader,
     }
 }
 
-void XMLSourcedEntity::unsupportedChildElement(const QString &parentName,
-                                               const QString &fileName,
-                                               const QXmlStreamReader &xmlReader) {
+void
+XMLSourcedEntity::unsupportedChildElement(const QString &parentName,
+                                          const QString &fileName,
+                                          const QXmlStreamReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
     errorStream << "Unsupported " << parentName << " child element '"
@@ -58,9 +59,10 @@ void XMLSourcedEntity::unsupportedChildElement(const QString &parentName,
     messageBox.warning(NULL, "Unsupported Child Element", errorStr);
 }
 
-void XMLSourcedEntity::unsupportedAttrError(const QXmlStreamAttribute &attribute,
-                                            const QString &fileName,
-                                            const QXmlStreamReader &xmlReader) {
+void
+XMLSourcedEntity::unsupportedAttrError(const QXmlStreamAttribute &attribute,
+                                       const QString &fileName,
+                                       const QXmlStreamReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
     errorStream << "Unsupported " << xmlReader.name() << " attribute '"
@@ -73,9 +75,10 @@ void XMLSourcedEntity::unsupportedAttrError(const QXmlStreamAttribute &attribute
     messageBox.warning(NULL, "Unsupported Attribute", errorStr);
 }
 
-void XMLSourcedEntity::missingRequiredAttrError(const QString &attributeName,
-                                                const QString &fileName,
-                                                const QXmlStreamReader &xmlReader) {
+void
+XMLSourcedEntity::missingRequiredAttrError(const QString &attributeName,
+                                           const QString &fileName,
+                                           const QXmlStreamReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
     errorStream << "Missing " << xmlReader.name() << " required attribute "

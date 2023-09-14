@@ -18,9 +18,9 @@ private:
 public:
     GridPos();
     void setFromXML(QXmlStreamReader &xmlReader, const QString &fileName);
-    bool isSet();
-    unsigned row();
-    unsigned col();
+    bool isSet() const;
+    unsigned row() const;
+    unsigned col() const;
 };
 
 #endif // GRID_POS_H

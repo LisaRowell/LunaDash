@@ -18,9 +18,9 @@ public:
     void handleChildElement(QXmlStreamReader &xmlReader,
                             const QString &parentName,
                             const QString &fileName);
-    bool hasGridPos();
-    unsigned row();
-    unsigned col();
+    bool hasGridPos() const;
+    unsigned row() const;
+    unsigned col() const;
 };
 
 #endif // WIDGET_H

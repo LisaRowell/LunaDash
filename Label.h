@@ -2,7 +2,6 @@
 #define LABEL_H
 
 #include "Widget.h"
-#include "GridPos.h"
 
 #include <QLabel>
 #include <QXmlStreamReader>

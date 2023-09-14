@@ -22,14 +22,14 @@ void GridPos::setFromXML(QXmlStreamReader &xmlReader,
     ignoreChildElements(xmlReader, "GridPos", fileName);
 }
 
-bool GridPos::isSet() {
+bool GridPos::isSet() const {
     return set;
 }
 
-unsigned GridPos::row() {
+unsigned GridPos::row() const {
     return _row;
 }
 
-unsigned GridPos::col() {
+unsigned GridPos::col() const {
     return _col;
 }

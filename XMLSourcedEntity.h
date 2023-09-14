@@ -6,18 +6,21 @@
 #include <QXmlStreamAttributes>
 #include <QXmlStreamAttribute>
 #include <QXmlStreamReader>
+#include <QObject>
 
-class XMLSourcedEntity {
+class XMLSourcedEntity : public QObject {
+    Q_OBJECT
+
 private:
     const QVector<QString> &allowedAttrs;
     const QVector<QString> &requiredAttrs;
 
     void unsupportedAttrError(const QXmlStreamAttribute &attribute,
                               const QString &fileName,
-                              const QXmlStreamReader &xmlReader);
+                              const QXmlStreamReader &xmlReader) const;
     void missingRequiredAttrError(const QString &attributeName,
                                   const QString &fileName,
-                                  const QXmlStreamReader &xmlReader);
+                                  const QXmlStreamReader &xmlReader) const;
 
 protected:
     void checkAttrs(const QXmlStreamAttributes &attributes,
@@ -28,7 +31,7 @@ protected:
                              const QString &fileName);
     void unsupportedChildElement(const QString &parentName,
                                  const QString &fileName,
-                                 const QXmlStreamReader &xmlReader);
+                                 const QXmlStreamReader &xmlReader) const;
 
 public:
     XMLSourcedEntity(const QVector<QString> &allowedAttrs,

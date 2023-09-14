@@ -5,8 +5,6 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamAttribute>
-#include <QTextStream>
-#include <QMessageBox>
 #include <QVector>
 #include <QString>
 
@@ -25,4 +23,3 @@ Label::Label(QXmlStreamReader &xmlReader, const QString &fileName)
         handleChildElement(xmlReader, "Label", fileName);
     }
 }
-

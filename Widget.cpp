@@ -22,14 +22,14 @@ void Widget::handleChildElement(QXmlStreamReader &xmlReader,
     }
 }
 
-bool Widget::hasGridPos() {
+bool Widget::hasGridPos() const {
     return gridPos.isSet();
 }
 
-unsigned Widget::row() {
+unsigned Widget::row() const {
     return gridPos.row();
 }
 
-unsigned Widget::col() {
+unsigned Widget::col() const {
     return gridPos.col();
 }

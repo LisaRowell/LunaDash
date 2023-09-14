@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Dashboard>
-    <MQTTBroker>
-        <Server>localhost</Server>
-        <Topic>
-            <String>N/c8df84ac7a73/battery/289/Dc/0/Voltage</String>
+    <MQTTBroker server="localhost">
+        <StatusVariable name="localhostState"/>
+        <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <Field>
                 <String>value</String>
                 <Value>houseBatteryVoltage</Value>
@@ -16,7 +15,7 @@
     <Label text="Bottom Right">
         <GridPos row="2" col="2"/>
     </Label>
-    <Label text="Middle">
+    <Text variable="localhostState">
         <GridPos row="1" col="1"/>
-    </Label>
+    </Text>
 </Dashboard>
