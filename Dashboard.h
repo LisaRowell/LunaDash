@@ -20,6 +20,7 @@
 #define DASHBOARD_H
 
 #include "Variables.h"
+#include "Widget.h"
 
 #include <QMainWindow>
 #include <QGridLayout>
@@ -43,6 +44,9 @@ private:
     void addMQTTClient(QXmlStreamReader &xmlReader, const QString &fileName);
     void addLabel(QXmlStreamReader &xmlReader, const QString &fileName);
     void addText(QXmlStreamReader &xmlReader, const QString &fileName);
+    void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
+                           QXmlStreamReader &xmlReader,
+                           const QString &fileName);
     void fileOpenError(const QString &fileName, const QFile &file) const;
     void xmlParseError(const QString &fileName,
                        const QXmlStreamReader &xmlReader) const;
@@ -53,7 +57,7 @@ private:
                              const QString &parentName,
                              const QString &fileName,
                              const QXmlStreamReader &xmlReader) const;
-    void missingGridPosError(const QString &widgetType,
+    void missingGridPosWarning(const QString &widgetType,
                              const QString &fileName,
                              const QXmlStreamReader &xmlReader) const;
 

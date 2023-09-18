@@ -27,16 +27,14 @@
 
 class GridPos : public XMLSourcedEntity {
 private:
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-    bool set;
     unsigned _row;
     unsigned _col;
 
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
+
 public:
-    GridPos();
-    void setFromXML(QXmlStreamReader &xmlReader, const QString &fileName);
-    bool isSet() const;
+    GridPos(QXmlStreamReader &xmlReader, const QString &fileName);
     unsigned row() const;
     unsigned col() const;
 };

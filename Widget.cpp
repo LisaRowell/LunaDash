@@ -19,6 +19,7 @@
 #include "Widget.h"
 
 #include "XMLSourcedEntity.h"
+#include "GridPos.h"
 
 #include <QString>
 #include <QVector>
@@ -33,21 +34,13 @@ void Widget::handleChildElement(QXmlStreamReader &xmlReader,
                                 const QString &parentName,
                                 const QString &fileName) {
     if (xmlReader.name().compare("GridPos") == 0) {
-        gridPos.setFromXML(xmlReader, fileName);
+        gridPos_ = new GridPos(xmlReader, fileName);
     } else {
         unsupportedChildElement(parentName, fileName, xmlReader);
         xmlReader.skipCurrentElement();
     }
 }
 
-bool Widget::hasGridPos() const {
-    return gridPos.isSet();
-}
-
-unsigned Widget::row() const {
-    return gridPos.row();
-}
-
-unsigned Widget::col() const {
-    return gridPos.col();
+const GridPos *Widget::gridPos() const {
+    return gridPos_;
 }

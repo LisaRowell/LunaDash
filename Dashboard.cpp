@@ -23,6 +23,7 @@
 #include "Label.h"
 #include "Text.h"
 #include "Variables.h"
+#include "GridPos.h"
 
 #include <QLayout>
 #include <QFile>
@@ -100,22 +101,27 @@ void Dashboard::readConfigStart(QXmlStreamReader &xmlReader,
 
 void Dashboard::addLabel(QXmlStreamReader &xmlReader, const QString &fileName) {
     Label *label = new Label(xmlReader, fileName);
-    if (label->hasGridPos()) {
-        layout->addWidget(label, label->row(), label->col());
-    } else {
-        missingGridPosError("Label", fileName, xmlReader);
-        delete label;
-    }
+    addWidgetToLayout(label, label->gridPos(), xmlReader, fileName);
 }
 
 void Dashboard::addText(QXmlStreamReader &xmlReader, const QString &fileName) {
     Text *text = new Text(xmlReader, fileName, variables);
-    if (text->hasGridPos()) {
-        layout->addWidget(text, text->row(), text->col());
+    addWidgetToLayout(text, text->gridPos(), xmlReader, fileName);
+}
+
+void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
+                                  QXmlStreamReader &xmlReader,
+                                  const QString &fileName) {
+    layout->addWidget(widget, gridPos->row(), gridPos->col());
+
+    if (gridPos) {
+        layout->addWidget(widget, gridPos->row(), gridPos->col());
     } else {
-        missingGridPosError("Text", fileName, xmlReader);
-        delete text;
+        missingGridPosWarning("Label", fileName, xmlReader);
+        // We're a little sloppy here and leak the widget, but it's no worse
+        // memory wise than having a configured one.
     }
+
 }
 
 // We had some error opening the config file. Show an error message and
@@ -189,9 +195,9 @@ void Dashboard::unknownElementError(const QStringView &name,
     messageBox.warning(NULL, "Unknown Element Error", errorStr);
 }
 
-void Dashboard::missingGridPosError(const QString &widgetType,
-                                    const QString &fileName,
-                                    const QXmlStreamReader &xmlReader) const {
+void Dashboard::missingGridPosWarning(const QString &widgetType,
+                                      const QString &fileName,
+                                      const QXmlStreamReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
     errorStream << "Dashboard " << widgetType << " widget missing GridPos in '"

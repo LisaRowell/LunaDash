@@ -28,7 +28,7 @@
 
 class Widget : public XMLSourcedEntity {
 private:
-    GridPos gridPos;
+    GridPos *gridPos_;
 
 public:
     Widget(const QVector<QString> &allowedAttrs,
@@ -36,9 +36,7 @@ public:
     void handleChildElement(QXmlStreamReader &xmlReader,
                             const QString &parentName,
                             const QString &fileName);
-    bool hasGridPos() const;
-    unsigned row() const;
-    unsigned col() const;
+    const GridPos *gridPos() const;
 };
 
 #endif // WIDGET_H
