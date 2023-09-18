@@ -15,7 +15,9 @@ SOURCES += \
     GridPos.cpp \
     Label.cpp \
     MQTTClient.cpp \
+    StringVariable.cpp \
     Text.cpp \
+    Topic.cpp \
     ValuedWidget.cpp \
     Variable.cpp \
     Variables.cpp \
@@ -30,7 +32,9 @@ HEADERS += \
     GridPos.h \
     Label.h \
     MQTTClient.h \
+    StringVariable.h \
     Text.h \
+    Topic.h \
     ValuedWidget.h \
     Variable.h \
     Variables.h \

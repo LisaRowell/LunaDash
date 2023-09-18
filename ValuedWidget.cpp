@@ -45,8 +45,8 @@ ValuedWidget::ValuedWidget(const QString &widgetType,
         const QString &variableName = attributes.value("variable").toString();
         variable = variables.find(variableName);
         if (variable != NULL) {
-            connect(variable, SIGNAL(valueChangedSignal()),
-                    this, SLOT(valueChanged()));
+            connect(variable, &Variable::valueChangedSignal,
+                    this, &ValuedWidget::valueChanged);
         } else {
             unknownVariableWarning(widgetType, variableName, xmlReader,
                                    fileName);

@@ -3,10 +3,13 @@
     <MQTTBroker server="localhost">
         <StatusVariable name="localhostState"/>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
-            <Field>
-                <String>value</String>
+            <String name="houseBatteryVoltage"/>
+            <Field label="value">
                 <Value>houseBatteryVoltage</Value>
             </Field>
+        </Topic>
+        <Topic path="$SYS/broker/messages/sent">
+            <String name="localHostSentMsgs"/>
         </Topic>
     </MQTTBroker>
     <Label text="Top Left">
@@ -17,5 +20,11 @@
     </Label>
     <Text variable="localhostState">
         <GridPos row="1" col="1"/>
+    </Text>
+    <Text variable="houseBatteryVoltage">
+        <GridPos row="3" col="0"/>
+    </Text>
+    <Text variable="localHostSentMsgs">
+        <GridPos row="3" col="2"/>
     </Text>
 </Dashboard>

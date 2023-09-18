@@ -21,6 +21,8 @@
 #include "XMLSourcedEntity.h"
 #include "ClientStatusVariable.h"
 #include "Variables.h"
+#include "Variable.h"
+#include "Topic.h"
 
 #include <MQTTAsync.h>
 
@@ -38,8 +40,13 @@ const QVector<QString> MQTTClient::requiredAttrs = { "server" };
 MQTTClient::MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
                        Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
-    connect(this, SIGNAL(connectedSignal()), this, SLOT(connected()));
-    connect(this, SIGNAL(connectionLostSignal()), this, SLOT(disconnected()));
+    connect(this, &MQTTClient::connectedSignal, this, &MQTTClient::connected);
+    connect(this, &MQTTClient::connectionLostSignal,
+            this, &MQTTClient::disconnected);
+    connect(this, &MQTTClient::subscriptionSuccessSignal,
+            this, &MQTTClient::handleSubscriptionSuccess);
+    connect(this, &MQTTClient::subscriptionFailureSignal,
+            this, &MQTTClient::handleSubscriptionFailure);
 
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
     checkAttrs(attributes, fileName, xmlReader);
@@ -49,6 +56,8 @@ MQTTClient::MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("StatusVariable") == 0) {
             addStatusVariable(xmlReader, fileName, variables);
+        } else if (xmlReader.name().compare("Topic") == 0) {
+            addTopic(xmlReader, fileName, variables);
         } else {
             unsupportedChildElement("MQTTBroker", fileName, xmlReader);
             xmlReader.skipCurrentElement();
@@ -140,6 +149,8 @@ void MQTTClient::connected() {
     for (auto statusVariable : statusVariables) {
         statusVariable->set(true);
     }
+
+    subscribeToTopics();
 }
 
 void MQTTClient::connectionLostCallback(void *context, char *cause) {
@@ -159,18 +170,42 @@ void MQTTClient::disconnected() {
     }
 }
 
+// Static member function used as a callback from the Paho C MQTT library
 int MQTTClient::messageArrivedCallback(void *context, char *topicName,
                                        int topicLen,
                                        MQTTAsync_message *message) {
     MQTTClient *client = (MQTTClient *)context;
 
-    // ***** To be implemented *****
-    (void)client;
-    (void)topicName;
-    (void)topicLen;
-    (void)message;
+    QString topicPath;
+    if (topicLen == 0) {
+        topicPath = topicName;
+    } else {
+        topicPath = QString::fromUtf8(topicName, topicLen);
+    }
+
+    QString payload = QString::fromUtf8((const char *)message->payload,
+                                        message->payloadlen);
+
+    client->messageArrivedCallbackInvoked(topicPath, payload);
+
+    MQTTAsync_free(topicName);
+    MQTTAsync_freeMessage(&message);
 
     return true;
+}
+
+// Class member function for the above callback.
+void MQTTClient::messageArrivedCallbackInvoked(const QString &topicPath,
+                                               const QString &payload) {
+    // Though we are running on a MQTT library thread and not the UI thread,
+    // it should be safe to access the topic map since all topic creation
+    // is done before the broker connection is started.
+    if (topics.contains(topicPath)) {
+        Topic *topic = topics.value(topicPath);
+        topic->messageReceived(payload);
+    } else {
+        // ***** Implement a warning message *****
+    }
 }
 
 void MQTTClient::deliveryCompleteCallback(void *context,
@@ -186,6 +221,117 @@ void MQTTClient::addStatusVariable(QXmlStreamReader &xmlReader,
         new ClientStatusVariable(xmlReader, fileName, variables);
     variables.addVariable(statusVariable);
     statusVariables.append(statusVariable);
+}
+
+void MQTTClient::addTopic(QXmlStreamReader &xmlReader,
+                          const QString &fileName,
+                          Variables &variables) {
+    Topic *topic = new Topic(xmlReader, fileName, variables, this);
+    topics.insert(topic->path(), topic);
+}
+
+void MQTTClient::subscribeToTopics() const {
+    for (auto const &topic : topics) {
+        subscribe(topic);
+    }
+}
+
+void MQTTClient::subscribe(const Topic *topic) const {
+    const QString &topicPath = topic->path();
+    QByteArray topicPathByteArray = topicPath.toLocal8Bit();
+    const char *topicPathCString = topicPathByteArray.data();
+
+    MQTTAsync_responseOptions responseOptions =
+        MQTTAsync_responseOptions_initializer;
+    responseOptions.onSuccess = subscribeSuccessCallback;
+    responseOptions.onFailure = subscribeFailureCallback;
+    responseOptions.context = (void *)topic; // Evil, but valid cast
+
+    int error = MQTTAsync_subscribe(handle, topicPathCString, 0, &responseOptions);
+    if (error != MQTTASYNC_SUCCESS) {
+        mqttError("Send Subscribe", error);
+    }
+}
+
+// Static callback invoked by the C MQTT library
+void MQTTClient::subscribeSuccessCallback(void *context,
+                                          MQTTAsync_successData *response) {
+    // Note that this callback is not running on the UI thread, but the method
+    // call to topic should be okay since all topics are configured before the
+    // connection to the broker is made and any subscriptions sent.
+    const Topic *topic = (Topic *)context;
+    const QString &topicPath = topic->path();
+
+    MQTTClient *client = topic->mqttClient();
+    client->subscribeSuccessCallbackInvoked(topicPath);
+
+    // The Paho example documentation does not free the MQTTAsync_successData
+    // structure so we're currently assuming that, unlike topics, it's freed
+    // by the caller. It's work investing further though...
+    (void)response;
+}
+
+// Class method for the above static callback
+void MQTTClient::subscribeSuccessCallbackInvoked(const QString &topicPath) {
+    // This is called on a MQTT library thread and not the UI thread so we
+    // use a signal to get it back on the proper thread for a messagebox.
+    emit subscriptionSuccessSignal(topicPath);
+}
+
+// UI thread handler for subscription failures
+void MQTTClient::handleSubscriptionSuccess(const QString &topicPath) {
+#if 0
+    QString infoStr;
+    QTextStream infoStream(&infoStr);
+    infoStream << "MQTT subscription to topic '" << topicPath
+               << "' on broker '" << serverName << "' success.";
+
+    QMessageBox messageBox;
+    messageBox.information(NULL, "Subscription Success", infoStr);
+#else
+    (void)topicPath;
+#endif
+}
+
+// Static callback invoked by the C MQTT library
+void MQTTClient::subscribeFailureCallback(void *context,
+                                          MQTTAsync_failureData *response) {
+    // Note that this callback is not running on the UI thread, but the method
+    // call to topic should be okay since all topics are configured before the
+    // connection to the broker is made and any subscriptions sent.
+    const Topic *topic = (Topic *)context;
+    const QString &topicPath = topic->path();
+
+    const QString message = response->message;
+
+    MQTTClient *client = topic->mqttClient();
+    client->subscribeFailureCallbackInvoked(topicPath, message);
+
+    // The Paho example documentation does not free the MQTTAsync_failureData
+    // structure so we're currently assuming that, unlike topics, it's freed
+    // by the caller. It's work investing further though...
+}
+
+// Class method for the above static callback
+void MQTTClient::subscribeFailureCallbackInvoked(const QString &topicPath,
+                                                 const QString &message) {
+    // This is called on a MQTT library thread and not the UI thread so we
+    // use a signal to get it back on the proper thread for a messagebox.
+    emit subscriptionFailureSignal(topicPath, message);
+}
+
+// UI thread handler for subscription failures
+void MQTTClient::handleSubscriptionFailure(const QString &topicPath,
+                                           const QString message) {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+    warningStream << "MQTT subscription to topic '" << topicPath
+                  << "' on broker '" << serverName << "' failed:" << Qt::endl;
+    warningStream << message;
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Subscription Failure", warningStr);
+    exit(EXIT_FAILURE);
 }
 
 void MQTTClient::mqttError(const QString description, int error) const {

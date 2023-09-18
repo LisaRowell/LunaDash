@@ -23,6 +23,7 @@
 
 #include "Variables.h"
 #include "ClientStatusVariable.h"
+#include "Topic.h"
 
 #include <MQTTAsync.h>
 
@@ -30,24 +31,34 @@
 #include <QVector>
 #include <QString>
 #include <QObject>
+#include <QMap>
 
 class MQTTClient : public XMLSourcedEntity {
     Q_OBJECT
 
 private:
-    QVector<ClientStatusVariable *>statusVariables;
+    QString serverName;
+    MQTTAsync handle;
+    QVector<ClientStatusVariable *> statusVariables;
+    QMap<QString, Topic *> topics;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
-    QString serverName;
-    MQTTAsync handle;
-
     void startConnection();
     void connectedCallbackInvoked();
     void connectionLostCallbackInvoked();
+    void messageArrivedCallbackInvoked(const QString &topicPath,
+                                       const QString &payload);
     void addStatusVariable(QXmlStreamReader &xmlReader,
                            const QString &fileName, Variables &variables);
+    void addTopic(QXmlStreamReader &xmlReader, const QString &fileName,
+                  Variables &variables);
+    void subscribeToTopics() const;
+    void subscribe(const Topic *topic) const;
+    void subscribeSuccessCallbackInvoked(const QString &topicPath);
+    void subscribeFailureCallbackInvoked(const QString &topicPath,
+                                         const QString &message);
     void mqttError(const QString description, int error) const;
 
     static void connectedCallback(void *context, char *cause);
@@ -55,15 +66,26 @@ private:
     static int messageArrivedCallback(void *context, char *topicName,
                                       int topicLen,
                                       MQTTAsync_message *message);
-    static void deliveryCompleteCallback(void *context, MQTTAsync_token token);
+    static void deliveryCompleteCallback(void *context,
+                                         MQTTAsync_token token);
+    static void subscribeSuccessCallback(void *context,
+                                         MQTTAsync_successData *response);
+    static void subscribeFailureCallback(void *context,
+                                         MQTTAsync_failureData *response);
 
 public slots:
     void connected();
     void disconnected();
+    void handleSubscriptionSuccess(const QString &topicPath);
+    void handleSubscriptionFailure(const QString &topicPath,
+                                   const QString message);
 
 signals:
     void connectedSignal();
     void connectionLostSignal();
+    void subscriptionSuccessSignal(const QString &topicPath);
+    void subscriptionFailureSignal(const QString &topicPath,
+                                   const QString message);
 
 public:
     MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
