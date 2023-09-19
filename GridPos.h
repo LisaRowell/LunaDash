@@ -20,10 +20,10 @@
 #define GRID_POS_H
 
 #include "XMLSourcedEntity.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 
 class GridPos : public XMLSourcedEntity {
 private:
@@ -34,7 +34,7 @@ private:
     static const QVector<QString> requiredAttrs;
 
 public:
-    GridPos(QXmlStreamReader &xmlReader, const QString &fileName);
+    GridPos(XMLFileReader &xmlReader);
     unsigned row() const;
     unsigned col() const;
 };

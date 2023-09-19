@@ -20,13 +20,13 @@
 #define DASHBOARD_H
 
 #include "Variables.h"
-#include "Widget.h"
+#include "GridPos.h"
+#include "XMLFileReader.h"
 
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QString>
 #include <QFile>
-#include <QXmlStreamReader>
 #include <QStringView>
 
 class Dashboard : public QMainWindow {
@@ -39,27 +39,20 @@ private:
 
     void initWindow();
     void readConfig(const QString &configFileName, Variables &variables);
-    void readConfigStart(QXmlStreamReader &xmlReader,
-                         const QString &fileName);
-    void addMQTTClient(QXmlStreamReader &xmlReader, const QString &fileName);
-    void addLabel(QXmlStreamReader &xmlReader, const QString &fileName);
-    void addText(QXmlStreamReader &xmlReader, const QString &fileName);
+    void readConfigStart(XMLFileReader &xmlReader);
+    void addLabel(XMLFileReader &xmlReader);
+    void addText(XMLFileReader &xmlReader);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
-                           QXmlStreamReader &xmlReader,
-                           const QString &fileName);
-    void fileOpenError(const QString &fileName, const QFile &file) const;
-    void xmlParseError(const QString &fileName,
-                       const QXmlStreamReader &xmlReader) const;
-    void xmlDocumentStartError(const QString &fileName) const;
-    void xmlDocumentTypeError(const QString &fileName,
-                              const QXmlStreamReader &xmlReader) const;
-    void unknownElementError(const QStringView &name,
-                             const QString &parentName,
-                             const QString &fileName,
-                             const QXmlStreamReader &xmlReader) const;
+                           XMLFileReader &xmlReader);
+    [[noreturn]] void xmlParseError(const XMLFileReader &xmlReader) const;
+    [[noreturn]] void
+    xmlDocumentStartError(const XMLFileReader &xmlReader) const;
+    [[noreturn]] void
+    xmlDocumentTypeError(const XMLFileReader &xmlReader) const;
+    void unknownElementWarning(const QString &parentName,
+                               const XMLFileReader &xmlReader) const;
     void missingGridPosWarning(const QString &widgetType,
-                             const QString &fileName,
-                             const QXmlStreamReader &xmlReader) const;
+                               const XMLFileReader &xmlReader) const;
 
 public:
     Dashboard(const QString &configFileName, QWidget *parent = nullptr);

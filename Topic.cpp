@@ -22,37 +22,35 @@
 #include "Variables.h"
 #include "Variable.h"
 #include "StringVariable.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 
 const QVector<QString> Topic::allowedAttrs = { "path" };
 const QVector<QString> Topic::requiredAttrs = { "path" };
 
-Topic::Topic(QXmlStreamReader &xmlReader, const QString &fileName,
-             Variables &variables, MQTTClient *mqttClient)
+Topic::Topic(XMLFileReader &xmlReader, Variables &variables,
+             MQTTClient *mqttClient)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs), mqttClient_(mqttClient) {
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, fileName, xmlReader);
+    checkAttrs(attributes, xmlReader);
     path_ = attributes.value("path").toString();
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {
-            addStringVariable(xmlReader, fileName, variables);
+            addStringVariable(xmlReader, variables);
         } else {
-            unsupportedChildElement("Topic", fileName, xmlReader);
+            unsupportedChildElement("Topic", xmlReader);
             xmlReader.skipCurrentElement();
         }
     }
 }
 
-void Topic::addStringVariable(QXmlStreamReader &xmlReader,
-                              const QString &fileName,
+void Topic::addStringVariable(XMLFileReader &xmlReader,
                               Variables &variables) {
-    StringVariable *variable = new StringVariable(xmlReader, fileName,
-                                                  variables);
+    StringVariable *variable = new StringVariable(xmlReader, variables);
     variables.addVariable(variable);
     connect(this, &Topic::messageReceivedSignal,
             variable, &StringVariable::newValue);

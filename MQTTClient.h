@@ -20,14 +20,13 @@
 #define MQTT_CLIENT_H
 
 #include "XMLSourcedEntity.h"
-
 #include "Variables.h"
 #include "ClientStatusVariable.h"
 #include "Topic.h"
+#include "XMLFileReader.h"
 
 #include <MQTTAsync.h>
 
-#include <QXmlStreamReader>
 #include <QVector>
 #include <QString>
 #include <QObject>
@@ -50,10 +49,8 @@ private:
     void connectionLostCallbackInvoked();
     void messageArrivedCallbackInvoked(const QString &topicPath,
                                        const QString &payload);
-    void addStatusVariable(QXmlStreamReader &xmlReader,
-                           const QString &fileName, Variables &variables);
-    void addTopic(QXmlStreamReader &xmlReader, const QString &fileName,
-                  Variables &variables);
+    void addStatusVariable(XMLFileReader &xmlReader, Variables &variables);
+    void addTopic(XMLFileReader &xmlReader, Variables &variables);
     void subscribeToTopics() const;
     void subscribe(const Topic *topic) const;
     void subscribeSuccessCallbackInvoked(const QString &topicPath);
@@ -73,6 +70,9 @@ private:
     static void subscribeFailureCallback(void *context,
                                          MQTTAsync_failureData *response);
 
+public:
+    MQTTClient(XMLFileReader &xmlReader, Variables &variables);
+
 public slots:
     void connected();
     void disconnected();
@@ -86,10 +86,6 @@ signals:
     void subscriptionSuccessSignal(const QString &topicPath);
     void subscriptionFailureSignal(const QString &topicPath,
                                    const QString message);
-
-public:
-    MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
-               Variables &variables);
 };
 
 #endif // MQTT_CLIENT_H

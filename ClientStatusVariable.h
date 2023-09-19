@@ -22,14 +22,13 @@
 #include "BoolVariable.h"
 
 #include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QXmlStreamReader>
 #include <QString>
 
 class ClientStatusVariable : public BoolVariable {
 public:
-    ClientStatusVariable(QXmlStreamReader &xmlReader, const QString &fileName,
-                         Variables &variables);
+    ClientStatusVariable(XMLFileReader &xmlReader, Variables &variables);
 };
 
 #endif // CLIENT_STATUS_VARIABLE_H

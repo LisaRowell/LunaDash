@@ -21,10 +21,10 @@
 
 #include "Widget.h"
 
+#include "XMLFileReader.h"
+
 #include <QLabel>
-#include <QXmlStreamReader>
 #include <QString>
-#include <QXmlStreamAttribute>
 #include <QVector>
 
 class Label : public QLabel, public Widget {
@@ -33,7 +33,7 @@ private:
     static const QVector<QString> requiredAttrs;
 
 public:
-    Label(QXmlStreamReader &xmlReader, const QString &fileName);
+    Label(XMLFileReader &xmlReader);
 };
 
 #endif // LABEL_H

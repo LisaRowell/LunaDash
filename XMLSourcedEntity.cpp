@@ -17,12 +17,12 @@
  */
 
 #include "XMLSourcedEntity.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamAttribute>
-#include <QXmlStreamReader>
 #include <QTextStream>
 #include <QMessageBox>
 
@@ -32,8 +32,7 @@ XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
 }
 
 void XMLSourcedEntity::checkAttrs(const QXmlStreamAttributes &attributes,
-                                  const QString &fileName,
-                                  const QXmlStreamReader &xmlReader) {
+                                  const XMLFileReader &xmlReader) {
     QVector<QString> requiredNotFound(requiredAttrs);
 
     for (auto iterator = attributes.begin(); iterator != attributes.end();
@@ -41,68 +40,62 @@ void XMLSourcedEntity::checkAttrs(const QXmlStreamAttributes &attributes,
         const QXmlStreamAttribute &attribute = *iterator;
 
         if (!allowedAttrs.contains(attribute.name())) {
-            unsupportedAttrError(attribute, fileName, xmlReader);
+            unsupportedAttrWarning(attribute, xmlReader);
         }
 
         requiredNotFound.removeOne(attribute.name());
     }
 
     if (requiredNotFound.count()) {
-        missingRequiredAttrError(requiredNotFound.first(), fileName, xmlReader);
+        missingRequiredAttrError(requiredNotFound.first(), xmlReader);
     }
 }
 
-void XMLSourcedEntity::ignoreChildElements(QXmlStreamReader &xmlReader,
-                                           const QString &parentName,
-                                           const QString &fileName) {
+void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
+                                           const QString &parentName) {
     while (xmlReader.readNextStartElement()) {
-        unsupportedChildElement(parentName, fileName, xmlReader);
+        unsupportedChildElement(parentName, xmlReader);
         xmlReader.skipCurrentElement();
     }
 }
 
 void
 XMLSourcedEntity::unsupportedChildElement(const QString &parentName,
-                                          const QString &fileName,
-                                          const QXmlStreamReader &xmlReader) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
-    errorStream << "Unsupported " << parentName << " child element '"
-                << xmlReader.name() << "' found in file '" << fileName
-                << "' (" << xmlReader.lineNumber() << ","
-                << xmlReader.columnNumber() << ")." << Qt::endl;
-    errorStream << "Ignored.";
+                                          const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Unsupported " << parentName << " child element '"
+                  << xmlReader.name() << "' found in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Ignored.";
 
     QMessageBox messageBox;
-    messageBox.warning(NULL, "Unsupported Child Element", errorStr);
+    messageBox.warning(NULL, "Unsupported Child Element", warningStr);
 }
 
 void
-XMLSourcedEntity::unsupportedAttrError(const QXmlStreamAttribute &attribute,
-                                       const QString &fileName,
-                                       const QXmlStreamReader &xmlReader) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
-    errorStream << "Unsupported " << xmlReader.name() << " attribute '"
-                << attribute.name() << "' found in file '" << fileName
-                << "' (" << xmlReader.lineNumber() << ","
-                << xmlReader.columnNumber() << ")." << Qt::endl;
-    errorStream << "Ignored.";
+XMLSourcedEntity::unsupportedAttrWarning(const QXmlStreamAttribute &attribute,
+                                         const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+    warningStream << "Unsupported " << xmlReader.name() << " attribute '"
+                  << attribute.name() << "' found in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Ignored.";
 
     QMessageBox messageBox;
-    messageBox.warning(NULL, "Unsupported Attribute", errorStr);
+    messageBox.warning(NULL, "Unsupported Attribute", warningStr);
 }
 
-void
+[[noreturn]] void
 XMLSourcedEntity::missingRequiredAttrError(const QString &attributeName,
-                                           const QString &fileName,
-                                           const QXmlStreamReader &xmlReader) const {
+                                           const XMLFileReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
     errorStream << "Missing " << xmlReader.name() << " required attribute "
-                << attributeName << " in file '" << fileName << "' ("
-                << xmlReader.lineNumber() << "," << xmlReader.columnNumber()
-                << ").";
+                << attributeName << " in file " << xmlReader.fileReference()
+                << ".";
 
     QMessageBox messageBox;
     messageBox.critical(NULL, "Missing Attribute", errorStr);

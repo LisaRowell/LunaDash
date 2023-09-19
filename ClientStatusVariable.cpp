@@ -19,12 +19,11 @@
 #include "ClientStatusVariable.h"
 
 #include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QXmlStreamReader>
 #include <QString>
 
-ClientStatusVariable::ClientStatusVariable(QXmlStreamReader &xmlReader,
-                                           const QString &fileName,
+ClientStatusVariable::ClientStatusVariable(XMLFileReader &xmlReader,
                                            Variables &variables)
-    : BoolVariable(xmlReader, fileName, variables) {
+    : BoolVariable(xmlReader, variables) {
 }

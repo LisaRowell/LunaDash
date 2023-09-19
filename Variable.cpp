@@ -19,10 +19,10 @@
 #include "Variable.h"
 
 #include "Variables.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QTextStream>
 #include <QMessageBox>
@@ -30,22 +30,22 @@
 const QVector<QString> Variable::allowedAttrs = { "name" };
 const QVector<QString> Variable::requiredAttrs = { "name" };
 
-Variable::Variable(const QString &typeName, QXmlStreamReader &xmlReader,
-                   const QString &fileName, Variables &variables)
+Variable::Variable(const QString &typeName, XMLFileReader &xmlReader,
+                   Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, fileName, xmlReader);
+    checkAttrs(attributes, xmlReader);
     name_ = attributes.value("name").toString();
 
     // Make sure that the user hasn't defined multiple variables with the same
     // name as it's required to be a unique
     if (variables.variableExists(name_)) {
-        duplicateVariableNamesErrors(name_, xmlReader, fileName);
+        duplicateVariableNamesErrors(name_, xmlReader);
     }
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
-        unsupportedChildElement(typeName, fileName, xmlReader);
+        unsupportedChildElement(typeName, xmlReader);
         xmlReader.skipCurrentElement();
     }
 }
@@ -63,14 +63,14 @@ const QString &Variable::string() const {
     return emptyString;
 }
 
-void Variable::duplicateVariableNamesErrors(const QString &name,
-                                            const QXmlStreamReader &xmlReader,
-                                            const QString &fileName) {
+[[noreturn]] void
+Variable::duplicateVariableNamesErrors(const QString &name,
+                                       const XMLFileReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
-    errorStream << "Non-unique variable name '" << name << "' found in file '"
-                << fileName << "' (" << xmlReader.lineNumber() << ","
-                << xmlReader.columnNumber() << ").";
+
+    errorStream << "Non-unique variable name '" << name << "' found in file "
+                << xmlReader.fileReference() << ".";
 
     QMessageBox messageBox;
     messageBox.critical(NULL, "Non-Unique Variable Error", errorStr);

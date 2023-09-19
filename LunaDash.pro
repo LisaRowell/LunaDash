@@ -22,6 +22,7 @@ SOURCES += \
     Variable.cpp \
     Variables.cpp \
     Widget.cpp \
+    XMLFileReader.cpp \
     XMLSourcedEntity.cpp \
     main.cpp
 
@@ -39,6 +40,7 @@ HEADERS += \
     Variable.h \
     Variables.h \
     Widget.h \
+    XMLFileReader.h \
     XMLSourcedEntity.h
 
 # Default rules for deployment.

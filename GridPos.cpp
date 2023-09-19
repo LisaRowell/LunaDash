@@ -18,21 +18,22 @@
 
 #include "GridPos.h"
 
+#include "XMLFileReader.h"
+
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 
 const QVector<QString> GridPos::allowedAttrs = { "row", "col" };
 const QVector<QString> GridPos::requiredAttrs = { "row", "col" };
 
-GridPos::GridPos(QXmlStreamReader &xmlReader, const QString &fileName)
+GridPos::GridPos(XMLFileReader &xmlReader)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, fileName, xmlReader);
+    checkAttrs(attributes, xmlReader);
     _row = attributes.value("row").toUInt();
     _col = attributes.value("col").toUInt();
 
-    ignoreChildElements(xmlReader, "GridPos", fileName);
+    ignoreChildElements(xmlReader, "GridPos");
 }
 
 unsigned GridPos::row() const {

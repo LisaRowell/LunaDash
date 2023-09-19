@@ -19,15 +19,14 @@
 #include "StringVariable.h"
 
 #include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QXmlStreamReader>
 #include <QString>
 
-StringVariable::StringVariable(QXmlStreamReader &xmlReader,
-                               const QString &fileName,
+StringVariable::StringVariable(XMLFileReader &xmlReader,
                                Variables &variables,
                                const QString &initialValue)
-    : Variable("String", xmlReader, fileName, variables), value_(initialValue) {
+    : Variable("String", xmlReader, variables), value_(initialValue) {
 }
 
 const QString &StringVariable::string() const {

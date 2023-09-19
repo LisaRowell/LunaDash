@@ -21,11 +21,11 @@
 
 #include "XMLSourcedEntity.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
 
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 
 class MQTTClient;
 
@@ -39,12 +39,11 @@ private:
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
-    void addStringVariable(QXmlStreamReader &xmlReader,
-                           const QString &fileName, Variables &variables);
+    void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
 
 public:
-    Topic(QXmlStreamReader &xmlReader, const QString &fileName,
-          Variables &variables, MQTTClient *mqttClient);
+    Topic(XMLFileReader &xmlReader, Variables &variables,
+          MQTTClient *mqttClient);
     const QString &path() const;
     MQTTClient *mqttClient() const;
     void messageReceived(const QString &string);

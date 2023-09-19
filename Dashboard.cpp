@@ -18,8 +18,8 @@
 
 #include "Dashboard.h"
 
+#include "XMLFileReader.h"
 #include "MQTTClient.h"
-
 #include "Label.h"
 #include "Text.h"
 #include "Variables.h"
@@ -30,7 +30,6 @@
 #include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QXmlStreamReader>
 #include <QStringView>
 
 Dashboard::Dashboard(const QString &configFileName, QWidget *parent)
@@ -54,96 +53,72 @@ void Dashboard::initWindow() {
 // Pull in the XML the configuration file, doing a streaming read, creating
 // objects as they're found.
 void Dashboard::readConfig(const QString &fileName, Variables &variables) {
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-        fileOpenError(fileName, file);
-    }
+    XMLFileReader xmlReader(fileName);
 
-    QXmlStreamReader xmlReader(&file);
-    readConfigStart(xmlReader, fileName);
+    readConfigStart(xmlReader);
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();
         if (elementName.compare("MQTTBroker") == 0) {
-            new MQTTClient(xmlReader, fileName, variables);
+            new MQTTClient(xmlReader, variables);
         } else if (elementName.compare("Label") == 0) {
-            addLabel(xmlReader, fileName);
+            addLabel(xmlReader);
         } else if (elementName.compare("Text") == 0) {
-            addText(xmlReader, fileName);
+            addText(xmlReader);
         } else {
-            unknownElementError(elementName, "Dashboard", fileName,
-                                xmlReader);
+            unknownElementWarning("Dashboard", xmlReader);
             xmlReader.skipCurrentElement();
         }
     }
     if (xmlReader.hasError()) {
-        xmlParseError(fileName, xmlReader);
+        xmlParseError(xmlReader);
     }
-
-    file.close();
 }
 
-void Dashboard::readConfigStart(QXmlStreamReader &xmlReader,
-                                const QString &fileName) {
+void Dashboard::readConfigStart(XMLFileReader &xmlReader) {
     if (!xmlReader.readNext()) {
-        xmlParseError(fileName, xmlReader);
+        xmlParseError(xmlReader);
     }
     if (!xmlReader.isStartDocument()) {
-        xmlDocumentStartError(fileName);
+        xmlDocumentStartError(xmlReader);
     }
     if (!xmlReader.readNextStartElement()) {
-        xmlParseError(fileName, xmlReader);
+        xmlParseError(xmlReader);
     }
     if (xmlReader.name().compare("Dashboard") != 0) {
-        xmlDocumentTypeError(fileName, xmlReader);
+        xmlDocumentTypeError(xmlReader);
     }
 }
 
-void Dashboard::addLabel(QXmlStreamReader &xmlReader, const QString &fileName) {
-    Label *label = new Label(xmlReader, fileName);
-    addWidgetToLayout(label, label->gridPos(), xmlReader, fileName);
+void Dashboard::addLabel(XMLFileReader &xmlReader) {
+    Label *label = new Label(xmlReader);
+    addWidgetToLayout(label, label->gridPos(), xmlReader);
 }
 
-void Dashboard::addText(QXmlStreamReader &xmlReader, const QString &fileName) {
-    Text *text = new Text(xmlReader, fileName, variables);
-    addWidgetToLayout(text, text->gridPos(), xmlReader, fileName);
+void Dashboard::addText(XMLFileReader &xmlReader) {
+    Text *text = new Text(xmlReader, variables);
+    addWidgetToLayout(text, text->gridPos(), xmlReader);
 }
 
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
-                                  QXmlStreamReader &xmlReader,
-                                  const QString &fileName) {
+                                  XMLFileReader &xmlReader) {
     if (gridPos) {
         layout->addWidget(widget, gridPos->row(), gridPos->col());
     } else {
-        missingGridPosWarning("Label", fileName, xmlReader);
+        missingGridPosWarning("Label", xmlReader);
         // We're a little sloppy here and leak the widget, but it's no worse
         // memory wise than having a configured one.
     }
-
-}
-
-// We had some error opening the config file. Show an error message and
-// abandon ship.
-void Dashboard::fileOpenError(const QString &fileName, const QFile &file) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
-    errorStream << "Failed to open config file '" << fileName << "':" << Qt::endl;
-    errorStream << file.errorString();
-
-    QMessageBox messageBox;
-    messageBox.critical(NULL, "Config File Open Error", errorStr);
-    exit(EXIT_FAILURE);
 }
 
 // The Qt XML stream parse found something that it didn't like. Show an error
 // message with it's error description and exit.
-void Dashboard::xmlParseError(const QString &fileName,
-                              const QXmlStreamReader &xmlReader) const {
+[[noreturn]] void
+Dashboard::xmlParseError(const XMLFileReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
-    errorStream << "Failed to parse config file '" << fileName << "' ("
-                << xmlReader.lineNumber() << "," << xmlReader.columnNumber()
-                <<"):" << Qt::endl;
+    errorStream << "Failed to parse config file " << xmlReader.fileReference()
+                <<":" << Qt::endl;
     errorStream << xmlReader.errorString();
 
     QMessageBox messageBox;
@@ -151,10 +126,13 @@ void Dashboard::xmlParseError(const QString &fileName,
     exit(EXIT_FAILURE);
 }
 
-void Dashboard::xmlDocumentStartError(const QString &fileName) const {
+[[noreturn]] void
+Dashboard::xmlDocumentStartError(const XMLFileReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
-    errorStream << "Failed to parse config file '" << fileName << "':" << Qt::endl;
+
+    errorStream << "Failed to parse config file " << xmlReader.fileReference()
+                << ":" << Qt::endl;
     errorStream << "Missing document start";
 
     QMessageBox messageBox;
@@ -163,13 +141,13 @@ void Dashboard::xmlDocumentStartError(const QString &fileName) const {
 }
 
 // The root XML element wasn't the type we expected.
-void Dashboard::xmlDocumentTypeError(const QString &fileName,
-                                     const QXmlStreamReader &xmlReader) const {
+[[noreturn]] void
+Dashboard::xmlDocumentTypeError(const XMLFileReader &xmlReader) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
-    errorStream << "Incorrect document type '" << xmlReader.name() << "' in '"
-                << fileName << "' (" << xmlReader.lineNumber() << ", "
-                << xmlReader.columnNumber() << ")." << Qt::endl;
+
+    errorStream << "Incorrect document type '" << xmlReader.name() << "' in "
+                << xmlReader.fileReference() << "." << Qt::endl;
     errorStream << "Expected Dashboard.";
 
     QMessageBox messageBox;
@@ -177,32 +155,29 @@ void Dashboard::xmlDocumentTypeError(const QString &fileName,
     exit(EXIT_FAILURE);
 }
 
-void Dashboard::unknownElementError(const QStringView &name,
-                                    const QString &parentName,
-                                    const QString &fileName,
-                                    const QXmlStreamReader &xmlReader) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
-    errorStream << parentName <<" contains unsupported element '" << name
-                << "' in file '" << fileName << "' ("
-                << xmlReader.lineNumber() << ", " << xmlReader.columnNumber()
-                << "):" << Qt::endl;
-    errorStream << "Ignored.";
+void Dashboard::unknownElementWarning(const QString &parentName,
+                                      const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << parentName <<" contains unsupported element '"
+                  << xmlReader.name() << "' in file "
+                  << xmlReader.fileReference() << ":" << Qt::endl;
+    warningStream << "Ignored.";
 
     QMessageBox messageBox;
-    messageBox.warning(NULL, "Unknown Element Error", errorStr);
+    messageBox.warning(NULL, "Unknown Element", warningStr);
 }
 
 void Dashboard::missingGridPosWarning(const QString &widgetType,
-                                      const QString &fileName,
-                                      const QXmlStreamReader &xmlReader) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
-    errorStream << "Dashboard " << widgetType << " widget missing GridPos in '"
-                << fileName << "' (" << xmlReader.lineNumber() << ", "
-                << xmlReader.columnNumber() << ")." << Qt::endl;
-    errorStream << "Ignored.";
+                                      const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+    warningStream << "Dashboard " << widgetType
+                  << " widget missing GridPos in "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Ignored.";
 
     QMessageBox messageBox;
-    messageBox.warning(NULL, "Missing GridPos Error", errorStr);
+    messageBox.warning(NULL, "Missing GridPos", warningStr);
 }

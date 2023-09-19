@@ -16,40 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VALUED_WIDGET_H
-#define VALUED_WIDGET_H
+#ifndef XML_FILE_READER_H
+#define XML_FILE_READER_H
 
-#include "Widget.h"
-#include "Variable.h"
-#include "Variables.h"
-#include "XMLFileReader.h"
-
-#include <QVector>
+#include <QXmlStreamReader>
 #include <QString>
-#include <QObject>
+#include <QFile>
 
-class ValuedWidget : public Widget {
-    Q_OBJECT
-
+class XMLFileReader : public QXmlStreamReader {
 private:
-    void unknownVariableWarning(const QString &widgetType,
-                                const QString &variableName,
-                                const XMLFileReader &xmlReader) const;
+    QString fileName;
+    QFile file;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
-protected:
-    Variable *variable;
-
-    virtual void setValue() = 0;
+    [[noreturn]] void fileOpenError() const;
 
 public:
-    ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
-                 const Variables &variables);
-
-public slots:
-    void valueChanged();
+    XMLFileReader(const QString &fileName);
+    ~XMLFileReader();
+    QString fileReference() const;
 };
 
-#endif // VALUED_WIDGET_H
+#endif // XML_FILE_READER_H

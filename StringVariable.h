@@ -21,8 +21,8 @@
 
 #include "Variable.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QXmlStreamReader>
 #include <QString>
 #include <QObject>
 
@@ -33,8 +33,8 @@ private:
     QString value_;
 
 public:
-    StringVariable(QXmlStreamReader &xmlReader, const QString &fileName,
-                   Variables &variables, const QString &initialValue = "");
+    StringVariable(XMLFileReader &xmlReader, Variables &variables,
+                   const QString &initialValue = "");
     virtual const QString &string() const override;
 
 public slots:

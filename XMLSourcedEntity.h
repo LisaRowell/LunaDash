@@ -19,11 +19,12 @@
 #ifndef XML_SOURCED_ENTITY_H
 #define XML_SOURCED_ENTITY_H
 
+#include "XMLFileReader.h"
+
 #include <QVector>
 #include <QString>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamAttribute>
-#include <QXmlStreamReader>
 #include <QObject>
 
 class XMLSourcedEntity : public QObject {
@@ -33,23 +34,19 @@ private:
     const QVector<QString> &allowedAttrs;
     const QVector<QString> &requiredAttrs;
 
-    void unsupportedAttrError(const QXmlStreamAttribute &attribute,
-                              const QString &fileName,
-                              const QXmlStreamReader &xmlReader) const;
-    void missingRequiredAttrError(const QString &attributeName,
-                                  const QString &fileName,
-                                  const QXmlStreamReader &xmlReader) const;
+    void unsupportedAttrWarning(const QXmlStreamAttribute &attribute,
+                                const XMLFileReader &xmlReader) const;
+    [[noreturn]] void
+    missingRequiredAttrError(const QString &attributeName,
+                             const XMLFileReader &xmlReader) const;
 
 protected:
     void checkAttrs(const QXmlStreamAttributes &attributes,
-                    const QString &fileName,
-                    const QXmlStreamReader &xmlReader);
-    void ignoreChildElements(QXmlStreamReader &xmlReader,
-                             const QString &parentName,
-                             const QString &fileName);
+                    const XMLFileReader &xmlReader);
+    void ignoreChildElements(XMLFileReader &xmlReader,
+                             const QString &parentName);
     void unsupportedChildElement(const QString &parentName,
-                                 const QString &fileName,
-                                 const QXmlStreamReader &xmlReader) const;
+                                 const XMLFileReader &xmlReader) const;
 
 public:
     XMLSourcedEntity(const QVector<QString> &allowedAttrs,

@@ -19,13 +19,13 @@
 #include "BoolVariable.h"
 
 #include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QXmlStreamReader>
 #include <QString>
 
-BoolVariable::BoolVariable(QXmlStreamReader &xmlReader, const QString &fileName,
-                           Variables &variables, bool initialValue)
-    : Variable("BoolVariable", xmlReader, fileName, variables),
+BoolVariable::BoolVariable(XMLFileReader &xmlReader, Variables &variables,
+                           bool initialValue)
+    : Variable("BoolVariable", xmlReader, variables),
       value_(initialValue) {
 }
 

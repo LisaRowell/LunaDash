@@ -23,10 +23,10 @@
 #include "Variables.h"
 #include "Variable.h"
 #include "Topic.h"
+#include "XMLFileReader.h"
 
 #include <MQTTAsync.h>
 
-#include <QXmlStreamReader>
 #include <QVector>
 #include <QString>
 #include <QByteArray>
@@ -37,8 +37,7 @@
 const QVector<QString> MQTTClient::allowedAttrs = { "server" };
 const QVector<QString> MQTTClient::requiredAttrs = { "server" };
 
-MQTTClient::MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
-                       Variables &variables)
+MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
     connect(this, &MQTTClient::connectedSignal, this, &MQTTClient::connected);
     connect(this, &MQTTClient::connectionLostSignal,
@@ -49,17 +48,17 @@ MQTTClient::MQTTClient(QXmlStreamReader &xmlReader, const QString &fileName,
             this, &MQTTClient::handleSubscriptionFailure);
 
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, fileName, xmlReader);
+    checkAttrs(attributes, xmlReader);
     serverName = attributes.value("server").toString();
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("StatusVariable") == 0) {
-            addStatusVariable(xmlReader, fileName, variables);
+            addStatusVariable(xmlReader, variables);
         } else if (xmlReader.name().compare("Topic") == 0) {
-            addTopic(xmlReader, fileName, variables);
+            addTopic(xmlReader, variables);
         } else {
-            unsupportedChildElement("MQTTBroker", fileName, xmlReader);
+            unsupportedChildElement("MQTTBroker", xmlReader);
             xmlReader.skipCurrentElement();
         }
     }
@@ -214,19 +213,16 @@ void MQTTClient::deliveryCompleteCallback(void *context,
     (void)token;
 }
 
-void MQTTClient::addStatusVariable(QXmlStreamReader &xmlReader,
-                                   const QString &fileName,
+void MQTTClient::addStatusVariable(XMLFileReader &xmlReader,
                                    Variables &variables) {
     ClientStatusVariable *statusVariable =
-        new ClientStatusVariable(xmlReader, fileName, variables);
+        new ClientStatusVariable(xmlReader, variables);
     variables.addVariable(statusVariable);
     statusVariables.append(statusVariable);
 }
 
-void MQTTClient::addTopic(QXmlStreamReader &xmlReader,
-                          const QString &fileName,
-                          Variables &variables) {
-    Topic *topic = new Topic(xmlReader, fileName, variables, this);
+void MQTTClient::addTopic(XMLFileReader &xmlReader, Variables &variables) {
+    Topic *topic = new Topic(xmlReader, variables, this);
     topics.insert(topic->path(), topic);
 }
 
@@ -331,7 +327,6 @@ void MQTTClient::handleSubscriptionFailure(const QString &topicPath,
 
     QMessageBox messageBox;
     messageBox.warning(NULL, "Subscription Failure", warningStr);
-    exit(EXIT_FAILURE);
 }
 
 void MQTTClient::mqttError(const QString description, int error) const {

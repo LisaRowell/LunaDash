@@ -21,11 +21,11 @@
 #include "Widget.h"
 #include "Variables.h"
 #include "Variable.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
 #include <QObject>
-#include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QTextStream>
 #include <QMessageBox>
@@ -34,12 +34,11 @@ const QVector<QString> ValuedWidget::allowedAttrs = { "variable" };
 const QVector<QString> ValuedWidget::requiredAttrs = { };
 
 ValuedWidget::ValuedWidget(const QString &widgetType,
-                           QXmlStreamReader &xmlReader,
-                           const QString &fileName,
+                           XMLFileReader &xmlReader,
                            const Variables &variables)
     : Widget(allowedAttrs, requiredAttrs) {
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, fileName, xmlReader);
+    checkAttrs(attributes, xmlReader);
 
     if (attributes.hasAttribute("variable")) {
         const QString &variableName = attributes.value("variable").toString();
@@ -48,8 +47,7 @@ ValuedWidget::ValuedWidget(const QString &widgetType,
             connect(variable, &Variable::valueChangedSignal,
                     this, &ValuedWidget::valueChanged);
         } else {
-            unknownVariableWarning(widgetType, variableName, xmlReader,
-                                   fileName);
+            unknownVariableWarning(widgetType, variableName, xmlReader);
         }
     } else {
         variable = NULL;
@@ -60,19 +58,18 @@ void ValuedWidget::valueChanged() {
     setValue();
 }
 
-void ValuedWidget::unknownVariableWarning(const QString &widgetType,
-                                          const QString &variableName,
-                                          const QXmlStreamReader &xmlReader,
-                                          const QString &fileName) const {
-    QString errorStr;
-    QTextStream errorStream(&errorStr);
+void
+ValuedWidget::unknownVariableWarning(const QString &widgetType,
+                                     const QString &variableName,
+                                     const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
 
-    errorStream << widgetType <<" with an unknown variable '" << variableName
-                << "' in file '" << fileName << "' ("
-                << xmlReader.lineNumber() << ", " << xmlReader.columnNumber()
-                << "):" << Qt::endl;
-    errorStream << "Ignored.";
+    warningStream << widgetType <<" with an unknown variable '"
+                  << variableName << "' in file " << xmlReader.fileReference()
+                  << ":" << Qt::endl;
+    warningStream << "Ignored.";
 
     QMessageBox messageBox;
-    messageBox.warning(NULL, "Unknown Variable Warning", errorStr);
+    messageBox.warning(NULL, "Unknown Variable Warning", warningStr);
 }

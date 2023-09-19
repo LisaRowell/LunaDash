@@ -20,10 +20,10 @@
 #define VARIABLE_H
 
 #include "XMLSourcedEntity.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 #include <QObject>
 
 class Variables;
@@ -34,9 +34,9 @@ class Variable : public XMLSourcedEntity {
 private:
     QString name_;
 
-    void duplicateVariableNamesErrors(const QString &name,
-                                      const QXmlStreamReader &xmlReader,
-                                      const QString &fileName);
+    [[noreturn]] void
+    duplicateVariableNamesErrors(const QString &name,
+                                  const XMLFileReader &xmlReader) const;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
@@ -45,8 +45,8 @@ protected:
     void valueChanged();
 
 public:
-    Variable(const QString &typeName, QXmlStreamReader &xmlReader,
-             const QString &fileName, Variables &variables);
+    Variable(const QString &typeName, XMLFileReader &xmlReader,
+             Variables &variables);
     const QString &name() const;
     virtual const QString &string() const;
 

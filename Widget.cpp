@@ -20,23 +20,22 @@
 
 #include "XMLSourcedEntity.h"
 #include "GridPos.h"
+#include "XMLFileReader.h"
 
 #include <QString>
 #include <QVector>
-#include <QXmlStreamReader>
 
 Widget::Widget(const QVector<QString> &allowedAttrs,
                const QVector<QString> &requiredAttrs)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
 }
 
-void Widget::handleChildElement(QXmlStreamReader &xmlReader,
-                                const QString &parentName,
-                                const QString &fileName) {
+void Widget::handleChildElement(XMLFileReader &xmlReader,
+                                const QString &parentName) {
     if (xmlReader.name().compare("GridPos") == 0) {
-        gridPos_ = new GridPos(xmlReader, fileName);
+        gridPos_ = new GridPos(xmlReader);
     } else {
-        unsupportedChildElement(parentName, fileName, xmlReader);
+        unsupportedChildElement(parentName, xmlReader);
         xmlReader.skipCurrentElement();
     }
 }

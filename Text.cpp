@@ -21,15 +21,15 @@
 #include "ValuedWidget.h"
 #include "Variable.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
 
 const QString Text::typeName("Text");
 
-Text::Text(QXmlStreamReader &xmlReader, const QString &fileName,
-           const Variables &variables)
-    : ValuedWidget(typeName, xmlReader, fileName, variables) {
+Text::Text(XMLFileReader &xmlReader, const Variables &variables)
+    : ValuedWidget(typeName, xmlReader, variables) {
 
     if (variable != NULL) {
         setText(variable->string());
@@ -39,7 +39,7 @@ Text::Text(QXmlStreamReader &xmlReader, const QString &fileName,
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {
-        handleChildElement(xmlReader, "Text", fileName);
+        handleChildElement(xmlReader, "Text");
     }
 }
 

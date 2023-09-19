@@ -21,10 +21,10 @@
 
 #include "XMLSourcedEntity.h"
 #include "GridPos.h"
+#include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamReader>
 
 class Widget : public XMLSourcedEntity {
 private:
@@ -33,9 +33,8 @@ private:
 public:
     Widget(const QVector<QString> &allowedAttrs,
            const QVector<QString> &requiredAttrs);
-    void handleChildElement(QXmlStreamReader &xmlReader,
-                            const QString &parentName,
-                            const QString &fileName);
+    void handleChildElement(XMLFileReader &xmlReader,
+                            const QString &parentName);
     const GridPos *gridPos() const;
 };
 
