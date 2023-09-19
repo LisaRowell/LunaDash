@@ -112,8 +112,6 @@ void Dashboard::addText(QXmlStreamReader &xmlReader, const QString &fileName) {
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                                   QXmlStreamReader &xmlReader,
                                   const QString &fileName) {
-    layout->addWidget(widget, gridPos->row(), gridPos->col());
-
     if (gridPos) {
         layout->addWidget(widget, gridPos->row(), gridPos->col());
     } else {
