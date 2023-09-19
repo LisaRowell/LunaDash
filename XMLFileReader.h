@@ -29,10 +29,13 @@ private:
     QFile file;
 
     [[noreturn]] void fileOpenError() const;
+    [[noreturn]] void xmlParseError() const;
+    [[noreturn]] void xmlDocumentStartError() const;
 
 public:
     XMLFileReader(const QString &fileName);
     ~XMLFileReader();
+    bool readNextStartElement();
     QString fileReference() const;
 };
 

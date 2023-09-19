@@ -31,10 +31,31 @@ XMLFileReader::XMLFileReader(const QString &fileName)
     }
 
     setDevice(&file);
+
+    if (!readNext()) {
+        xmlParseError();
+    }
+    if (!isStartDocument()) {
+        xmlDocumentStartError();
+    }
 }
 
 XMLFileReader::~XMLFileReader() {
     file.close();
+}
+
+bool XMLFileReader::readNextStartElement() {
+    bool hasNextElement = QXmlStreamReader::readNextStartElement();
+
+    if (hasNextElement) {
+        return true;
+    } else {
+        if (hasError()) {
+            xmlParseError();
+        } else {
+            return false;
+        }
+    }
 }
 
 QString XMLFileReader::fileReference() const {
@@ -56,5 +77,32 @@ QString XMLFileReader::fileReference() const {
 
     QMessageBox messageBox;
     messageBox.critical(NULL, "Config File Open Error", errorStr);
+    exit(EXIT_FAILURE);
+}
+
+// The Qt XML stream parse found something that it didn't like. Show an error
+// message with it's error description and exit.
+[[noreturn]] void XMLFileReader::xmlParseError() const {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+    errorStream << "Failed to parse config file " << fileReference() << ":"
+                << Qt::endl;
+    errorStream << errorString();
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "Config Parse Error", errorStr);
+    exit(EXIT_FAILURE);
+}
+
+[[noreturn]] void XMLFileReader::xmlDocumentStartError() const {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+
+    errorStream << "Failed to parse config file " << fileReference() << ":"
+                << Qt::endl;
+    errorStream << "Missing document start";
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "Config Parse Error", errorStr);
     exit(EXIT_FAILURE);
 }

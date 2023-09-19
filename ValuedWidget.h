@@ -28,7 +28,7 @@
 #include <QString>
 #include <QObject>
 
-class ValuedWidget : public Widget {
+class ValuedWidget : public QObject, public Widget {
     Q_OBJECT
 
 private:

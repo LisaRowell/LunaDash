@@ -28,7 +28,7 @@
 
 class Variables;
 
-class Variable : public XMLSourcedEntity {
+class Variable : public QObject, public XMLSourcedEntity {
     Q_OBJECT;
 
 private:

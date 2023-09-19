@@ -32,7 +32,7 @@
 #include <QObject>
 #include <QMap>
 
-class MQTTClient : public XMLSourcedEntity {
+class MQTTClient : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:

@@ -17,9 +17,15 @@
  */
 
 #include "Dashboard.h"
+#include "XMLFileReader.h"
 
 #include <QApplication>
 #include <QString>
+#include <QTextStream>
+#include <QMessageBox>
+
+[[noreturn]] static void missingXMLDocumentError(const XMLFileReader &xmlReader);
+[[noreturn]] static void xmlDocumentTypeError(const XMLFileReader &xmlReader);
 
 int main(int argc, char *argv[])
 {
@@ -30,8 +36,43 @@ int main(int argc, char *argv[])
     // from arguements and the user should be able to double click a .ldash
     // file to start running with that dashboard.
     const QString configFileName = "Dashboard.ldash";
-    Dashboard dashboard(configFileName);
+
+    XMLFileReader xmlReader(configFileName);
+    if (!xmlReader.readNextStartElement()) {
+        missingXMLDocumentError(xmlReader);
+    }
+    if (xmlReader.name().compare("Dashboard") != 0) {
+        xmlDocumentTypeError(xmlReader);
+    }
+
+    Dashboard dashboard(xmlReader);
     dashboard.show();
 
     return application.exec();
+}
+
+[[noreturn]] static void missingXMLDocumentError(const XMLFileReader &xmlReader) {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+
+    errorStream << "Missing XML document in " << xmlReader.fileReference()
+                << "." << Qt::endl;
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "Config Document Type Error", errorStr);
+    exit(EXIT_FAILURE);
+}
+
+// The root XML element wasn't the type we expected.
+[[noreturn]] static void xmlDocumentTypeError(const XMLFileReader &xmlReader) {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+
+    errorStream << "Incorrect document type '" << xmlReader.name() << "' in "
+                << xmlReader.fileReference() << "." << Qt::endl;
+    errorStream << "Expected Dashboard.";
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "Config Document Type Error", errorStr);
+    exit(EXIT_FAILURE);
 }

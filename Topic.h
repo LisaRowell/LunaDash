@@ -29,7 +29,7 @@
 
 class MQTTClient;
 
-class Topic : public XMLSourcedEntity {
+class Topic : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:

@@ -25,11 +25,8 @@
 #include <QString>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamAttribute>
-#include <QObject>
 
-class XMLSourcedEntity : public QObject {
-    Q_OBJECT
-
+class XMLSourcedEntity {
 private:
     const QVector<QString> &allowedAttrs;
     const QVector<QString> &requiredAttrs;

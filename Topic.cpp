@@ -26,6 +26,7 @@
 
 #include <QVector>
 #include <QString>
+#include <QObject>
 
 const QVector<QString> Topic::allowedAttrs = { "path" };
 const QVector<QString> Topic::requiredAttrs = { "path" };

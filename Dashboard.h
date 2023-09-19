@@ -19,6 +19,8 @@
 #ifndef DASHBOARD_H
 #define DASHBOARD_H
 
+#include "XMLSourcedEntity.h"
+
 #include "Variables.h"
 #include "GridPos.h"
 #include "XMLFileReader.h"
@@ -29,7 +31,7 @@
 #include <QFile>
 #include <QStringView>
 
-class Dashboard : public QMainWindow {
+class Dashboard : public QMainWindow, public XMLSourcedEntity {
     Q_OBJECT
 
 private:
@@ -38,24 +40,18 @@ private:
     QGridLayout *layout;
 
     void initWindow();
-    void readConfig(const QString &configFileName, Variables &variables);
-    void readConfigStart(XMLFileReader &xmlReader);
     void addLabel(XMLFileReader &xmlReader);
     void addText(XMLFileReader &xmlReader);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                            XMLFileReader &xmlReader);
-    [[noreturn]] void xmlParseError(const XMLFileReader &xmlReader) const;
-    [[noreturn]] void
-    xmlDocumentStartError(const XMLFileReader &xmlReader) const;
-    [[noreturn]] void
-    xmlDocumentTypeError(const XMLFileReader &xmlReader) const;
-    void unknownElementWarning(const QString &parentName,
-                               const XMLFileReader &xmlReader) const;
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;
 
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
+
 public:
-    Dashboard(const QString &configFileName, QWidget *parent = nullptr);
+    Dashboard(XMLFileReader &xmlReader, QWidget *parent = nullptr);
     ~Dashboard();
 };
 
