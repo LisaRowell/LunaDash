@@ -29,11 +29,22 @@ StringVariable::StringVariable(XMLFileReader &xmlReader,
     : Variable("String", xmlReader, variables), value_(initialValue) {
 }
 
-const QString &StringVariable::string() const {
+const QString StringVariable::string() const {
     return value_;
 }
 
+double StringVariable::doubleValue(bool *valid) const  {
+    if (hasValue_) {
+        *valid = true;
+        return value_.toDouble(valid);
+    } else {
+        *valid = false;
+        return 0;
+    }
+}
+
 void StringVariable::newValue(const QString &value) {
+    hasValue_ = true;
     value_ = value;
     valueChanged();
 }

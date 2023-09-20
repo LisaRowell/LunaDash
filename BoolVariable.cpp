@@ -30,16 +30,29 @@ BoolVariable::BoolVariable(XMLFileReader &xmlReader, Variables &variables,
 }
 
 void BoolVariable::set(bool value) {
+    hasValue_ = true;
     value_ = value;
     valueChanged();
 }
 
-const QString &BoolVariable::string() const {
+const QString BoolVariable::string() const {
     if (value_) {
-        static QString trueStr("true");
-        return trueStr;
+        return "true";
     } else {
-        static QString falseStr("false");
-        return falseStr;
+        return "false";
+    }
+}
+
+double BoolVariable::doubleValue(bool *valid) const  {
+    if (hasValue_) {
+        *valid = true;
+        if (value_) {
+            return 1;
+        } else {
+            return 0;
+        }
+    } else {
+        *valid = false;
+        return 0;
     }
 }

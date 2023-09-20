@@ -40,10 +40,11 @@ private:
     QGridLayout *layout;
 
     void initWindow();
-    void addLabel(XMLFileReader &xmlReader);
-    void addText(XMLFileReader &xmlReader);
+    void addLabelWidget(XMLFileReader &xmlReader);
+    void addTextWidget(XMLFileReader &xmlReader);
+    void addNumberWidget(XMLFileReader &xmlReader);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
-                           XMLFileReader &xmlReader);
+                           const QString &typeName, XMLFileReader &xmlReader);
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;
 

@@ -27,9 +27,6 @@
 #include <QString>
 
 class TextWidget : public QLabel, public ValuedWidget {
-private:
-    static const QString typeName;
-
 protected:
     virtual void setValue() override;
 

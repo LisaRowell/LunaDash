@@ -32,7 +32,7 @@ const QVector<QString> Variable::requiredAttrs = { "name" };
 
 Variable::Variable(const QString &typeName, XMLFileReader &xmlReader,
                    Variables &variables)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+    : XMLSourcedEntity(allowedAttrs, requiredAttrs), hasValue_(false) {
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
     checkAttrs(attributes, xmlReader);
     name_ = attributes.value("name").toString();
@@ -54,13 +54,12 @@ const QString &Variable::name() const {
     return name_;
 }
 
-void Variable::valueChanged() {
-    emit valueChangedSignal();
+bool Variable::hasValue() const {
+    return hasValue_;
 }
 
-const QString &Variable::string() const {
-    static QString emptyString("");
-    return emptyString;
+void Variable::valueChanged() {
+    emit valueChangedSignal();
 }
 
 [[noreturn]] void

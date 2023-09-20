@@ -39,7 +39,9 @@ private:
     static const QVector<QString> requiredAttrs;
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
+    void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     void receivedValueForString(QJsonValue &value);
+    void receivedValueForDouble(QJsonValue &value);
     void multipleVariableWarning(XMLFileReader &xmlReader) const;
 
 public:
@@ -48,6 +50,8 @@ public:
 
 signals:
     void stringFieldChangedSignal(QString value);
+    void doubleFieldChangedSignal(double value);
+    void resetFieldSignal();
 };
 
 #endif // JSON_FIELD_H

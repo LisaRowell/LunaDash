@@ -12,11 +12,13 @@ SOURCES += \
     BoolVariable.cpp \
     ClientStatusVariable.cpp \
     Dashboard.cpp \
+    DoubleVariable.cpp \
     GridPos.cpp \
     JSONDecoder.cpp \
     JSONField.cpp \
     LabelWidget.cpp \
     MQTTClient.cpp \
+    NumberWidget.cpp \
     StringVariable.cpp \
     TextWidget.cpp \
     Topic.cpp \
@@ -32,11 +34,13 @@ HEADERS += \
     BoolVariable.h \
     ClientStatusVariable.h \
     Dashboard.h \
+    DoubleVariable.h \
     GridPos.h \
     JSONDecoder.h \
     JSONField.h \
     LabelWidget.h \
     MQTTClient.h \
+    NumberWidget.h \
     StringVariable.h \
     TextWidget.h \
     Topic.h \

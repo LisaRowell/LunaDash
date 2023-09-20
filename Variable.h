@@ -42,13 +42,16 @@ private:
     static const QVector<QString> requiredAttrs;
 
 protected:
+    bool hasValue_;
     void valueChanged();
 
 public:
     Variable(const QString &typeName, XMLFileReader &xmlReader,
              Variables &variables);
     const QString &name() const;
-    virtual const QString &string() const;
+    bool hasValue() const;
+    virtual const QString string() const = 0;
+    virtual double doubleValue(bool *valid) const = 0;
 
 signals:
     void valueChangedSignal();

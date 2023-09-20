@@ -16,25 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOOL_VARIABLE_H
-#define BOOL_VARIABLE_H
+#ifndef DOUBLE_VARIABLE_H
+#define DOUBLE_VARIABLE_H
 
 #include "Variable.h"
-#include "Variables.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
+#include <QObject>
 #include <QString>
 
-class BoolVariable : public Variable {
+class DoubleVariable : public Variable {
+    Q_OBJECT
+
 private:
-    bool value_;
+    double value_;
 
 public:
-    BoolVariable(XMLFileReader &xmlReader, Variables &variables,
-                 bool initialValue = false);
-    void set(bool value);
+    DoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     virtual const QString string() const override;
     virtual double doubleValue(bool *valid) const override;
+
+public slots:
+    void newStringValue(const QString &value);
+    void newDoubleValue(const double value);
+    void resetValue();
 };
 
-#endif // BOOL_VARIABLE_H
+#endif // DOUBLE_VARIABLE_H

@@ -22,6 +22,7 @@
 #include "MQTTClient.h"
 #include "LabelWidget.h"
 #include "TextWidget.h"
+#include "NumberWidget.h"
 #include "Variables.h"
 #include "GridPos.h"
 
@@ -44,9 +45,11 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
         if (elementName.compare("MQTTBroker") == 0) {
             new MQTTClient(xmlReader, variables);
         } else if (elementName.compare("Label") == 0) {
-            addLabel(xmlReader);
+            addLabelWidget(xmlReader);
         } else if (elementName.compare("Text") == 0) {
-            addText(xmlReader);
+            addTextWidget(xmlReader);
+        } else if (elementName.compare("Number") == 0) {
+            addNumberWidget(xmlReader);
         } else {
             unsupportedChildElement("Dashboard", xmlReader);
             xmlReader.skipCurrentElement();
@@ -66,22 +69,30 @@ void Dashboard::initWindow() {
     layout = new QGridLayout(mainWidget);
 }
 
-void Dashboard::addLabel(XMLFileReader &xmlReader) {
+void Dashboard::addLabelWidget(XMLFileReader &xmlReader) {
     LabelWidget *labelWidget = new LabelWidget(xmlReader);
-    addWidgetToLayout(labelWidget, labelWidget->gridPos(), xmlReader);
+    addWidgetToLayout(labelWidget, labelWidget->gridPos(), "Label",
+                      xmlReader);
 }
 
-void Dashboard::addText(XMLFileReader &xmlReader) {
+void Dashboard::addTextWidget(XMLFileReader &xmlReader) {
     TextWidget *textWidget = new TextWidget(xmlReader, variables);
-    addWidgetToLayout(textWidget, textWidget->gridPos(), xmlReader);
+    addWidgetToLayout(textWidget, textWidget->gridPos(), "Text", xmlReader);
+}
+
+void Dashboard::addNumberWidget(XMLFileReader &xmlReader) {
+    NumberWidget *numberWidget = new NumberWidget(xmlReader, variables);
+    addWidgetToLayout(numberWidget, numberWidget->gridPos(), "Number",
+                      xmlReader);
 }
 
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
+                                  const QString &typeName,
                                   XMLFileReader &xmlReader) {
     if (gridPos) {
         layout->addWidget(widget, gridPos->row(), gridPos->col());
     } else {
-        missingGridPosWarning("Label", xmlReader);
+        missingGridPosWarning(typeName, xmlReader);
         // We're a little sloppy here and leak the widget, but it's no worse
         // memory wise than having a configured one.
     }

@@ -16,29 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TextWidget.h"
+#include "NumberWidget.h"
 
-#include "ValuedWidget.h"
-#include "Variable.h"
-#include "Variables.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
-#include <QVector>
-#include <QString>
-
-TextWidget::TextWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Text", xmlReader, variables) {
+NumberWidget::NumberWidget(XMLFileReader &xmlReader, const Variables &variables)
+    : ValuedWidget("Number", xmlReader, variables) {
     setValue();
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {
-        handleChildElement(xmlReader, "Text");
+        handleChildElement(xmlReader, "Number");
     }
 }
 
-void TextWidget::setValue() {
+void NumberWidget::setValue() {
     if (variable != NULL && variable->hasValue()) {
-        setText(variable->string());
+        bool valid;
+        double value = variable->doubleValue(&valid);
+        if (valid) {
+            // Expand to include things like precision
+            QString stringValue = QString::number(value);
+            setText(stringValue);
+        } else {
+            setText("");
+        }
     } else {
         setText("");
     }

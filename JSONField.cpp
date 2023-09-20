@@ -22,6 +22,7 @@
 #include "Variables.h"
 #include "XMLSourcedEntity.h"
 #include "StringVariable.h"
+#include "DoubleVariable.h"
 
 #include <QVector>
 #include <QString>
@@ -43,6 +44,8 @@ JSONField::JSONField(XMLFileReader &xmlReader, Variables &variables)
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {
             addStringVariable(xmlReader, variables);
+        } else if (xmlReader.name().compare("Double") == 0) {
+            addDoubleVariable(xmlReader, variables);
         } else {
             unsupportedChildElement("Field", xmlReader);
             xmlReader.skipCurrentElement();
@@ -65,6 +68,24 @@ void JSONField::addStringVariable(XMLFileReader &xmlReader,
     }
 }
 
+void JSONField::addDoubleVariable(XMLFileReader &xmlReader,
+                                  Variables &variables) {
+    // Make sure we only are working with one variable for each field
+    if (type == QJsonValue::Undefined) {
+        DoubleVariable *variable = new DoubleVariable(xmlReader, variables);
+        variables.addVariable(variable);
+        connect(this, &JSONField::doubleFieldChangedSignal,
+                variable, &DoubleVariable::newDoubleValue);
+        // Set this up so that we can clear the field.
+        connect(this, &JSONField::resetFieldSignal,
+                variable, &DoubleVariable::resetValue);
+        type = QJsonValue::Double;
+    } else {
+        multipleVariableWarning(xmlReader);
+        xmlReader.skipCurrentElement();
+    }
+}
+
 void JSONField::objectReceived(QJsonObject &object) {
     // Each field gets the JSON object and is responsible for pulling its
     // field out if it exists.
@@ -75,6 +96,10 @@ void JSONField::objectReceived(QJsonObject &object) {
         switch (type) {
         case QJsonValue::String:
             receivedValueForString(value);
+            break;
+
+        case QJsonValue::Double:
+            receivedValueForDouble(value);
             break;
 
         default:
@@ -112,6 +137,40 @@ void JSONField::receivedValueForString(QJsonValue &value) {
 
     default:
         // We have a new value for a field which we can't convert to a string.
+        // Add a debug?
+        emit stringFieldChangedSignal("");
+        break;
+    }
+}
+
+void JSONField::receivedValueForDouble(QJsonValue &value) {
+    switch (value.type()) {
+    case QJsonValue::String:
+        {
+            bool valid = false;
+            double doubleValue = value.toString().toDouble(&valid);
+            if (valid) {
+                emit doubleFieldChangedSignal(doubleValue);
+            } else {
+                emit resetFieldSignal();
+            }
+        }
+        break;
+
+    case QJsonValue::Double:
+        emit doubleFieldChangedSignal(value.toDouble());
+        break;
+
+    case QJsonValue::Bool:
+        if (value.isBool() == true) {
+            emit doubleFieldChangedSignal(1);
+        } else {
+            emit doubleFieldChangedSignal(0);
+        }
+        break;
+
+    default:
+        // We have a new value for a field which we can't convert to a double.
         // Add a debug?
         emit stringFieldChangedSignal("");
         break;

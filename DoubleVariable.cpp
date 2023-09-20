@@ -16,30 +16,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TextWidget.h"
-
-#include "ValuedWidget.h"
-#include "Variable.h"
-#include "Variables.h"
+#include "DoubleVariable.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
-#include <QVector>
 #include <QString>
 
-TextWidget::TextWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Text", xmlReader, variables) {
-    setValue();
+DoubleVariable::DoubleVariable(XMLFileReader &xmlReader,
+                               Variables &variables)
+    : Variable("Double", xmlReader, variables){
+}
 
-    // Loop through the child elements, any that are there are for Widget
-    while (xmlReader.readNextStartElement()) {
-        handleChildElement(xmlReader, "Text");
+const QString DoubleVariable::string() const {
+    if (hasValue_) {
+        return QString::number(value_);
+    } else {
+        return "";
     }
 }
 
-void TextWidget::setValue() {
-    if (variable != NULL && variable->hasValue()) {
-        setText(variable->string());
+double DoubleVariable::doubleValue(bool *valid) const  {
+    if (hasValue_) {
+        *valid = true;
+        return value_;
     } else {
-        setText("");
+        *valid = false;
+        return 0;
     }
+}
+
+void DoubleVariable::newStringValue(const QString &value) {
+    value_ = value.toDouble(&hasValue_);
+    valueChanged();
+}
+
+void DoubleVariable::newDoubleValue(const double value) {
+    hasValue_ = true;
+    value_ = value;
+    valueChanged();
+}
+
+void DoubleVariable::resetValue() {
+    hasValue_ = false;
 }

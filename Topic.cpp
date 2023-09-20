@@ -22,6 +22,7 @@
 #include "Variables.h"
 #include "Variable.h"
 #include "StringVariable.h"
+#include "DoubleVariable.h"
 #include "JSONDecoder.h"
 #include "XMLFileReader.h"
 
@@ -43,6 +44,8 @@ Topic::Topic(XMLFileReader &xmlReader, Variables &variables,
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {
             addStringVariable(xmlReader, variables);
+        } else if (xmlReader.name().compare("Double") == 0) {
+            addDoubleVariable(xmlReader, variables);
         } else if (xmlReader.name().compare("JSON") == 0) {
             addJSONDecoder(xmlReader, variables);
         } else {
@@ -58,6 +61,14 @@ void Topic::addStringVariable(XMLFileReader &xmlReader,
     variables.addVariable(variable);
     connect(this, &Topic::messageReceivedSignal,
             variable, &StringVariable::newValue);
+}
+
+void Topic::addDoubleVariable(XMLFileReader &xmlReader,
+                              Variables &variables) {
+    DoubleVariable *variable = new DoubleVariable(xmlReader, variables);
+    variables.addVariable(variable);
+    connect(this, &Topic::messageReceivedSignal,
+            variable, &DoubleVariable::newStringValue);
 }
 
 void Topic::addJSONDecoder(XMLFileReader &xmlReader, Variables &variables) {

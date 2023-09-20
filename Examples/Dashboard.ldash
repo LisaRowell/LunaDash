@@ -8,7 +8,14 @@
                 <Field label="value">
                     <String name="houseBatteryVoltage"/>
                 </Field>
+                <Field label="value">
+                    <Double name="houseBatteryVoltage2"/>
+                </Field>
             </JSON>
+        </Topic>
+        <Topic path="testDouble">
+            <String name="testDoubleAsString"/>
+            <Double name="testDoubleAsDouble"/>
         </Topic>
         <Topic path="$SYS/broker/messages/sent">
             <String name="localHostSentMsgs"/>
@@ -29,7 +36,19 @@
     <Text variable="houseBatteryVoltage">
         <GridPos row="3" col="1"/>
     </Text>
-    <Text variable="localHostSentMsgs">
+    <Text variable="houseBatteryVoltage2">
         <GridPos row="3" col="2"/>
+    </Text>
+    <Text variable="testDoubleAsString">
+        <GridPos row="4" col="0"/>
+    </Text>
+    <Text variable="testDoubleAsDouble">
+        <GridPos row="4" col="1"/>
+    </Text>
+    <Number variable="testDoubleAsDouble">
+        <GridPos row="4" col="2"/>
+    </Number>
+    <Text variable="localHostSentMsgs">
+        <GridPos row="5" col="1"/>
     </Text>
 </Dashboard>

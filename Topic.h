@@ -40,6 +40,7 @@ private:
     static const QVector<QString> requiredAttrs;
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
+    void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     void addJSONDecoder(XMLFileReader &xmlReader, Variables &variables);
 
 public:
