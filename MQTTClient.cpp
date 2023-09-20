@@ -46,6 +46,8 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
             this, &MQTTClient::handleSubscriptionSuccess);
     connect(this, &MQTTClient::subscriptionFailureSignal,
             this, &MQTTClient::handleSubscriptionFailure);
+    connect(this, &MQTTClient::messageForUnknownTopicSignal,
+            this, &MQTTClient::messageForUnknownTopic);
 
     const QXmlStreamAttributes &attributes = xmlReader.attributes();
     checkAttrs(attributes, xmlReader);
@@ -203,8 +205,19 @@ void MQTTClient::messageArrivedCallbackInvoked(const QString &topicPath,
         Topic *topic = topics.value(topicPath);
         topic->messageReceived(payload);
     } else {
-        // ***** Implement a warning message *****
+        emit messageForUnknownTopicSignal(topicPath);
     }
+}
+
+void MQTTClient::messageForUnknownTopic(const QString &topicPath) {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+    warningStream << "Received a MQTT publish message from '" << serverName
+                  << "' for unknown topic '" << topicPath << "'." << Qt::endl;
+    warningStream << "Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Publish for Unknown Topic", warningStr);
 }
 
 void MQTTClient::deliveryCompleteCallback(void *context,

@@ -79,13 +79,15 @@ public slots:
     void handleSubscriptionSuccess(const QString &topicPath);
     void handleSubscriptionFailure(const QString &topicPath,
                                    const QString message);
+    void messageForUnknownTopic(const QString &topicPath);
 
 signals:
     void connectedSignal();
     void connectionLostSignal();
-    void subscriptionSuccessSignal(const QString &topicPath);
-    void subscriptionFailureSignal(const QString &topicPath,
+    void subscriptionSuccessSignal(const QString topicPath);
+    void subscriptionFailureSignal(const QString topicPath,
                                    const QString message);
+    void messageForUnknownTopicSignal(const QString topicPath);
 };
 
 #endif // MQTT_CLIENT_H
