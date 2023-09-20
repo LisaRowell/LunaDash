@@ -16,41 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOPIC_H
-#define TOPIC_H
+#ifndef JSON_FIELD_H
+#define JSON_FIELD_H
 
 #include "XMLSourcedEntity.h"
-#include "Variables.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
 #include <QObject>
-#include <QVector>
 #include <QString>
+#include <QJsonValue>
+#include <QJsonObject>
 
-class MQTTClient;
-
-class Topic : public QObject, public XMLSourcedEntity {
+class JSONField : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:
-    QString path_;
-    MQTTClient *mqttClient_;
+    QString label;
+    QJsonValue::Type type;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
-    void addJSONDecoder(XMLFileReader &xmlReader, Variables &variables);
+    void receivedValueForString(QJsonValue &value);
 
 public:
-    Topic(XMLFileReader &xmlReader, Variables &variables,
-          MQTTClient *mqttClient);
-    const QString &path() const;
-    MQTTClient *mqttClient() const;
-    void messageReceived(const QString &string);
+    JSONField(XMLFileReader &xmlReader, Variables &variables);
+    void objectReceived(QJsonObject &object);
 
 signals:
-    void messageReceivedSignal(QString message);
+    void stringFieldChangedSignal(QString value);
 };
 
-#endif // TOPIC_H
+#endif // JSON_FIELD_H

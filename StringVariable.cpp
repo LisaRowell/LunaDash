@@ -33,7 +33,7 @@ const QString &StringVariable::string() const {
     return value_;
 }
 
-void StringVariable::newValue(const QString value) {
+void StringVariable::newValue(const QString &value) {
     value_ = value;
     valueChanged();
 }

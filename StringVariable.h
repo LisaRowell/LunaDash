@@ -38,7 +38,7 @@ public:
     virtual const QString &string() const override;
 
 public slots:
-    void newValue(const QString value);
+    void newValue(const QString &value);
 };
 
 #endif // STRING_VARIABLE_H

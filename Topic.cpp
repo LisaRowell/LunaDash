@@ -22,6 +22,7 @@
 #include "Variables.h"
 #include "Variable.h"
 #include "StringVariable.h"
+#include "JSONDecoder.h"
 #include "XMLFileReader.h"
 
 #include <QVector>
@@ -42,6 +43,8 @@ Topic::Topic(XMLFileReader &xmlReader, Variables &variables,
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {
             addStringVariable(xmlReader, variables);
+        } else if (xmlReader.name().compare("JSON") == 0) {
+            addJSONDecoder(xmlReader, variables);
         } else {
             unsupportedChildElement("Topic", xmlReader);
             xmlReader.skipCurrentElement();
@@ -55,6 +58,12 @@ void Topic::addStringVariable(XMLFileReader &xmlReader,
     variables.addVariable(variable);
     connect(this, &Topic::messageReceivedSignal,
             variable, &StringVariable::newValue);
+}
+
+void Topic::addJSONDecoder(XMLFileReader &xmlReader, Variables &variables) {
+    JSONDecoder *jsonDecoder = new JSONDecoder(xmlReader, variables);
+    connect(this, &Topic::messageReceivedSignal,
+            jsonDecoder, &JSONDecoder::newEncoding);
 }
 
 const QString &Topic::path() const {

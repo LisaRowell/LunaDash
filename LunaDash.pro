@@ -13,6 +13,8 @@ SOURCES += \
     ClientStatusVariable.cpp \
     Dashboard.cpp \
     GridPos.cpp \
+    JSONDecoder.cpp \
+    JSONField.cpp \
     LabelWidget.cpp \
     MQTTClient.cpp \
     StringVariable.cpp \
@@ -31,6 +33,8 @@ HEADERS += \
     ClientStatusVariable.h \
     Dashboard.h \
     GridPos.h \
+    JSONDecoder.h \
+    JSONField.h \
     LabelWidget.h \
     MQTTClient.h \
     StringVariable.h \

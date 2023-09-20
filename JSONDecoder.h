@@ -16,41 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOPIC_H
-#define TOPIC_H
+#ifndef JSON_DECODER_H
+#define JSON_DECODER_H
 
 #include "XMLSourcedEntity.h"
-#include "Variables.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
+#include "JSONField.h"
 
 #include <QObject>
 #include <QVector>
 #include <QString>
 
-class MQTTClient;
-
-class Topic : public QObject, public XMLSourcedEntity {
+class JSONDecoder : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:
-    QString path_;
-    MQTTClient *mqttClient_;
+    QVector<JSONField *> fields;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
-    void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
-    void addJSONDecoder(XMLFileReader &xmlReader, Variables &variables);
+    void addField(XMLFileReader &xmlReader, Variables &variables);
 
 public:
-    Topic(XMLFileReader &xmlReader, Variables &variables,
-          MQTTClient *mqttClient);
-    const QString &path() const;
-    MQTTClient *mqttClient() const;
-    void messageReceived(const QString &string);
+    JSONDecoder(XMLFileReader &xmlReader, Variables &variables);
 
-signals:
-    void messageReceivedSignal(QString message);
+public slots:
+    void newEncoding(const QString &value);
 };
 
-#endif // TOPIC_H
+#endif // JSON_DECODER_H
