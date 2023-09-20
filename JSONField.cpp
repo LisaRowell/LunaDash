@@ -28,6 +28,8 @@
 #include <QXmlStreamAttributes>
 #include <QJsonValue>
 #include <QJsonObject>
+#include <QTextStream>
+#include <QMessageBox>
 
 const QVector<QString> JSONField::allowedAttrs = { "label" };
 const QVector<QString> JSONField::requiredAttrs = { "label" };
@@ -48,7 +50,8 @@ JSONField::JSONField(XMLFileReader &xmlReader, Variables &variables)
     }
 }
 
-void JSONField::addStringVariable(XMLFileReader &xmlReader, Variables &variables) {
+void JSONField::addStringVariable(XMLFileReader &xmlReader,
+                                  Variables &variables) {
     // Make sure we only are working with one variable for each field
     if (type == QJsonValue::Undefined) {
         StringVariable *variable = new StringVariable(xmlReader, variables);
@@ -57,7 +60,8 @@ void JSONField::addStringVariable(XMLFileReader &xmlReader, Variables &variables
                 variable, &StringVariable::newValue);
         type = QJsonValue::String;
     } else {
-        // insert warning message here
+        multipleVariableWarning(xmlReader);
+        xmlReader.skipCurrentElement();
     }
 }
 
@@ -112,4 +116,18 @@ void JSONField::receivedValueForString(QJsonValue &value) {
         emit stringFieldChangedSignal("");
         break;
     }
+}
+
+void JSONField::multipleVariableWarning(XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "JSON field '" << label
+                  << "' has multiple variables in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Ignored all but the first. "
+                  << "Consider using multiple fields with the same label.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Multiple JSON Field Variables", warningStr);
 }

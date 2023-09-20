@@ -40,6 +40,7 @@ private:
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
     void receivedValueForString(QJsonValue &value);
+    void multipleVariableWarning(XMLFileReader &xmlReader) const;
 
 public:
     JSONField(XMLFileReader &xmlReader, Variables &variables);
