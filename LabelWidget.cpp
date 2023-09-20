@@ -16,35 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Text.h"
+#include "LabelWidget.h"
 
-#include "ValuedWidget.h"
-#include "Variable.h"
-#include "Variables.h"
+#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
 
+#include <QXmlStreamAttributes>
+#include <QXmlStreamAttribute>
 #include <QVector>
 #include <QString>
 
-const QString Text::typeName("Text");
+const QVector<QString> LabelWidget::allowedAttrs = { "text" };
+const QVector<QString> LabelWidget::requiredAttrs = { "text" };
 
-Text::Text(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget(typeName, xmlReader, variables) {
-
-    if (variable != NULL) {
-        setText(variable->string());
-    } else {
-        setText("");
-    }
+LabelWidget::LabelWidget(XMLFileReader &xmlReader)
+    : Widget(allowedAttrs, requiredAttrs) {
+    // We should have just a single 'text' attribute.
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    checkAttrs(attributes, xmlReader);
+    setText(attributes.value("text").toString());
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {
-        handleChildElement(xmlReader, "Text");
-    }
-}
-
-void Text::setValue() {
-    if (variable != NULL) {
-        setText(variable->string());
+        handleChildElement(xmlReader, "Label");
     }
 }

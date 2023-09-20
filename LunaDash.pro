@@ -13,10 +13,10 @@ SOURCES += \
     ClientStatusVariable.cpp \
     Dashboard.cpp \
     GridPos.cpp \
-    Label.cpp \
+    LabelWidget.cpp \
     MQTTClient.cpp \
     StringVariable.cpp \
-    Text.cpp \
+    TextWidget.cpp \
     Topic.cpp \
     ValuedWidget.cpp \
     Variable.cpp \
@@ -31,10 +31,10 @@ HEADERS += \
     ClientStatusVariable.h \
     Dashboard.h \
     GridPos.h \
-    Label.h \
+    LabelWidget.h \
     MQTTClient.h \
     StringVariable.h \
-    Text.h \
+    TextWidget.h \
     Topic.h \
     ValuedWidget.h \
     Variable.h \

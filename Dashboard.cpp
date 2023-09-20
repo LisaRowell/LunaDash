@@ -20,8 +20,8 @@
 
 #include "XMLFileReader.h"
 #include "MQTTClient.h"
-#include "Label.h"
-#include "Text.h"
+#include "LabelWidget.h"
+#include "TextWidget.h"
 #include "Variables.h"
 #include "GridPos.h"
 
@@ -67,13 +67,13 @@ void Dashboard::initWindow() {
 }
 
 void Dashboard::addLabel(XMLFileReader &xmlReader) {
-    Label *label = new Label(xmlReader);
-    addWidgetToLayout(label, label->gridPos(), xmlReader);
+    LabelWidget *labelWidget = new LabelWidget(xmlReader);
+    addWidgetToLayout(labelWidget, labelWidget->gridPos(), xmlReader);
 }
 
 void Dashboard::addText(XMLFileReader &xmlReader) {
-    Text *text = new Text(xmlReader, variables);
-    addWidgetToLayout(text, text->gridPos(), xmlReader);
+    TextWidget *textWidget = new TextWidget(xmlReader, variables);
+    addWidgetToLayout(textWidget, textWidget->gridPos(), xmlReader);
 }
 
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,

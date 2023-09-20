@@ -16,24 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef TEXT_WIDGET_H
+#define TEXT_WIDGET_H
 
-#include "Widget.h"
-
+#include "ValuedWidget.h"
+#include "Variables.h"
 #include "XMLFileReader.h"
 
 #include <QLabel>
 #include <QString>
-#include <QVector>
 
-class Label : public QLabel, public Widget {
+class TextWidget : public QLabel, public ValuedWidget {
 private:
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
+    static const QString typeName;
+
+protected:
+    virtual void setValue() override;
 
 public:
-    Label(XMLFileReader &xmlReader);
+    TextWidget(XMLFileReader &xmlReader, const Variables &variables);
 };
 
-#endif // LABEL_H
+#endif // TEXT_WIDGET_H
