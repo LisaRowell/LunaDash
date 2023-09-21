@@ -65,6 +65,7 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
         }
     }
 
+    disconnected();
     startConnection();
 }
 

@@ -30,8 +30,7 @@ private:
     bool value_;
 
 public:
-    BoolVariable(XMLFileReader &xmlReader, Variables &variables,
-                 bool initialValue = false);
+    BoolVariable(XMLFileReader &xmlReader, Variables &variables);
     void set(bool value);
     virtual const QString string() const override;
     virtual double doubleValue(bool *valid) const override;

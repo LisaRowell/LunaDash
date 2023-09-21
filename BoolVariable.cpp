@@ -23,10 +23,8 @@
 
 #include <QString>
 
-BoolVariable::BoolVariable(XMLFileReader &xmlReader, Variables &variables,
-                           bool initialValue)
-    : Variable("BoolVariable", xmlReader, variables),
-      value_(initialValue) {
+BoolVariable::BoolVariable(XMLFileReader &xmlReader, Variables &variables)
+    : Variable("BoolVariable", xmlReader, variables) {
 }
 
 void BoolVariable::set(bool value) {
