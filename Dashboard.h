@@ -40,6 +40,7 @@ private:
     QGridLayout *layout;
 
     void initWindow();
+    void createShortcuts();
     void addLabelWidget(XMLFileReader &xmlReader);
     void addTextWidget(XMLFileReader &xmlReader);
     void addNumberWidget(XMLFileReader &xmlReader);
@@ -55,6 +56,9 @@ private:
 public:
     Dashboard(XMLFileReader &xmlReader, QWidget *parent = nullptr);
     ~Dashboard();
+
+public slots:
+    void exit();
 };
 
 #endif // DASHBOARD_H

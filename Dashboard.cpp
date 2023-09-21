@@ -33,6 +33,9 @@
 #include <QString>
 #include <QTextStream>
 #include <QStringView>
+#include <QShortcut>
+#include <QKeySequence>
+#include <QApplication>
 
 const QVector<QString> Dashboard::allowedAttrs = { };
 const QVector<QString> Dashboard::requiredAttrs = { };
@@ -40,6 +43,7 @@ const QVector<QString> Dashboard::requiredAttrs = { };
 Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
     : QMainWindow(parent), XMLSourcedEntity(allowedAttrs, requiredAttrs) {
     initWindow();
+    createShortcuts();
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();
@@ -70,6 +74,16 @@ void Dashboard::initWindow() {
     setCentralWidget(mainWidget);
 
     layout = new QGridLayout(mainWidget);
+}
+
+void Dashboard::createShortcuts() {
+    QShortcut *exitShortcut
+        = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q), this);
+    connect(exitShortcut, &QShortcut::activated, this, &Dashboard::exit);
+}
+
+void Dashboard::exit() {
+    QApplication::quit();
 }
 
 void Dashboard::addLabelWidget(XMLFileReader &xmlReader) {
