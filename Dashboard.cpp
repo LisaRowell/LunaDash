@@ -23,6 +23,7 @@
 #include "LabelWidget.h"
 #include "TextWidget.h"
 #include "NumberWidget.h"
+#include "BoolWidget.h"
 #include "Variables.h"
 #include "GridPos.h"
 
@@ -50,6 +51,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             addTextWidget(xmlReader);
         } else if (elementName.compare("Number") == 0) {
             addNumberWidget(xmlReader);
+        } else if (elementName.compare("Bool") == 0) {
+            addBoolWidget(xmlReader);
         } else {
             unsupportedChildElement("Dashboard", xmlReader);
             xmlReader.skipCurrentElement();
@@ -84,6 +87,11 @@ void Dashboard::addNumberWidget(XMLFileReader &xmlReader) {
     NumberWidget *numberWidget = new NumberWidget(xmlReader, variables);
     addWidgetToLayout(numberWidget, numberWidget->gridPos(), "Number",
                       xmlReader);
+}
+
+void Dashboard::addBoolWidget(XMLFileReader &xmlReader) {
+    BoolWidget *boolWidget = new BoolWidget(xmlReader, variables);
+    addWidgetToLayout(boolWidget, boolWidget->gridPos(), "Bool", xmlReader);
 }
 
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,

@@ -52,6 +52,7 @@ public:
     bool hasValue() const;
     virtual const QString string() const = 0;
     virtual double doubleValue(bool *valid) const = 0;
+    virtual bool boolValue(bool *valid) const = 0;
 
 signals:
     void valueChangedSignal();

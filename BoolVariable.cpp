@@ -54,3 +54,37 @@ double BoolVariable::doubleValue(bool *valid) const  {
         return 0;
     }
 }
+
+bool BoolVariable::boolValue(bool *valid) const  {
+    if (hasValue_) {
+        *valid = true;
+        return value_;
+    } else {
+        *valid = false;
+        return false;
+    }
+}
+
+void BoolVariable::newStringValue(const QString &value) {
+    if (value == "true") {
+        value_ = true;
+        hasValue_ = true;
+    } else if (value == "false") {
+        value_ = false;
+        hasValue_ = true;
+    } else {
+        hasValue_ = false;
+    }
+    valueChanged();
+}
+
+void BoolVariable::newBoolValue(bool value) {
+    value_ = value != 0;
+    hasValue_ = true;
+    valueChanged();
+}
+
+void BoolVariable::resetValue() {
+    hasValue_ = false;
+    valueChanged();
+}

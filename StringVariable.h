@@ -37,6 +37,7 @@ public:
                    const QString &initialValue = "");
     virtual const QString string() const override;
     virtual double doubleValue(bool *valid) const override;
+    virtual bool boolValue(bool *valid) const override;
 
 public slots:
     void newValue(const QString &value);

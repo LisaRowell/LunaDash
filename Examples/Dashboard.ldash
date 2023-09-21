@@ -17,19 +17,26 @@
             <String name="testDoubleAsString"/>
             <Double name="testDoubleAsDouble"/>
         </Topic>
+        <Topic path="testBool">
+            <Bool name="testBool"/>
+        </Topic>
+        <Topic path="testJSONBool">
+            <JSON>
+                <Field label="value">
+                    <Bool name="testJSONBool"/>
+                </Field>
+            </JSON>
+        </Topic>
         <Topic path="$SYS/broker/messages/sent">
             <String name="localHostSentMsgs"/>
         </Topic>
     </MQTTBroker>
-    <Label text="Top Left">
+    <Label text="Connected:">
         <GridPos row="0" col="0"/>
     </Label>
-    <Label text="Bottom Right">
-        <GridPos row="2" col="2"/>
-    </Label>
-    <Text variable="localhostState">
-        <GridPos row="1" col="1"/>
-    </Text>
+    <Bool variable="localhostState">
+        <GridPos row="0" col="1"/>
+    </Bool>
     <Text variable="houseBatteryVoltageJSON">
         <GridPos row="3" col="0"/>
     </Text>
@@ -50,5 +57,20 @@
     </Number>
     <Text variable="localHostSentMsgs">
         <GridPos row="5" col="1"/>
+    </Text>
+    <Label text="testBool:">
+        <GridPos row="6" col="0"/>
+    </Label>
+    <Bool variable="testBool">
+        <GridPos row="6" col="1"/>
+    </Bool>
+    <Label text="testJSONBool:">
+        <GridPos row="7" col="0"/>
+    </Label>
+    <Bool variable="testJSONBool">
+        <GridPos row="7" col="1"/>
+    </Bool>
+    <Text variable="testJSONBool">
+        <GridPos row="7" col="2"/>
     </Text>
 </Dashboard>

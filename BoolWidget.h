@@ -16,33 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOOL_VARIABLE_H
-#define BOOL_VARIABLE_H
+#ifndef BOOL_WIDGET_H
+#define BOOL_WIDGET_H
 
-#include "Variable.h"
-#include "Variables.h"
+#include "ValuedWidget.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
-#include <QString>
-#include <QObject>
+#include <QLabel>
 
-class BoolVariable : public Variable {
-    Q_OBJECT
-
-private:
-    bool value_;
+class BoolWidget : public QLabel, public ValuedWidget {
+protected:
+    virtual void setValue() override;
 
 public:
-    BoolVariable(XMLFileReader &xmlReader, Variables &variables);
-    void set(bool value);
-    virtual const QString string() const override;
-    virtual double doubleValue(bool *valid) const override;
-    virtual bool boolValue(bool *valid) const override;
-
-public slots:
-    void newStringValue(const QString &value);
-    void newBoolValue(bool value);
-    void resetValue();
+    BoolWidget(XMLFileReader &xmlReader, const Variables &variables);
 };
 
-#endif // BOOL_VARIABLE_H
+#endif // BOOL_WIDGET_H

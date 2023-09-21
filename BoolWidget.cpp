@@ -16,33 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOOL_VARIABLE_H
-#define BOOL_VARIABLE_H
+#include "BoolWidget.h"
 
-#include "Variable.h"
-#include "Variables.h"
 #include "XMLFileReader.h"
+#include "Variables.h"
 
-#include <QString>
-#include <QObject>
+BoolWidget::BoolWidget(XMLFileReader &xmlReader, const Variables &variables)
+    : ValuedWidget("Bool", xmlReader, variables) {
+    setValue();
 
-class BoolVariable : public Variable {
-    Q_OBJECT
+    // Loop through the child elements, any that are there are for Widget
+    while (xmlReader.readNextStartElement()) {
+        handleChildElement(xmlReader, "Bool");
+    }
+}
 
-private:
-    bool value_;
-
-public:
-    BoolVariable(XMLFileReader &xmlReader, Variables &variables);
-    void set(bool value);
-    virtual const QString string() const override;
-    virtual double doubleValue(bool *valid) const override;
-    virtual bool boolValue(bool *valid) const override;
-
-public slots:
-    void newStringValue(const QString &value);
-    void newBoolValue(bool value);
-    void resetValue();
-};
-
-#endif // BOOL_VARIABLE_H
+void BoolWidget::setValue() {
+    if (variable != NULL && variable->hasValue()) {
+        bool valid;
+        bool value = variable->boolValue(&valid);
+        if (valid) {
+            if (value) {
+                setText("true");
+            } else {
+                setText("false");
+            }
+        } else {
+            setText("");
+        }
+    } else {
+        setText("");
+    }
+}

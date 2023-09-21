@@ -40,8 +40,10 @@ private:
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
     void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
+    void addBoolVariable(XMLFileReader &xmlReader, Variables &variables);
     void receivedValueForString(QJsonValue &value);
     void receivedValueForDouble(QJsonValue &value);
+    void receivedValueForBool(QJsonValue &value);
     void multipleVariableWarning(XMLFileReader &xmlReader) const;
 
 public:
@@ -51,6 +53,7 @@ public:
 signals:
     void stringFieldChangedSignal(QString value);
     void doubleFieldChangedSignal(double value);
+    void boolFieldChangedSignal(bool value);
     void resetFieldSignal();
 };
 

@@ -45,12 +45,22 @@ double DoubleVariable::doubleValue(bool *valid) const  {
     }
 }
 
+bool DoubleVariable::boolValue(bool *valid) const  {
+    if (hasValue_) {
+        *valid = true;
+        return value_ != 0;
+    } else {
+        *valid = false;
+        return false;
+    }
+}
+
 void DoubleVariable::newStringValue(const QString &value) {
     value_ = value.toDouble(&hasValue_);
     valueChanged();
 }
 
-void DoubleVariable::newDoubleValue(const double value) {
+void DoubleVariable::newDoubleValue(double value) {
     hasValue_ = true;
     value_ = value;
     valueChanged();
@@ -58,4 +68,5 @@ void DoubleVariable::newDoubleValue(const double value) {
 
 void DoubleVariable::resetValue() {
     hasValue_ = false;
+    valueChanged();
 }

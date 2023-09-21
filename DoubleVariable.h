@@ -36,10 +36,11 @@ public:
     DoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     virtual const QString string() const override;
     virtual double doubleValue(bool *valid) const override;
+    virtual bool boolValue(bool *valid) const override;
 
 public slots:
     void newStringValue(const QString &value);
-    void newDoubleValue(const double value);
+    void newDoubleValue(double value);
     void resetValue();
 };
 

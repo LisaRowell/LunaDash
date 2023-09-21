@@ -43,6 +43,7 @@ private:
     void addLabelWidget(XMLFileReader &xmlReader);
     void addTextWidget(XMLFileReader &xmlReader);
     void addNumberWidget(XMLFileReader &xmlReader);
+    void addBoolWidget(XMLFileReader &xmlReader);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                            const QString &typeName, XMLFileReader &xmlReader);
     void missingGridPosWarning(const QString &widgetType,

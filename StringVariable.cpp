@@ -43,6 +43,24 @@ double StringVariable::doubleValue(bool *valid) const  {
     }
 }
 
+bool StringVariable::boolValue(bool *valid) const  {
+    if (hasValue_) {
+        if (value_ == "true") {
+            *valid = true;
+            return true;
+        } else if (value_ == "false") {
+            *valid = false;
+            return true;
+        } else {
+            *valid = false;
+            return false;
+        }
+    } else {
+        *valid = false;
+        return false;
+    }
+}
+
 void StringVariable::newValue(const QString &value) {
     hasValue_ = true;
     value_ = value;

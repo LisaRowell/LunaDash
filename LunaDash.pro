@@ -10,6 +10,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
     BoolVariable.cpp \
+    BoolWidget.cpp \
     ClientStatusVariable.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     BoolVariable.h \
+    BoolWidget.h \
     ClientStatusVariable.h \
     Dashboard.h \
     DoubleVariable.h \
