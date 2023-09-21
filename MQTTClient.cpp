@@ -33,8 +33,10 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QObject>
+#include <QXmlStreamAttributes>
+#include <QStringView>
 
-const QVector<QString> MQTTClient::allowedAttrs = { "server" };
+const QVector<QString> MQTTClient::allowedAttrs = { "server", "port" };
 const QVector<QString> MQTTClient::requiredAttrs = { "server" };
 
 MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
@@ -49,9 +51,7 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
     connect(this, &MQTTClient::messageForUnknownTopicSignal,
             this, &MQTTClient::messageForUnknownTopic);
 
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
-    serverName = attributes.value("server").toString();
+    parseAttributes(xmlReader);
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
@@ -69,8 +69,27 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
     startConnection();
 }
 
+void MQTTClient::parseAttributes(XMLFileReader &xmlReader) {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    checkAttrs(attributes, xmlReader);
+
+    serverName = attributes.value("server").toString();
+
+    QStringView portAttribute = attributes.value("port");
+    if (portAttribute.isEmpty()) {
+        port = 1883;
+    } else {
+        bool portValid;
+        port = portAttribute.toUShort(&portValid);
+        if (!portValid) {
+            invalidPortError(xmlReader, portAttribute.toString());
+        }
+    }
+}
+
 void MQTTClient::startConnection() {
-    const QString serverURI = "tcp://" + serverName + ":1883";
+    const QString serverURI = "tcp://" + serverName + ":"
+                              + QString::number(port);
     const QByteArray localServerURI = serverURI.toLocal8Bit();
 
     int error;
@@ -352,5 +371,19 @@ void MQTTClient::mqttError(const QString description, int error) const {
 
     QMessageBox messageBox;
     messageBox.critical(NULL, "MQTT Error", errorStr);
+    exit(EXIT_FAILURE);
+}
+
+void MQTTClient::invalidPortError(const XMLFileReader &xmlReader,
+                                  const QString &portString) const {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+
+    errorStream << "Bad MQTT port number ('" << portString
+                << "') for server '" << serverName << "' for in file "
+                << xmlReader.fileReference() << ".";
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "MQTT Port Error", errorStr);
     exit(EXIT_FAILURE);
 }

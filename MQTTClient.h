@@ -37,6 +37,7 @@ class MQTTClient : public QObject, public XMLSourcedEntity {
 
 private:
     QString serverName;
+    unsigned port;
     MQTTAsync handle;
     QVector<ClientStatusVariable *> statusVariables;
     QMap<QString, Topic *> topics;
@@ -44,6 +45,7 @@ private:
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
+    void parseAttributes(XMLFileReader &xmlReader);
     void startConnection();
     void connectedCallbackInvoked();
     void connectionLostCallbackInvoked();
@@ -57,6 +59,8 @@ private:
     void subscribeFailureCallbackInvoked(const QString &topicPath,
                                          const QString &message);
     void mqttError(const QString description, int error) const;
+    void invalidPortError(const XMLFileReader &xmlReader,
+                          const QString &portString) const;
 
     static void connectedCallback(void *context, char *cause);
     static void connectionLostCallback(void *context, char *cause);
