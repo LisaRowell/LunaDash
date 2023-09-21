@@ -3,32 +3,18 @@
     <MQTTBroker server="localhost">
         <StatusVariable name="localhostState"/>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
-            <String name="houseBatteryVoltageJSON"/>
             <JSON>
                 <Field label="value">
-                    <String name="houseBatteryVoltage"/>
-                </Field>
-                <Field label="value">
-                    <Double name="houseBatteryVoltage2"/>
+                    <Double name="houseBatteryVoltage"/>
                 </Field>
             </JSON>
         </Topic>
-        <Topic path="testDouble">
-            <String name="testDoubleAsString"/>
-            <Double name="testDoubleAsDouble"/>
-        </Topic>
-        <Topic path="testBool">
-            <Bool name="testBool"/>
-        </Topic>
-        <Topic path="testJSONBool">
+        <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Power">
             <JSON>
                 <Field label="value">
-                    <Bool name="testJSONBool"/>
+                    <Double name="houseBatteryPower"/>
                 </Field>
             </JSON>
-        </Topic>
-        <Topic path="$SYS/broker/messages/sent">
-            <String name="localHostSentMsgs"/>
         </Topic>
     </MQTTBroker>
     <Label text="Connected:">
@@ -37,40 +23,16 @@
     <Bool variable="localhostState">
         <GridPos row="0" col="1"/>
     </Bool>
-    <Text variable="houseBatteryVoltageJSON">
-        <GridPos row="3" col="0"/>
-    </Text>
-    <Text variable="houseBatteryVoltage">
-        <GridPos row="3" col="1"/>
-    </Text>
-    <Text variable="houseBatteryVoltage2">
-        <GridPos row="3" col="2"/>
-    </Text>
-    <Text variable="testDoubleAsString">
-        <GridPos row="4" col="0"/>
-    </Text>
-    <Text variable="testDoubleAsDouble">
-        <GridPos row="4" col="1"/>
-    </Text>
-    <Number variable="testDoubleAsDouble">
-        <GridPos row="4" col="2"/>
+    <Label text="House Battery Voltage:">
+        <GridPos row="1" col="0"/>
+    </Label>
+    <Number variable="houseBatteryVoltage">
+        <GridPos row="1" col="1"/>
     </Number>
-    <Text variable="localHostSentMsgs">
-        <GridPos row="5" col="1"/>
-    </Text>
-    <Label text="testBool:">
-        <GridPos row="6" col="0"/>
+    <Label text="House Battery Power:">
+        <GridPos row="2" col="0"/>
     </Label>
-    <Bool variable="testBool">
-        <GridPos row="6" col="1"/>
-    </Bool>
-    <Label text="testJSONBool:">
-        <GridPos row="7" col="0"/>
-    </Label>
-    <Bool variable="testJSONBool">
-        <GridPos row="7" col="1"/>
-    </Bool>
-    <Text variable="testJSONBool">
-        <GridPos row="7" col="2"/>
-    </Text>
+    <Number variable="houseBatteryPower">
+        <GridPos row="2" col="1"/>
+    </Number>
 </Dashboard>
