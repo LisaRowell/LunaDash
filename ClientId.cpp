@@ -51,11 +51,10 @@ void ClientId::set(XMLFileReader &xmlReader, QString &serverName) {
         base = stringAttribute("id", xmlReader);
         randomize = boolAttribute("randomize", xmlReader, false);
         prefixWithHostName = boolAttribute("hostPrefix", xmlReader, false);
+        buildId();
 
         ignoreChildElements(xmlReader, "ClientId");
     }
-
-    buildId();
 }
 
 void ClientId::buildId() {
