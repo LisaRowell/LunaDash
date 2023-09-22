@@ -36,12 +36,19 @@ private:
     [[noreturn]] void
     missingRequiredAttrError(const QString &attributeName,
                              const XMLFileReader &xmlReader) const;
+    void badBoolAttrWarning(const QString &name, const QStringView &attribute,
+                            const XMLFileReader &xmlReader) const;
 
 protected:
     void checkAttrs(const QXmlStreamAttributes &attributes,
                     const XMLFileReader &xmlReader);
     void ignoreChildElements(XMLFileReader &xmlReader,
                              const QString &parentName);
+    QString stringAttribute(const QString &name,
+                            const XMLFileReader &xmlReader,
+                            QString defaultValue = "") const;
+    bool boolAttribute(const QString &name, const XMLFileReader &xmlReader,
+                       bool defaultValue = false) const;
     void unsupportedChildElement(const QString &parentName,
                                  const XMLFileReader &xmlReader) const;
 

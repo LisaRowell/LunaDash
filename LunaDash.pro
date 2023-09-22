@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,6 +11,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     BoolVariable.cpp \
     BoolWidget.cpp \
+    ClientId.cpp \
     ClientStatusVariable.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
     BoolVariable.h \
     BoolWidget.h \
+    ClientId.h \
     ClientStatusVariable.h \
     Dashboard.h \
     DoubleVariable.h \

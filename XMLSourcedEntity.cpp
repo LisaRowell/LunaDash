@@ -25,6 +25,7 @@
 #include <QXmlStreamAttribute>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QStringView>
 
 XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
                                    const QVector<QString> &requiredAttrs)
@@ -56,6 +57,37 @@ void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
     while (xmlReader.readNextStartElement()) {
         unsupportedChildElement(parentName, xmlReader);
         xmlReader.skipCurrentElement();
+    }
+}
+
+QString XMLSourcedEntity::stringAttribute(const QString &name,
+                                          const XMLFileReader &xmlReader,
+                                          const QString defaultValue) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        return attribute.toString();
+    } else {
+        return defaultValue;
+    }
+}
+
+bool XMLSourcedEntity::boolAttribute(const QString &name,
+                                     const XMLFileReader &xmlReader,
+                                     bool defaultValue) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        if (attribute.compare("true") == 0) {
+            return true;
+        } else if (attribute.compare("false") == 0) {
+            return false;
+        } else {
+            badBoolAttrWarning(name, attribute, xmlReader);
+            return defaultValue;
+        }
+    } else {
+        return defaultValue;
     }
 }
 
@@ -100,4 +132,20 @@ XMLSourcedEntity::missingRequiredAttrError(const QString &attributeName,
     QMessageBox messageBox;
     messageBox.critical(NULL, "Missing Attribute", errorStr);
     exit(EXIT_FAILURE);
+}
+
+void
+XMLSourcedEntity::badBoolAttrWarning(const QString &name,
+                                     const QStringView &attribute,
+                                     const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Bad " << xmlReader.name() << " " << name
+                  << " attribute '" << attribute << "' in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Allowed values are 'true' and 'false'. Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Bool Attribute Warning", warningStr);
 }

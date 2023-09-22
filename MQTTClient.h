@@ -24,6 +24,7 @@
 #include "ClientStatusVariable.h"
 #include "Topic.h"
 #include "XMLFileReader.h"
+#include "ClientId.h"
 
 #include <MQTTAsync.h>
 
@@ -38,6 +39,7 @@ class MQTTClient : public QObject, public XMLSourcedEntity {
 private:
     QString serverName;
     unsigned port;
+    ClientId clientId;
     MQTTAsync handle;
     QVector<ClientStatusVariable *> statusVariables;
     QMap<QString, Topic *> topics;
@@ -59,8 +61,8 @@ private:
     void subscribeFailureCallbackInvoked(const QString &topicPath,
                                          const QString &message);
     void mqttError(const QString description, int error) const;
-    void invalidPortError(const XMLFileReader &xmlReader,
-                          const QString &portString) const;
+    [[noreturn]] void invalidPortError(const XMLFileReader &xmlReader,
+                                       const QString &portString) const;
 
     static void connectedCallback(void *context, char *cause);
     static void connectionLostCallback(void *context, char *cause);

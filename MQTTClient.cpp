@@ -55,9 +55,12 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
-        if (xmlReader.name().compare("StatusVariable") == 0) {
+        QStringView elementName = xmlReader.name();
+        if (elementName.compare("ClientId") == 0) {
+            clientId.set(xmlReader, serverName);
+        } else if (elementName.compare("StatusVariable") == 0) {
             addStatusVariable(xmlReader, variables);
-        } else if (xmlReader.name().compare("Topic") == 0) {
+        } else if (elementName.compare("Topic") == 0) {
             addTopic(xmlReader, variables);
         } else {
             unsupportedChildElement("MQTTBroker", xmlReader);
@@ -93,8 +96,9 @@ void MQTTClient::startConnection() {
     const QByteArray localServerURI = serverURI.toLocal8Bit();
 
     int error;
-    error = MQTTAsync_create(&handle, localServerURI.data(), "LunaDash",
-                             MQTTCLIENT_PERSISTENCE_NONE, NULL);
+    error = MQTTAsync_create(&handle, localServerURI.data(),
+                             clientId.cString(), MQTTCLIENT_PERSISTENCE_NONE,
+                             NULL);
     if (error != MQTTASYNC_SUCCESS) {
         mqttError("MQTT client create", error);
     }
@@ -374,8 +378,9 @@ void MQTTClient::mqttError(const QString description, int error) const {
     exit(EXIT_FAILURE);
 }
 
-void MQTTClient::invalidPortError(const XMLFileReader &xmlReader,
-                                  const QString &portString) const {
+[[noreturn]] void
+MQTTClient::invalidPortError(const XMLFileReader &xmlReader,
+                             const QString &portString) const {
     QString errorStr;
     QTextStream errorStream(&errorStr);
 

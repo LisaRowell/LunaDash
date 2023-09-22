@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Dashboard>
     <MQTTBroker server="localhost">
+        <ClientId hostPrefix="true" id="Dash" randomize="true"/>
         <StatusVariable name="localhostState"/>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <JSON>
