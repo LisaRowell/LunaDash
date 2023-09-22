@@ -21,8 +21,6 @@
 #include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
 
-#include <QXmlStreamAttributes>
-#include <QXmlStreamAttribute>
 #include <QVector>
 #include <QString>
 
@@ -32,9 +30,9 @@ const QVector<QString> LabelWidget::requiredAttrs = { "text" };
 LabelWidget::LabelWidget(XMLFileReader &xmlReader)
     : Widget(allowedAttrs, requiredAttrs) {
     // We should have just a single 'text' attribute.
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
-    setText(attributes.value("text").toString());
+    checkAttrs(xmlReader);
+    const QString label = stringAttribute("text", xmlReader);
+    setText(label);
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {

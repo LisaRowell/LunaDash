@@ -23,7 +23,6 @@
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamAttributes>
 #include <QStringView>
 #include <QTextStream>
 #include <QMessageBox>
@@ -46,8 +45,7 @@ void ClientId::set(XMLFileReader &xmlReader, QString &serverName) {
         multipleIdWarning(xmlReader, serverName);
         xmlReader.skipCurrentElement();
     } else {
-        const QXmlStreamAttributes &attributes = xmlReader.attributes();
-        checkAttrs(attributes, xmlReader);
+        checkAttrs(xmlReader);
 
         set_ = true;
         base = stringAttribute("id", xmlReader);

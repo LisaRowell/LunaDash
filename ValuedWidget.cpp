@@ -26,7 +26,6 @@
 #include <QVector>
 #include <QString>
 #include <QObject>
-#include <QXmlStreamAttributes>
 #include <QTextStream>
 #include <QMessageBox>
 
@@ -37,11 +36,10 @@ ValuedWidget::ValuedWidget(const QString &widgetType,
                            XMLFileReader &xmlReader,
                            const Variables &variables)
     : Widget(allowedAttrs, requiredAttrs) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
+    checkAttrs(xmlReader);
 
-    if (attributes.hasAttribute("variable")) {
-        const QString &variableName = attributes.value("variable").toString();
+    const QString variableName = stringAttribute("variable", xmlReader);
+    if (!variableName.isEmpty()) {
         variable = variables.find(variableName);
         if (variable != NULL) {
             connect(variable, &Variable::valueChangedSignal,

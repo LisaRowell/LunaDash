@@ -36,17 +36,28 @@ private:
     [[noreturn]] void
     missingRequiredAttrError(const QString &attributeName,
                              const XMLFileReader &xmlReader) const;
+    void badUnsignedAttrWarning(const QString &name,
+                                const QStringView &attribute,
+                                const XMLFileReader &xmlReader) const;
+    void badUShortAttrWarning(const QString &name,
+                              const QStringView &attribute,
+                              const XMLFileReader &xmlReader) const;
     void badBoolAttrWarning(const QString &name, const QStringView &attribute,
                             const XMLFileReader &xmlReader) const;
 
 protected:
-    void checkAttrs(const QXmlStreamAttributes &attributes,
-                    const XMLFileReader &xmlReader);
+    void checkAttrs(const XMLFileReader &xmlReader);
     void ignoreChildElements(XMLFileReader &xmlReader,
                              const QString &parentName);
     QString stringAttribute(const QString &name,
                             const XMLFileReader &xmlReader,
                             QString defaultValue = "") const;
+    unsigned unsignedAttribute(const QString &name,
+                               const XMLFileReader &xmlReader,
+                               unsigned defaultValue = 0) const;
+    unsigned short ushortAttribute(const QString &name,
+                                   const XMLFileReader &xmlReader,
+                                   unsigned short defaultValue) const;
     bool boolAttribute(const QString &name, const XMLFileReader &xmlReader,
                        bool defaultValue = false) const;
     void unsupportedChildElement(const QString &parentName,

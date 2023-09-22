@@ -32,8 +32,8 @@ XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
     : allowedAttrs(allowedAttrs), requiredAttrs(requiredAttrs) {
 }
 
-void XMLSourcedEntity::checkAttrs(const QXmlStreamAttributes &attributes,
-                                  const XMLFileReader &xmlReader) {
+void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader) {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
     QVector<QString> requiredNotFound(requiredAttrs);
 
     for (auto iterator = attributes.begin(); iterator != attributes.end();
@@ -51,7 +51,6 @@ void XMLSourcedEntity::checkAttrs(const QXmlStreamAttributes &attributes,
         missingRequiredAttrError(requiredNotFound.first(), xmlReader);
     }
 }
-
 void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
                                            const QString &parentName) {
     while (xmlReader.readNextStartElement()) {
@@ -67,6 +66,45 @@ QString XMLSourcedEntity::stringAttribute(const QString &name,
     QStringView attribute = attributes.value(name);
     if (!attribute.isEmpty()) {
         return attribute.toString();
+    } else {
+        return defaultValue;
+    }
+}
+
+unsigned XMLSourcedEntity::unsignedAttribute(const QString &name,
+                                             const XMLFileReader &xmlReader,
+                                             unsigned defaultValue) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        bool valid;
+        unsigned value = attribute.toUInt(&valid);
+        if (valid) {
+            return value;
+        } else {
+            badUnsignedAttrWarning(name, attribute, xmlReader);
+            return defaultValue;
+        }
+    } else {
+        return defaultValue;
+    }
+}
+
+unsigned short
+XMLSourcedEntity::ushortAttribute(const QString &name,
+                                  const XMLFileReader &xmlReader,
+                                  unsigned short defaultValue) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        bool valid;
+        unsigned short value = attribute.toUShort(&valid);
+        if (valid) {
+            return value;
+        } else {
+            badUShortAttrWarning(name, attribute, xmlReader);
+            return defaultValue;
+        }
     } else {
         return defaultValue;
     }
@@ -132,6 +170,38 @@ XMLSourcedEntity::missingRequiredAttrError(const QString &attributeName,
     QMessageBox messageBox;
     messageBox.critical(NULL, "Missing Attribute", errorStr);
     exit(EXIT_FAILURE);
+}
+
+void
+XMLSourcedEntity::badUnsignedAttrWarning(const QString &name,
+                                         const QStringView &attribute,
+                                         const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Bad " << xmlReader.name() << " " << name
+                  << " attribute '" << attribute << "' in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Allowed values are unsigned numbers. Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Unsigned Attribute Warning", warningStr);
+}
+
+void
+XMLSourcedEntity::badUShortAttrWarning(const QString &name,
+                                       const QStringView &attribute,
+                                       const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Bad " << xmlReader.name() << " " << name
+                  << " attribute '" << attribute << "' in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Allowed values are unsigned numbers from 0 to 65,535. Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Unsigned Attribute Warning", warningStr);
 }
 
 void

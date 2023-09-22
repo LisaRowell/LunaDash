@@ -27,7 +27,6 @@
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamAttributes>
 #include <QJsonValue>
 #include <QJsonObject>
 #include <QTextStream>
@@ -38,9 +37,8 @@ const QVector<QString> JSONField::requiredAttrs = { "label" };
 
 JSONField::JSONField(XMLFileReader &xmlReader, Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs), type(QJsonValue::Undefined) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
-    label = attributes.value("label").toString();
+    checkAttrs(xmlReader);
+    label = stringAttribute("label", xmlReader);
 
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {

@@ -23,7 +23,6 @@
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamAttributes>
 #include <QTextStream>
 #include <QMessageBox>
 
@@ -33,9 +32,8 @@ const QVector<QString> Variable::requiredAttrs = { "name" };
 Variable::Variable(const QString &typeName, XMLFileReader &xmlReader,
                    Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs), hasValue_(false) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
-    name_ = attributes.value("name").toString();
+    checkAttrs(xmlReader);
+    name_ = stringAttribute("name", xmlReader);
 
     // Make sure that the user hasn't defined multiple variables with the same
     // name as it's required to be a unique

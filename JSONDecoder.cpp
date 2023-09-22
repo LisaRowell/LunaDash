@@ -24,7 +24,6 @@
 
 #include <QVector>
 #include <QString>
-#include <QXmlStreamAttributes>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QByteArray>
@@ -36,8 +35,7 @@ const QVector<QString> JSONDecoder::requiredAttrs = { };
 
 JSONDecoder::JSONDecoder(XMLFileReader &xmlReader, Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
+    checkAttrs(xmlReader);
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {

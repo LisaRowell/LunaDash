@@ -37,9 +37,8 @@ const QVector<QString> Topic::requiredAttrs = { "path" };
 Topic::Topic(XMLFileReader &xmlReader, Variables &variables,
              MQTTClient *mqttClient)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs), mqttClient_(mqttClient) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    checkAttrs(attributes, xmlReader);
-    path_ = attributes.value("path").toString();
+    checkAttrs(xmlReader);
+    path_ = stringAttribute("path", xmlReader);
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {
