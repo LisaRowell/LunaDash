@@ -25,6 +25,7 @@
 #include "Topic.h"
 #include "XMLFileReader.h"
 #include "ClientId.h"
+#include "UserId.h"
 
 #include <MQTTAsync.h>
 
@@ -40,6 +41,7 @@ private:
     QString serverName;
     unsigned short port;
     ClientId clientId;
+    UserId userId;
     MQTTAsync handle;
     QVector<BoolVariable *> statusVariables;
     QMap<QString, Topic *> topics;

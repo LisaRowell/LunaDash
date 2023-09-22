@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CLIENT_ID_H
-#define CLIENT_ID_H
+#ifndef USER_ID_H
+#define USER_ID_H
 
 #include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
@@ -26,25 +26,25 @@
 #include <QString>
 #include <QByteArray>
 
-class ClientId : public XMLSourcedEntity {
+class UserId : public XMLSourcedEntity {
 private:
     bool set_;
-    QString base;
-    bool randomize;
-    bool prefixWithHostName;
-    QString idStr;
-    QByteArray idByteArray;
+    QString name;
+    QByteArray nameByteArray;
+    QString password;
+    QByteArray passwordByteArray;
 
-    void buildId();
-    void multipleIdWarning(XMLFileReader &xmlReader, QString &serverName);
+    void makeCStrings();
+    void multipleUserWarning(XMLFileReader &xmlReader, QString &serverName);
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
 public:
-    ClientId();
+    UserId();
     void set(XMLFileReader &xmlReader, QString &serverName);
-    const char *cString() const;
+    const char *nameCString() const;
+    const char *passwordCString() const;
 };
 
-#endif // CLIENT_ID_H
+#endif // USER_ID_H

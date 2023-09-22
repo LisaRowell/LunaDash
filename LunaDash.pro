@@ -23,6 +23,7 @@ SOURCES += \
     StringVariable.cpp \
     TextWidget.cpp \
     Topic.cpp \
+    UserId.cpp \
     ValuedWidget.cpp \
     Variable.cpp \
     Variables.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     StringVariable.h \
     TextWidget.h \
     Topic.h \
+    UserId.h \
     ValuedWidget.h \
     Variable.h \
     Variables.h \

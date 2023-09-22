@@ -59,6 +59,8 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
         QStringView elementName = xmlReader.name();
         if (elementName.compare("ClientId") == 0) {
             clientId.set(xmlReader, serverName);
+        } else if (elementName.compare("User") == 0) {
+            userId.set(xmlReader, serverName);
         } else if (elementName.compare("StatusVariable") == 0) {
             addStatusVariable(xmlReader, variables);
         } else if (elementName.compare("Topic") == 0) {
@@ -121,8 +123,8 @@ void MQTTClient::startConnection() {
     connectOptions.cleansession = true;
     connectOptions.maxInflight = 65535;
     connectOptions.will = NULL;
-    connectOptions.username = NULL;
-    connectOptions.password = NULL;
+    connectOptions.username = userId.nameCString();
+    connectOptions.password = userId.passwordCString();
     connectOptions.connectTimeout = 30;
     connectOptions.retryInterval = 0;
     connectOptions.ssl = NULL;
