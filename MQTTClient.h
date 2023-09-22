@@ -49,6 +49,7 @@ private:
 
     void parseAttributes(XMLFileReader &xmlReader);
     void startConnection();
+    void connectFailureCallbackInvoked(MQTTAsync_failureData *response);
     void connectedCallbackInvoked();
     void connectionLostCallbackInvoked();
     void messageArrivedCallbackInvoked(const QString &topicPath,
@@ -62,6 +63,8 @@ private:
                                          const QString &message);
     void mqttError(const QString description, int error) const;
 
+    static void connectFailureCallback(void *context,
+                                       MQTTAsync_failureData *response);
     static void connectedCallback(void *context, char *cause);
     static void connectionLostCallback(void *context, char *cause);
     static int messageArrivedCallback(void *context, char *topicName,
@@ -78,6 +81,7 @@ public:
     MQTTClient(XMLFileReader &xmlReader, Variables &variables);
 
 public slots:
+    void connectFailure(int code, QString reason);
     void connected();
     void disconnected();
     void handleSubscriptionSuccess(const QString &topicPath);
@@ -86,6 +90,7 @@ public slots:
     void messageForUnknownTopic(const QString &topicPath);
 
 signals:
+    void connectFailureSignal(int code, QString reason);
     void connectedSignal();
     void connectionLostSignal();
     void subscriptionSuccessSignal(const QString topicPath);

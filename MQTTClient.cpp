@@ -40,6 +40,8 @@ const QVector<QString> MQTTClient::requiredAttrs = { "server" };
 
 MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
     : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+    connect(this, &MQTTClient::connectFailureSignal,
+            this, &MQTTClient::connectFailure);
     connect(this, &MQTTClient::connectedSignal, this, &MQTTClient::connected);
     connect(this, &MQTTClient::connectionLostSignal,
             this, &MQTTClient::disconnected);
@@ -125,7 +127,7 @@ void MQTTClient::startConnection() {
     connectOptions.retryInterval = 0;
     connectOptions.ssl = NULL;
     connectOptions.onSuccess = NULL;
-    connectOptions.onFailure = NULL;
+    connectOptions.onFailure = connectFailureCallback;
     connectOptions.context = this;
     connectOptions.serverURIcount = 0;
     connectOptions.serverURIs = NULL;
@@ -147,6 +149,63 @@ void MQTTClient::startConnection() {
     }
 }
 
+// Called when an MQTT connect was a failure. Runs on library thread.
+void MQTTClient::connectFailureCallback(void *context,
+                                         MQTTAsync_failureData *response) {
+    MQTTClient *client = (MQTTClient *)context;
+    client->connectFailureCallbackInvoked(response);
+}
+
+void MQTTClient::connectFailureCallbackInvoked(MQTTAsync_failureData *response) {
+    QString responseStr = response->message;
+    emit connectFailureSignal(response->code, responseStr);
+}
+
+// The Paho MQTT library is inconsistent with the use of the code and
+// description, sometimes using the documented 1->5 code returns with less
+// than helpful message strings, and sometimes with -1 code and a helpful
+// message. There are other times, such as a no server error, where the code
+// is -1 and the description is NULL. Hopefully this will improve in future
+// versions.
+void MQTTClient::connectFailure(int code, QString reason) {
+    QString description;
+
+    switch (code) {
+    case 1:
+        description = "Connection refused: Unacceptable protocol version";
+        break;
+    case 2:
+        description = "Connection refused: Identifier rejected";
+        break;
+    case 3:
+        description = "Connection refused: Server unavailable";
+        break;
+    case 4:
+        description = "Connection refused: Bad user name or password";
+        break;
+    case 5:
+        description = "Connection refused: Not authorized";
+        break;
+
+    default:
+        if (reason.isEmpty()) {
+            description = "Unknown reason";
+        } else {
+            description = reason;
+        }
+    }
+
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "MQTT connect failed for broker '" << serverName << "': "
+                  << description << Qt::endl;
+    warningStream << "Connection will retry...";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "MQTT Connect Failure", warningStr);
+}
+
 void MQTTClient::connectedCallback(void *context, char *cause) {
     (void)cause;
 
@@ -159,7 +218,7 @@ void MQTTClient::connectedCallbackInvoked() {
 }
 
 void MQTTClient::connected() {
-    for (auto statusVariable : statusVariables) {
+    for (BoolVariable *statusVariable : statusVariables) {
         statusVariable->set(true);
     }
 
