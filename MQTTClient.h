@@ -21,7 +21,7 @@
 
 #include "XMLSourcedEntity.h"
 #include "Variables.h"
-#include "ClientStatusVariable.h"
+#include "BoolVariable.h"
 #include "Topic.h"
 #include "XMLFileReader.h"
 #include "ClientId.h"
@@ -41,7 +41,7 @@ private:
     unsigned short port;
     ClientId clientId;
     MQTTAsync handle;
-    QVector<ClientStatusVariable *> statusVariables;
+    QVector<BoolVariable *> statusVariables;
     QMap<QString, Topic *> topics;
 
     static const QVector<QString> allowedAttrs;

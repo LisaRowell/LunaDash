@@ -12,7 +12,6 @@ SOURCES += \
     BoolVariable.cpp \
     BoolWidget.cpp \
     ClientId.cpp \
-    ClientStatusVariable.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
     GridPos.cpp \
@@ -36,7 +35,6 @@ HEADERS += \
     BoolVariable.h \
     BoolWidget.h \
     ClientId.h \
-    ClientStatusVariable.h \
     Dashboard.h \
     DoubleVariable.h \
     GridPos.h \

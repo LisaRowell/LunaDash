@@ -19,7 +19,7 @@
 #include "MQTTClient.h"
 
 #include "XMLSourcedEntity.h"
-#include "ClientStatusVariable.h"
+#include "BoolVariable.h"
 #include "Variables.h"
 #include "Variable.h"
 #include "Topic.h"
@@ -178,7 +178,7 @@ void MQTTClient::connectionLostCallbackInvoked() {
 }
 
 void MQTTClient::disconnected() {
-    for (auto statusVariable : statusVariables) {
+    for (BoolVariable *statusVariable : statusVariables) {
         statusVariable->set(false);
     }
 }
@@ -240,8 +240,8 @@ void MQTTClient::deliveryCompleteCallback(void *context,
 
 void MQTTClient::addStatusVariable(XMLFileReader &xmlReader,
                                    Variables &variables) {
-    ClientStatusVariable *statusVariable =
-        new ClientStatusVariable(xmlReader, variables);
+    BoolVariable *statusVariable =
+        new BoolVariable(xmlReader, variables);
     variables.addVariable(statusVariable);
     statusVariables.append(statusVariable);
 }
