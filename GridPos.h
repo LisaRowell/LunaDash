@@ -27,8 +27,8 @@
 
 class GridPos : public XMLSourcedEntity {
 private:
-    unsigned _row;
-    unsigned _col;
+    unsigned row_;
+    unsigned col_;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
