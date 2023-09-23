@@ -28,7 +28,7 @@
 
 TextWidget::TextWidget(XMLFileReader &xmlReader, const Variables &variables)
     : ValuedWidget("Text", xmlReader, variables) {
-    setValue();
+    TextWidget::setValue();
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {
