@@ -36,7 +36,8 @@ private:
     QByteArray idByteArray;
 
     void buildId();
-    void multipleIdWarning(XMLFileReader &xmlReader, QString &serverName);
+    void multipleIdWarning(XMLFileReader &xmlReader,
+                           QString &serverName) const;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;

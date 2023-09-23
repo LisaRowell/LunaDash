@@ -84,7 +84,7 @@ const char *ClientId::cString() const {
 }
 
 void ClientId::multipleIdWarning(XMLFileReader &xmlReader,
-                                 QString &serverName) {
+                                 QString &serverName) const {
     QString warningStr;
     QTextStream warningStream(&warningStr);
 

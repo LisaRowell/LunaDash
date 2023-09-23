@@ -35,7 +35,8 @@ private:
     QByteArray passwordByteArray;
 
     void makeCStrings();
-    void multipleUserWarning(XMLFileReader &xmlReader, QString &serverName);
+    void multipleUserWarning(XMLFileReader &xmlReader,
+                             QString &serverName) const;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;

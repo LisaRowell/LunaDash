@@ -46,7 +46,7 @@ void UserId::set(XMLFileReader &xmlReader, QString &serverName) {
         password = stringAttribute("password", xmlReader);
         makeCStrings();
 
-        ignoreChildElements(xmlReader, "ClientId");
+        ignoreChildElements(xmlReader, "UserId");
     }
 }
 
@@ -72,7 +72,7 @@ const char *UserId::passwordCString() const {
 }
 
 void UserId::multipleUserWarning(XMLFileReader &xmlReader,
-                                 QString &serverName) {
+                                 QString &serverName) const {
     QString warningStr;
     QTextStream warningStream(&warningStr);
 
