@@ -91,6 +91,25 @@ unsigned XMLSourcedEntity::unsignedAttribute(const QString &name,
     }
 }
 
+unsigned XMLSourcedEntity::unsignedAttribute(const QString &name,
+                                             const XMLFileReader &xmlReader,
+                                             bool *valid) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        unsigned value = attribute.toUInt(valid);
+        if (valid) {
+            return value;
+        } else {
+            badUnsignedAttrWarning(name, attribute, xmlReader);
+            return 0;
+        }
+    } else {
+        *valid = false;
+        return 0;
+    }
+}
+
 unsigned short
 XMLSourcedEntity::ushortAttribute(const QString &name,
                                   const XMLFileReader &xmlReader,

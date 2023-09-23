@@ -57,6 +57,9 @@ protected:
     unsigned unsignedAttribute(const QString &name,
                                const XMLFileReader &xmlReader,
                                unsigned defaultValue = 0) const;
+    unsigned unsignedAttribute(const QString &name,
+                               const XMLFileReader &xmlReader,
+                               bool *valid) const;
     unsigned short ushortAttribute(const QString &name,
                                    const XMLFileReader &xmlReader,
                                    unsigned short defaultValue) const;

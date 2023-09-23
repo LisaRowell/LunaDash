@@ -28,6 +28,8 @@
 class NumberWidget : public QLabel, public ValuedWidget {
 private:
     QString suffix;
+    bool precisionSet;
+    unsigned precision;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
