@@ -21,9 +21,15 @@
 #include "XMLFileReader.h"
 #include "Variables.h"
 
+const QVector<QString> NumberWidget::allowedAttrs = { "variable", "suffix" };
+const QVector<QString> NumberWidget::requiredAttrs = { };
+
 NumberWidget::NumberWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Number", xmlReader, variables) {
-    setValue();
+    : ValuedWidget("Number", xmlReader, variables, allowedAttrs,
+                   requiredAttrs) {
+    NumberWidget::setValue();
+
+    suffix = stringAttribute("suffix", xmlReader);
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {
@@ -38,6 +44,10 @@ void NumberWidget::setValue() {
         if (valid) {
             // Expand to include things like precision
             QString stringValue = QString::number(value);
+            if (!suffix.isEmpty()) {
+                stringValue.append(' ');
+                stringValue.append(suffix);
+            }
             setText(stringValue);
         } else {
             setText("");

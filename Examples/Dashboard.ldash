@@ -31,13 +31,13 @@
     <Label text="House Battery Voltage:">
         <GridPos row="1" col="0"/>
     </Label>
-    <Number variable="houseBatteryVoltage">
+    <Number variable="houseBatteryVoltage" suffix="V">
         <GridPos row="1" col="1"/>
     </Number>
     <Label text="House Battery Power:">
         <GridPos row="2" col="0"/>
     </Label>
-    <Number variable="houseBatteryPower">
+    <Number variable="houseBatteryPower" suffix="W">
         <GridPos row="2" col="1"/>
     </Number>
 </Dashboard>

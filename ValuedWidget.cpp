@@ -29,12 +29,13 @@
 #include <QTextStream>
 #include <QMessageBox>
 
-const QVector<QString> ValuedWidget::allowedAttrs = { "variable" };
-const QVector<QString> ValuedWidget::requiredAttrs = { };
+const QVector<QString> ValuedWidget::baseAllowedAttrs = { "variable" };
+const QVector<QString> ValuedWidget::baseRequiredAttrs = { };
 
-ValuedWidget::ValuedWidget(const QString &widgetType,
-                           XMLFileReader &xmlReader,
-                           const Variables &variables)
+ValuedWidget::ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
+                           const Variables &variables,
+                           const QVector<QString> allowedAttrs,
+                           const QVector<QString> requiredAttrs)
     : Widget(allowedAttrs, requiredAttrs) {
     checkAttrs(xmlReader);
 

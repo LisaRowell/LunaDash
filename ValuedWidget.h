@@ -36,8 +36,8 @@ private:
                                 const QString &variableName,
                                 const XMLFileReader &xmlReader) const;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
+    static const QVector<QString> baseAllowedAttrs;
+    static const QVector<QString> baseRequiredAttrs;
 
 protected:
     Variable *variable;
@@ -46,7 +46,9 @@ protected:
 
 public:
     ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
-                 const Variables &variables);
+                 const Variables &variables,
+                 const QVector<QString> allowedAttrs = baseAllowedAttrs,
+                 const QVector<QString> requiredAttrs = baseRequiredAttrs);
 
 public slots:
     void valueChanged();

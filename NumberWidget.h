@@ -26,6 +26,12 @@
 #include <QLabel>
 
 class NumberWidget : public QLabel, public ValuedWidget {
+private:
+    QString suffix;
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
+
 protected:
     virtual void setValue() override;
 
