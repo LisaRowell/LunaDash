@@ -22,6 +22,7 @@ SOURCES += \
     NumberWidget.cpp \
     StringVariable.cpp \
     TextWidget.cpp \
+    TLSInfo.cpp \
     Topic.cpp \
     UserId.cpp \
     ValuedWidget.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     MQTTClient.h \
     NumberWidget.h \
     StringVariable.h \
+    TLSInfo.h \
     TextWidget.h \
     Topic.h \
     UserId.h \
@@ -60,4 +62,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx: LIBS += -lpaho-mqtt3a
+unix:!macx: LIBS += -lpaho-mqtt3as

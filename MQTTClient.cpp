@@ -24,6 +24,7 @@
 #include "Variable.h"
 #include "Topic.h"
 #include "XMLFileReader.h"
+#include "TLSInfo.h"
 
 #include <MQTTAsync.h>
 
@@ -61,6 +62,8 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
             clientId.set(xmlReader, serverName);
         } else if (elementName.compare("User") == 0) {
             userId.set(xmlReader, serverName);
+        } else if (elementName.compare("TLS") == 0) {
+            tlsInfo.set(xmlReader, serverName);
         } else if (elementName.compare("StatusVariable") == 0) {
             addStatusVariable(xmlReader, variables);
         } else if (elementName.compare("Topic") == 0) {
@@ -83,7 +86,9 @@ void MQTTClient::parseAttributes(XMLFileReader &xmlReader) {
 }
 
 void MQTTClient::startConnection() {
-    const QString serverURI = "tcp://" + serverName + ":"
+    const QString protocolPrefix
+        = tlsInfo.tlsConfigured() ? "ssl://" : "tcp://";
+    const QString serverURI = protocolPrefix + serverName + ":"
                               + QString::number(port);
     const QByteArray localServerURI = serverURI.toLocal8Bit();
 
@@ -108,6 +113,11 @@ void MQTTClient::startConnection() {
         mqttError("MQTT set connected callback", error);
     }
 
+    MQTTAsync_SSLOptions sslOptions = MQTTAsync_SSLOptions_initializer;
+    if (tlsInfo.tlsConfigured()) {
+        sslOptions.trustStore = tlsInfo.serverCertificateFileNameCStr();
+    }
+
     // Due to an incompatibility in the Paho library with C++, we can't use
     // the default initializer, zero the structure and set each currently
     // implement field. While the memset isn't theoretically needed, it's
@@ -127,7 +137,11 @@ void MQTTClient::startConnection() {
     connectOptions.password = userId.passwordCString();
     connectOptions.connectTimeout = 30;
     connectOptions.retryInterval = 0;
-    connectOptions.ssl = NULL;
+    if (tlsInfo.tlsConfigured()) {
+        connectOptions.ssl = &sslOptions;
+    } else {
+        connectOptions.ssl = NULL;
+    }
     connectOptions.onSuccess = NULL;
     connectOptions.onFailure = connectFailureCallback;
     connectOptions.context = this;

@@ -31,6 +31,8 @@ private:
     const QVector<QString> &allowedAttrs;
     const QVector<QString> &requiredAttrs;
 
+    void verifyLoneAttribute(const QString &attributeName,
+                             const XMLFileReader &xmlReader);
     void unsupportedAttrWarning(const QXmlStreamAttribute &attribute,
                                 const XMLFileReader &xmlReader) const;
     [[noreturn]] void
@@ -60,6 +62,8 @@ protected:
                                    unsigned short defaultValue) const;
     bool boolAttribute(const QString &name, const XMLFileReader &xmlReader,
                        bool defaultValue = false) const;
+    QString stringElement(const QString &attributeName,
+                          XMLFileReader &xmlReader);
     void unsupportedChildElement(const QString &parentName,
                                  const XMLFileReader &xmlReader) const;
 

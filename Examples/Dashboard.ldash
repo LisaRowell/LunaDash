@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Dashboard>
-    <MQTTBroker server="localhost" port ="8884">
+    <MQTTBroker server="mqtt23.victronenergy.com" port ="8883">
         <ClientId hostPrefix="true" id="Dash" randomize="true"/>
-        <User name="Lisa" password="FooBar"/>
-        <StatusVariable name="localhostState"/>
+        <User name="XXXXX" password="XXXXX"/>
+        <TLS>
+            <serverCertificate file="/home/lisa/Documents/Personal Projects/Qt/LunaDash/venus-ca.crt"/>
+        </TLS>
+        <StatusVariable name="connectionState"/>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <JSON>
                 <Field label="value">
@@ -22,7 +25,7 @@
     <Label text="Connected:">
         <GridPos row="0" col="0"/>
     </Label>
-    <Bool variable="localhostState">
+    <Bool variable="connectionState">
         <GridPos row="0" col="1"/>
     </Bool>
     <Label text="House Battery Voltage:">

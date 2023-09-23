@@ -26,6 +26,7 @@
 #include "XMLFileReader.h"
 #include "ClientId.h"
 #include "UserId.h"
+#include "TLSInfo.h"
 
 #include <MQTTAsync.h>
 
@@ -42,6 +43,7 @@ private:
     unsigned short port;
     ClientId clientId;
     UserId userId;
+    TLSInfo tlsInfo;
     MQTTAsync handle;
     QVector<BoolVariable *> statusVariables;
     QMap<QString, Topic *> topics;

@@ -51,6 +51,7 @@ void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader) {
         missingRequiredAttrError(requiredNotFound.first(), xmlReader);
     }
 }
+
 void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
                                            const QString &parentName) {
     while (xmlReader.readNextStartElement()) {
@@ -126,6 +127,38 @@ bool XMLSourcedEntity::boolAttribute(const QString &name,
         }
     } else {
         return defaultValue;
+    }
+}
+
+QString XMLSourcedEntity::stringElement(const QString &attributeName,
+                                        XMLFileReader &xmlReader) {
+    verifyLoneAttribute(attributeName, xmlReader);
+    QString value = stringAttribute(attributeName, xmlReader);
+
+    QString elementName = xmlReader.name().toString();
+    ignoreChildElements(xmlReader, elementName);
+
+    return value;
+}
+
+void XMLSourcedEntity::verifyLoneAttribute(const QString &attributeName,
+                                           const XMLFileReader &xmlReader) {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    bool attributeFound = false;
+
+    for (auto iterator = attributes.begin(); iterator != attributes.end();
+         ++iterator) {
+        const QXmlStreamAttribute &attribute = *iterator;
+
+        if (attribute.name().compare(attributeName) == 0) {
+            attributeFound = true;
+        } else {
+            unsupportedAttrWarning(attribute, xmlReader);
+        }
+    }
+
+    if (!attributeFound) {
+        missingRequiredAttrError(attributeName, xmlReader);
     }
 }
 
