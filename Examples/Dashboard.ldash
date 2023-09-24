@@ -24,14 +24,28 @@
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <JSON>
                 <Field label="value">
-                    <Double name="houseBatteryVoltage"/>
+                    <Double name="houseBatteryBankVoltage"/>
+                </Field>
+            </JSON>
+        </Topic>
+        <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Current">
+            <JSON>
+                <Field label="value">
+                    <Double name="houseBatteryBankCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Power">
             <JSON>
                 <Field label="value">
-                    <Double name="houseBatteryPower"/>
+                    <Double name="houseBatteryBankPower"/>
+                </Field>
+            </JSON>
+        </Topic>
+        <Topic path="N/c8df84ac7a73/dcsource/290/Dc/1/Voltage">
+            <JSON>
+                <Field label="value">
+                    <Double name="engineBatteryBankVoltage"/>
                 </Field>
             </JSON>
         </Topic>
@@ -51,16 +65,28 @@
     <Number variable="houseBatteryBankSoC" precision="1" suffix="%">
         <GridPos row="1" col="1"/>
     </Number>
-    <Label text="House Battery Voltage:">
+    <Label text="House Battery Bank Voltage:">
         <GridPos row="2" col="0"/>
     </Label>
-    <Number variable="houseBatteryVoltage" precision="1" suffix=" V">
+    <Number variable="houseBatteryBankVoltage" precision="1" suffix=" V">
         <GridPos row="2" col="1"/>
     </Number>
-    <Label text="House Battery Power:">
+    <Label text="House Battery Bank Current:">
         <GridPos row="3" col="0"/>
     </Label>
-    <Number variable="houseBatteryPower" precision="0" suffix=" W">
+    <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
         <GridPos row="3" col="1"/>
+    </Number>
+    <Label text="House Battery Bank Power:">
+        <GridPos row="4" col="0"/>
+    </Label>
+    <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
+        <GridPos row="4" col="1"/>
+    </Number>
+    <Label text="Engine Battery Bank Voltage:">
+        <GridPos row="5" col="0"/>
+    </Label>
+    <Number variable="engineBatteryBankVoltage" precision="1" suffix=" V">
+        <GridPos row="5" col="1"/>
     </Number>
 </Dashboard>
