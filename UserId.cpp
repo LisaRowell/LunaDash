@@ -30,7 +30,7 @@ const QVector<QString> UserId::allowedAttrs = { "name", "password" };
 const QVector<QString> UserId::requiredAttrs = { "name" };
 
 UserId::UserId()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), name(""), password("") {
+    : XMLSourcedEntity(allowedAttrs, requiredAttrs), set_(false) {
     makeCStrings();
 }
 
