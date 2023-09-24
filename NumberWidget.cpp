@@ -53,7 +53,6 @@ void NumberWidget::setValue() {
                 stringValue = QString::number(value);
             }
             if (!suffix.isEmpty()) {
-                stringValue.append(' ');
                 stringValue.append(suffix);
             }
             setText(stringValue);

@@ -14,6 +14,13 @@
             <serverCertificate file="/home/lisa/Documents/Personal Projects/Qt/LunaDash/venus-ca.crt"/>
         </TLS>
         <StatusVariable name="connectionState"/>
+        <Topic path="N/c8df84ac7a73/battery/289/Soc">
+            <JSON>
+                <Field label="value">
+                    <Double name="houseBatteryBankSoC"/>
+                </Field>
+            </JSON>
+        </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <JSON>
                 <Field label="value">
@@ -38,16 +45,22 @@
             <BackgroundColor>tomato</BackgroundColor>
         </OffStyle>
     </LabelIndicator>
-    <Label text="House Battery Voltage:">
+    <Label text="House Battery Bank SoC:">
         <GridPos row="1" col="0"/>
     </Label>
-    <Number variable="houseBatteryVoltage" precision="1" suffix="V">
+    <Number variable="houseBatteryBankSoC" precision="1" suffix="%">
         <GridPos row="1" col="1"/>
     </Number>
-    <Label text="House Battery Power:">
+    <Label text="House Battery Voltage:">
         <GridPos row="2" col="0"/>
     </Label>
-    <Number variable="houseBatteryPower" precision="0" suffix="W">
+    <Number variable="houseBatteryVoltage" precision="1" suffix=" V">
         <GridPos row="2" col="1"/>
+    </Number>
+    <Label text="House Battery Power:">
+        <GridPos row="3" col="0"/>
+    </Label>
+    <Number variable="houseBatteryPower" precision="0" suffix=" W">
+        <GridPos row="3" col="1"/>
     </Number>
 </Dashboard>
