@@ -16,32 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LABEL_INDICATOR_H
-#define LABEL_INDICATOR_H
+#ifndef WIDGET_STYLES_H
+#define WIDGET_STYLES_H
 
-#include "ValuedWidget.h"
-#include "XMLFileReader.h"
 #include "WidgetStyle.h"
-#include "WidgetStyles.h"
 
-#include <QLabel>
-#include <QVector>
+#include <QMap>
 #include <QString>
 
-class LabelIndicatorWidget : public QLabel, public ValuedWidget {
+class WidgetStyles {
 private:
-    WidgetStyle onStyle;
-    WidgetStyle offStyle;
-
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
-protected:
-    virtual void setValue() override;
+    QMap<QString, WidgetStyle *> styles;
 
 public:
-    LabelIndicatorWidget(XMLFileReader &xmlReader, const Variables &variables,
-                         WidgetStyles &widgetStyles);
+    WidgetStyles();
+    bool styleExists(const QString &name) const;
+    void addStyle(WidgetStyle *style);
+    WidgetStyle *find(const QString &name) const;
 };
 
-#endif // LABEL_INDICATOR_H
+#endif // WIDGET_STYLES_H

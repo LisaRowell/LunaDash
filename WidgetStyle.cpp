@@ -18,91 +18,289 @@
 
 #include "WidgetStyle.h"
 
+#include "WidgetStyles.h"
 #include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
 
 #include <QVector>
 #include <QString>
 #include <QTextStream>
+#include <QMessageBox>
 
-const QVector<QString> WidgetStyle::allowedAttrs = { };
+const QVector<QString> WidgetStyle::allowedAttrs = { "name", "base" };
 const QVector<QString> WidgetStyle::requiredAttrs = { };
 
 WidgetStyle::WidgetStyle()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+    : XMLSourcedEntity(allowedAttrs, requiredAttrs), base(nullptr) {
 }
 
-void WidgetStyle::set(XMLFileReader &xmlReader) {
+WidgetStyle::WidgetStyle(XMLFileReader &xmlReader, WidgetStyles &widgetStyles)
+    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+    set(xmlReader, widgetStyles);
+}
+
+void WidgetStyle::set(XMLFileReader &xmlReader, WidgetStyles &widgetStyles) {
     checkAttrs(xmlReader);
+
+    name_ = stringAttribute("name", xmlReader);
+
+    // Make sure that the user hasn't defined multiple styles with the same
+    // name as it's required to be a unique.
+    if (widgetStyles.styleExists(name_)) {
+        duplicateStyleNamesErrors(name_, xmlReader);
+    }
+
+    setBase(xmlReader, widgetStyles);
 
     while (xmlReader.readNextStartElement()) {
         QStringView elementName = xmlReader.name();
         if (elementName.compare("BackgroundColor") == 0) {
-            backgroundColor = xmlReader.readElementText();
+            backgroundColor_ = xmlReader.readElementText();
         } else if (elementName.compare("Color") == 0) {
-            color = xmlReader.readElementText();
+            color_ = xmlReader.readElementText();
         } else if (elementName.compare("BorderWidth") == 0) {
-            borderWidth = xmlReader.readElementText();
+            borderWidth_ = xmlReader.readElementText();
         } else if (elementName.compare("BorderStyle") == 0) {
-            borderStyle = xmlReader.readElementText();
+            borderStyle_ = xmlReader.readElementText();
         } else if (elementName.compare("BorderRadius") == 0) {
-            borderRadius = xmlReader.readElementText();
+            borderRadius_ = xmlReader.readElementText();
         } else if (elementName.compare("BorderColor") == 0) {
-            borderColor = xmlReader.readElementText();
+            borderColor_ = xmlReader.readElementText();
         } else if (elementName.compare("Padding") == 0) {
-            padding = xmlReader.readElementText();
+            padding_ = xmlReader.readElementText();
         } else if (elementName.compare("TopPadding") == 0) {
-            topPadding = xmlReader.readElementText();
+            topPadding_ = xmlReader.readElementText();
         } else if (elementName.compare("BottomPadding") == 0) {
-            bottomPadding = xmlReader.readElementText();
+            bottomPadding_ = xmlReader.readElementText();
         } else if (elementName.compare("LeftPadding") == 0) {
-            leftPadding = xmlReader.readElementText();
+            leftPadding_ = xmlReader.readElementText();
         } else if (elementName.compare("RightPadding") == 0) {
-            rightPadding = xmlReader.readElementText();
+            rightPadding_ = xmlReader.readElementText();
         } else {
             unsupportedChildElement("Style", xmlReader);
             xmlReader.skipCurrentElement();
         }
     }
+
+    if (!name_.isEmpty()) {
+        widgetStyles.addStyle(this);
+    }
+}
+
+void WidgetStyle::setBase(const XMLFileReader &xmlReader,
+                          const WidgetStyles &widgetStyles) {
+    const QString baseName = stringAttribute("base", xmlReader);
+
+    if (!baseName.isEmpty()) {
+        if (widgetStyles.styleExists(baseName)) {
+            base = widgetStyles.find(baseName);
+        } else {
+            // Warning goes here
+        }
+    } else {
+        base = nullptr;
+    }
+}
+
+const QString &WidgetStyle::name() const {
+    return name_;
 }
 
 QString WidgetStyle::styleSheet() const {
     QString styleSheet;
     QTextStream styleSheetStream(&styleSheet);
 
-    if (!backgroundColor.isEmpty()) {
-        styleSheetStream << "background-color: " << backgroundColor << ";";
+    const QString &backgroundColorToUse = backgroundColor();
+    if (!backgroundColorToUse.isEmpty()) {
+        styleSheetStream << "background-color: " << backgroundColorToUse
+                         << ";";
     }
-    if (!color.isEmpty()) {
-        styleSheetStream << "color: " << color << ";";
+    const QString &colorToUse = color();
+    if (!colorToUse.isEmpty()) {
+        styleSheetStream << "color: " << colorToUse << ";";
     }
-    if (!borderWidth.isEmpty()) {
-        styleSheetStream << "border-width: " << borderWidth << ";";
+    const QString &borderWidthToUse = borderWidth();
+    if (!borderWidthToUse.isEmpty()) {
+        styleSheetStream << "border-width: " << borderWidthToUse << ";";
     }
-    if (!borderStyle.isEmpty()) {
-        styleSheetStream << "border-style: " << borderStyle << ";";
+    const QString &borderStyleToUse = borderStyle();
+    if (!borderStyleToUse.isEmpty()) {
+        styleSheetStream << "border-style: " << borderStyleToUse << ";";
     }
-    if (!borderRadius.isEmpty()) {
-        styleSheetStream << "border-radius: " << borderRadius << ";";
+    const QString &borderRadiusToUse = borderRadius();
+    if (!borderRadiusToUse.isEmpty()) {
+        styleSheetStream << "border-radius: " << borderRadiusToUse << ";";
     }
-    if (!borderColor.isEmpty()) {
-        styleSheetStream << "border-color: " << borderColor << ";";
+    const QString &borderColorToUse = borderColor();
+    if (!borderColorToUse.isEmpty()) {
+        styleSheetStream << "border-color: " << borderColorToUse << ";";
     }
-    if (!padding.isEmpty()) {
-        styleSheetStream << "padding: " << padding << ";";
+    const QString &paddingToUse = padding();
+    if (!paddingToUse.isEmpty()) {
+        styleSheetStream << "padding: " << paddingToUse << ";";
     }
-    if (!topPadding.isEmpty()) {
-        styleSheetStream << "padding-top: " << topPadding << ";";
+    const QString &topPaddingToUse = topPadding();
+    if (!topPaddingToUse.isEmpty()) {
+        styleSheetStream << "padding-top: " << topPaddingToUse << ";";
     }
-    if (!bottomPadding.isEmpty()) {
-        styleSheetStream << "padding-bottom: " << bottomPadding << ";";
+    const QString &bottomPaddingToUse = bottomPadding();
+    if (!bottomPaddingToUse.isEmpty()) {
+        styleSheetStream << "padding-bottom: " << bottomPaddingToUse << ";";
     }
-    if (!leftPadding.isEmpty()) {
-        styleSheetStream << "padding-left: " << leftPadding << ";";
+    const QString &leftPaddingToUse = leftPadding();
+    if (!leftPaddingToUse.isEmpty()) {
+        styleSheetStream << "padding-left: " << leftPaddingToUse << ";";
     }
-    if (!rightPadding.isEmpty()) {
-        styleSheetStream << "padding-right: " << rightPadding << ";";
+    const QString &rightPaddingToUse = rightPadding();
+    if (!rightPaddingToUse.isEmpty()) {
+        styleSheetStream << "padding-right: " << rightPaddingToUse << ";";
     }
 
     return styleSheet;
+}
+
+const QString WidgetStyle::backgroundColor() const {
+    if (!backgroundColor_.isEmpty()) {
+        return backgroundColor_;
+    } else {
+        if (base) {
+            return base->backgroundColor();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::color() const {
+    if (!color_.isEmpty()) {
+        return color_;
+    } else {
+        if (base) {
+            return base->color();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::borderWidth() const {
+    if (!borderWidth_.isEmpty()) {
+        return borderWidth_;
+    } else {
+        if (base) {
+            return base->borderWidth();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::borderStyle() const {
+    if (!borderStyle_.isEmpty()) {
+        return borderStyle_;
+    } else {
+        if (base) {
+            return base->borderStyle();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::borderRadius() const {
+    if (!borderRadius_.isEmpty()) {
+        return borderRadius_;
+    } else {
+        if (base) {
+            return base->borderRadius();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::borderColor() const {
+    if (!borderColor_.isEmpty()) {
+        return borderColor_;
+    } else {
+        if (base) {
+            return base->borderColor();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::padding() const {
+    if (!padding_.isEmpty()) {
+        return padding_;
+    } else {
+        if (base) {
+            return base->padding();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::topPadding() const {
+    if (!topPadding_.isEmpty()) {
+        return topPadding_;
+    } else {
+        if (base) {
+            return base->topPadding();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::bottomPadding() const {
+    if (!topPadding_.isEmpty()) {
+        return topPadding_;
+    } else {
+        if (base) {
+            return base->topPadding();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::leftPadding() const {
+    if (!leftPadding_.isEmpty()) {
+        return leftPadding_;
+    } else {
+        if (base) {
+            return base->leftPadding();
+        } else {
+            return "";
+        }
+    }
+}
+
+const QString WidgetStyle::rightPadding() const {
+    if (!rightPadding_.isEmpty()) {
+        return rightPadding_;
+    } else {
+        if (base) {
+            return base->rightPadding();
+        } else {
+            return "";
+        }
+    }
+}
+
+[[noreturn]] void
+WidgetStyle::duplicateStyleNamesErrors(const QString &name,
+                                       const XMLFileReader &xmlReader) const {
+    QString errorStr;
+    QTextStream errorStream(&errorStr);
+
+    errorStream << "Non-unique style name '" << name << "' found in file "
+                << xmlReader.fileReference() << ".";
+
+    QMessageBox messageBox;
+    messageBox.critical(NULL, "Non-Unique Style Error", errorStr);
+    exit(EXIT_FAILURE);
 }

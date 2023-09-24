@@ -22,29 +22,54 @@
 #include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
 
+
 #include <QVector>
 #include <QString>
 
+class WidgetStyles;
+
 class WidgetStyle : public XMLSourcedEntity {
 private:
-    QString backgroundColor;
-    QString color;
-    QString borderWidth;
-    QString borderStyle;
-    QString borderRadius;
-    QString borderColor;
-    QString padding;
-    QString topPadding;
-    QString bottomPadding;
-    QString leftPadding;
-    QString rightPadding;
+    QString name_;
+    WidgetStyle *base;
+
+    QString backgroundColor_;
+    QString color_;
+    QString borderWidth_;
+    QString borderStyle_;
+    QString borderRadius_;
+    QString borderColor_;
+    QString padding_;
+    QString topPadding_;
+    QString bottomPadding_;
+    QString leftPadding_;
+    QString rightPadding_;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
+    void setBase(const XMLFileReader &xmlReader,
+                 const WidgetStyles &widgetStyles);
+    const QString backgroundColor() const;
+    const QString color() const;
+    const QString borderWidth() const;
+    const QString borderStyle() const;
+    const QString borderRadius() const;
+    const QString borderColor() const;
+    const QString padding() const;
+    const QString topPadding() const;
+    const QString bottomPadding() const;
+    const QString leftPadding() const;
+    const QString rightPadding() const;
+    [[noreturn]] void
+    duplicateStyleNamesErrors(const QString &name,
+                              const XMLFileReader &xmlReader) const;
+
 public:
     WidgetStyle();
-    void set(XMLFileReader &xmlReader);
+    WidgetStyle(XMLFileReader &xmlReader, WidgetStyles &widgetStyles);
+    void set(XMLFileReader &xmlReader, WidgetStyles &widgetStyles);
+    const QString &name() const;
     QString styleSheet() const;
 };
 

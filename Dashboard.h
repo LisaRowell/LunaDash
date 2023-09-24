@@ -22,6 +22,7 @@
 #include "XMLSourcedEntity.h"
 
 #include "Variables.h"
+#include "WidgetStyles.h"
 #include "GridPos.h"
 #include "XMLFileReader.h"
 
@@ -36,6 +37,7 @@ class Dashboard : public QMainWindow, public XMLSourcedEntity {
 
 private:
     Variables variables;
+    WidgetStyles widgetStyles;
     QWidget *mainWidget;
     QGridLayout *layout;
 

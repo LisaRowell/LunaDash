@@ -31,6 +31,7 @@ SOURCES += \
     Variables.cpp \
     Widget.cpp \
     WidgetStyle.cpp \
+    WidgetStyles.cpp \
     XMLFileReader.cpp \
     XMLSourcedEntity.cpp \
     main.cpp
@@ -58,6 +59,7 @@ HEADERS += \
     Variables.h \
     Widget.h \
     WidgetStyle.h \
+    WidgetStyles.h \
     XMLFileReader.h \
     XMLSourcedEntity.h
 

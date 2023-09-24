@@ -48,7 +48,9 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();
-        if (elementName.compare("MQTTBroker") == 0) {
+        if (elementName.compare("Style") == 0) {
+            new WidgetStyle(xmlReader, widgetStyles);
+        } else if (elementName.compare("MQTTBroker") == 0) {
             new MQTTClient(xmlReader, variables);
         } else if (elementName.compare("Label") == 0) {
             addLabelWidget(xmlReader);
@@ -113,7 +115,7 @@ void Dashboard::addBoolWidget(XMLFileReader &xmlReader) {
 
 void Dashboard::addLabelIndicatorWidget(XMLFileReader &xmlReader) {
     LabelIndicatorWidget *labelIndicatorWidget
-        = new LabelIndicatorWidget(xmlReader, variables);
+        = new LabelIndicatorWidget(xmlReader, variables, widgetStyles);
     addWidgetToLayout(labelIndicatorWidget, labelIndicatorWidget->gridPos(),
                       "LabelIndicator", xmlReader);
 }

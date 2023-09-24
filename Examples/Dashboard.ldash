@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Dashboard>
+    <Style name="LabelOval">
+        <BorderRadius>8px</BorderRadius>
+        <LeftPadding>5px</LeftPadding>
+        <RightPadding>5px</RightPadding>
+        <TopPadding>3px</TopPadding>
+        <BottomPadding>3px</BottomPadding>
+    </Style>
     <MQTTBroker server="mqtt23.victronenergy.com" port ="8883">
         <ClientId hostPrefix="true" id="Dash" randomize="true"/>
         <User name="XXXXX" password="XXXXX"/>
@@ -24,21 +31,11 @@
     </MQTTBroker>
     <LabelIndicator text="VRM" variable="connectionState">
         <GridPos row="0" col="0"/>
-        <OnStyle>
+        <OnStyle base="LabelOval">
             <BackgroundColor>lightgreen</BackgroundColor>
-            <BorderRadius>8px</BorderRadius>
-            <LeftPadding>5px</LeftPadding>
-            <RightPadding>5px</RightPadding>
-            <TopPadding>3px</TopPadding>
-            <BottomPadding>3px</BottomPadding>
         </OnStyle>
-        <OffStyle>
+        <OffStyle base="LabelOval">
             <BackgroundColor>tomato</BackgroundColor>
-            <BorderRadius>8px</BorderRadius>
-            <LeftPadding>5px</LeftPadding>
-            <RightPadding>5px</RightPadding>
-            <TopPadding>3px</TopPadding>
-            <BottomPadding>3px</BottomPadding>
         </OffStyle>
     </LabelIndicator>
     <Label text="House Battery Voltage:">

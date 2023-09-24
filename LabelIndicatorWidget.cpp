@@ -21,6 +21,7 @@
 #include "ValuedWidget.h"
 #include "XMLFileReader.h"
 #include "Variables.h"
+#include "WidgetStyles.h"
 
 #include <QVector>
 #include <QString>
@@ -29,7 +30,8 @@ const QVector<QString> LabelIndicatorWidget::allowedAttrs = { "text", "variable"
 const QVector<QString> LabelIndicatorWidget::requiredAttrs = { };
 
 LabelIndicatorWidget::LabelIndicatorWidget(XMLFileReader &xmlReader,
-                                           const Variables &variables)
+                                           const Variables &variables,
+                                           WidgetStyles &widgetStyles)
     : ValuedWidget("LabelIndicator", xmlReader, variables, allowedAttrs,
                    requiredAttrs) {
     checkAttrs(xmlReader);
@@ -39,9 +41,9 @@ LabelIndicatorWidget::LabelIndicatorWidget(XMLFileReader &xmlReader,
     while (xmlReader.readNextStartElement()) {
         QStringView elementName = xmlReader.name();
         if (elementName.compare("OnStyle") == 0) {
-            onStyle.set(xmlReader);
+            onStyle.set(xmlReader, widgetStyles);
         } else if (elementName.compare("OffStyle") == 0) {
-            offStyle.set(xmlReader);
+            offStyle.set(xmlReader, widgetStyles);
         } else {
             handleChildElement(xmlReader, "Label");
         }
