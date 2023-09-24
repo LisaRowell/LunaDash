@@ -22,12 +22,25 @@
             </JSON>
         </Topic>
     </MQTTBroker>
-    <Label text="Connected:">
+    <LabelIndicator text="VRM" variable="connectionState">
         <GridPos row="0" col="0"/>
-    </Label>
-    <Bool variable="connectionState">
-        <GridPos row="0" col="1"/>
-    </Bool>
+        <OnStyle>
+            <BackgroundColor>lightgreen</BackgroundColor>
+            <BorderRadius>8px</BorderRadius>
+            <LeftPadding>5px</LeftPadding>
+            <RightPadding>5px</RightPadding>
+            <TopPadding>3px</TopPadding>
+            <BottomPadding>3px</BottomPadding>
+        </OnStyle>
+        <OffStyle>
+            <BackgroundColor>tomato</BackgroundColor>
+            <BorderRadius>8px</BorderRadius>
+            <LeftPadding>5px</LeftPadding>
+            <RightPadding>5px</RightPadding>
+            <TopPadding>3px</TopPadding>
+            <BottomPadding>3px</BottomPadding>
+        </OffStyle>
+    </LabelIndicator>
     <Label text="House Battery Voltage:">
         <GridPos row="1" col="0"/>
     </Label>

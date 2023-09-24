@@ -17,6 +17,7 @@ SOURCES += \
     GridPos.cpp \
     JSONDecoder.cpp \
     JSONField.cpp \
+    LabelIndicatorWidget.cpp \
     LabelWidget.cpp \
     MQTTClient.cpp \
     NumberWidget.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     Variable.cpp \
     Variables.cpp \
     Widget.cpp \
+    WidgetStyle.cpp \
     XMLFileReader.cpp \
     XMLSourcedEntity.cpp \
     main.cpp
@@ -42,6 +44,7 @@ HEADERS += \
     GridPos.h \
     JSONDecoder.h \
     JSONField.h \
+    LabelIndicatorWidget.h \
     LabelWidget.h \
     MQTTClient.h \
     NumberWidget.h \
@@ -54,6 +57,7 @@ HEADERS += \
     Variable.h \
     Variables.h \
     Widget.h \
+    WidgetStyle.h \
     XMLFileReader.h \
     XMLSourcedEntity.h
 

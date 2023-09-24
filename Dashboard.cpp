@@ -24,6 +24,7 @@
 #include "TextWidget.h"
 #include "NumberWidget.h"
 #include "BoolWidget.h"
+#include "LabelIndicatorWidget.h"
 #include "Variables.h"
 #include "GridPos.h"
 
@@ -57,6 +58,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             addNumberWidget(xmlReader);
         } else if (elementName.compare("Bool") == 0) {
             addBoolWidget(xmlReader);
+        } else if (elementName.compare("LabelIndicator") == 0) {
+            addLabelIndicatorWidget(xmlReader);
         } else {
             unsupportedChildElement("Dashboard", xmlReader);
             xmlReader.skipCurrentElement();
@@ -108,11 +111,19 @@ void Dashboard::addBoolWidget(XMLFileReader &xmlReader) {
     addWidgetToLayout(boolWidget, boolWidget->gridPos(), "Bool", xmlReader);
 }
 
+void Dashboard::addLabelIndicatorWidget(XMLFileReader &xmlReader) {
+    LabelIndicatorWidget *labelIndicatorWidget
+        = new LabelIndicatorWidget(xmlReader, variables);
+    addWidgetToLayout(labelIndicatorWidget, labelIndicatorWidget->gridPos(),
+                      "LabelIndicator", xmlReader);
+}
+
 void Dashboard::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                                   const QString &typeName,
                                   XMLFileReader &xmlReader) {
     if (gridPos) {
-        layout->addWidget(widget, gridPos->row(), gridPos->col());
+        layout->addWidget(widget, gridPos->row(), gridPos->col(),
+                          Qt::AlignTop | Qt::AlignLeft);
     } else {
         missingGridPosWarning(typeName, xmlReader);
         // We're a little sloppy here and leak the widget, but it's no worse
