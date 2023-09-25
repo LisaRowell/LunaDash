@@ -49,6 +49,20 @@
                 </Field>
             </JSON>
         </Topic>
+        <Topic path="N/c8df84ac7a73/dcsource/290/History/MinimumStarterVoltage">
+            <JSON>
+                <Field label="value">
+                    <Double name="engineBatteryBankMinVoltage"/>
+                </Field>
+            </JSON>
+        </Topic>
+        <Topic path="N/c8df84ac7a73/dcsource/290/History/MaximumStarterVoltage">
+            <JSON>
+                <Field label="value">
+                    <Double name="engineBatteryBankMaxVoltage"/>
+                </Field>
+            </JSON>
+        </Topic>
     </MQTTBroker>
     <LabelIndicator text="VRM" variable="connectionState">
         <GridPos row="0" col="0"/>
@@ -59,34 +73,52 @@
             <BackgroundColor>tomato</BackgroundColor>
         </OffStyle>
     </LabelIndicator>
-    <Label text="House Battery Bank SoC:">
+    <Box label="House Battery Bank">
         <GridPos row="1" col="0"/>
-    </Label>
-    <Number variable="houseBatteryBankSoC" precision="1" suffix="%">
+        <Label text="House Battery Bank SoC:">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Number variable="houseBatteryBankSoC" precision="1" suffix="%">
+            <GridPos row="0" col="1"/>
+        </Number>
+        <Label text="House Battery Bank Voltage:">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Number variable="houseBatteryBankVoltage" precision="1" suffix=" V">
+            <GridPos row="1" col="1"/>
+        </Number>
+        <Label text="House Battery Bank Current:">
+            <GridPos row="2" col="0"/>
+        </Label>
+        <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
+            <GridPos row="2" col="1"/>
+        </Number>
+        <Label text="House Battery Bank Power:">
+            <GridPos row="3" col="0"/>
+        </Label>
+        <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
+            <GridPos row="3" col="1"/>
+        </Number>
+    </Box>
+    <Box label="Engine Battery Bank">
         <GridPos row="1" col="1"/>
-    </Number>
-    <Label text="House Battery Bank Voltage:">
-        <GridPos row="2" col="0"/>
-    </Label>
-    <Number variable="houseBatteryBankVoltage" precision="1" suffix=" V">
-        <GridPos row="2" col="1"/>
-    </Number>
-    <Label text="House Battery Bank Current:">
-        <GridPos row="3" col="0"/>
-    </Label>
-    <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
-        <GridPos row="3" col="1"/>
-    </Number>
-    <Label text="House Battery Bank Power:">
-        <GridPos row="4" col="0"/>
-    </Label>
-    <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
-        <GridPos row="4" col="1"/>
-    </Number>
-    <Label text="Engine Battery Bank Voltage:">
-        <GridPos row="5" col="0"/>
-    </Label>
-    <Number variable="engineBatteryBankVoltage" precision="1" suffix=" V">
-        <GridPos row="5" col="1"/>
-    </Number>
+        <Label text="Engine Battery Bank Voltage:">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Number variable="engineBatteryBankVoltage" precision="2" suffix=" V">
+            <GridPos row="0" col="1"/>
+        </Number>
+        <Label text="Engine Battery Bank Min Voltage:">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Number variable="engineBatteryBankMinVoltage" precision="2" suffix=" V">
+            <GridPos row="1" col="1"/>
+        </Number>
+        <Label text="Engine Battery Bank Max Voltage:">
+            <GridPos row="2" col="0"/>
+        </Label>
+        <Number variable="engineBatteryBankMaxVoltage" precision="2" suffix=" V">
+            <GridPos row="2" col="1"/>
+        </Number>
+    </Box>
 </Dashboard>

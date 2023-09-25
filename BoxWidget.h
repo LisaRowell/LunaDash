@@ -16,44 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DASHBOARD_H
-#define DASHBOARD_H
+#ifndef BOX_WIDGET_H
+#define BOX_WIDGET_H
 
-#include "XMLSourcedEntity.h"
-
+#include "Widget.h"
+#include "WidgetGrid.h"
+#include "XMLFileReader.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
-#include "GridPos.h"
-#include "XMLFileReader.h"
-#include "WidgetGrid.h"
 
-#include <QMainWindow>
+#include <QGroupBox>
+#include <QVector>
 #include <QString>
-#include <QFile>
-#include <QStringView>
 
-class Dashboard : public QMainWindow, public XMLSourcedEntity {
-    Q_OBJECT
-
+class BoxWidget : public QGroupBox, public Widget {
 private:
-    Variables variables;
-    WidgetStyles widgetStyles;
-    QWidget *mainWidget;
     WidgetGrid *layout;
-
-    void initWindow();
-    void createShortcuts();
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
     static const QString className;
 
 public:
-    Dashboard(XMLFileReader &xmlReader, QWidget *parent = nullptr);
-    ~Dashboard();
-
-public slots:
-    void exit();
+    BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
+              WidgetStyles &widgetStyles);
 };
 
-#endif // DASHBOARD_H
+#endif // BOX_WIDGET_H

@@ -11,6 +11,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     BoolVariable.cpp \
     BoolWidget.cpp \
+    BoxWidget.cpp \
     ClientId.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     Variable.cpp \
     Variables.cpp \
     Widget.cpp \
+    WidgetGrid.cpp \
     WidgetStyle.cpp \
     WidgetStyles.cpp \
     XMLFileReader.cpp \
@@ -39,6 +41,7 @@ SOURCES += \
 HEADERS += \
     BoolVariable.h \
     BoolWidget.h \
+    BoxWidget.h \
     ClientId.h \
     Dashboard.h \
     DoubleVariable.h \
@@ -58,6 +61,7 @@ HEADERS += \
     Variable.h \
     Variables.h \
     Widget.h \
+    WidgetGrid.h \
     WidgetStyle.h \
     WidgetStyles.h \
     XMLFileReader.h \
