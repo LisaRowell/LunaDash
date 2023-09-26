@@ -79,9 +79,9 @@
             <GridPos row="0" col="0"/>
             <Range min="0" max="100"/>
         </Gauge>
-        <Gauge variable="houseBatteryBankVoltage" precision="1" suffix=" V">
+        <Gauge variable="houseBatteryBankVoltage" precision="2" suffix=" V">
             <GridPos row="0" col="1"/>
-            <Range min="0" max="16"/>
+            <Range min="11" max="16"/>
         </Gauge>
         <Label text="Current:">
             <GridPos row="2" col="0"/>
@@ -100,7 +100,7 @@
         <GridPos row="1" col="1"/>
         <Gauge variable="engineBatteryBankVoltage" precision="2" suffix=" V">
             <GridPos row="0" col="0" colSpan="2"/>
-            <Range min="0" max="16"/>
+            <Range min="11" max="16"/>
         </Gauge>
         <Label text="Min Voltage:">
             <GridPos row="1" col="0"/>

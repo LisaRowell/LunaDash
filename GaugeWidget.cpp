@@ -67,6 +67,13 @@ void GaugeWidget::initGauge() {
     if (range.isSet()) {
         setScale(range.min(), range.max());
     }
+
+    // Reduce the number of major dividers so that the scale doesn't go to
+    // decimal values.
+    const unsigned delta = range.max() - range.min();
+    const unsigned maxScaleNumbers = delta > 10 ? 10 : delta;
+    setScaleMaxMajor(maxScaleNumbers);
+    setScaleMaxMinor(2);
 }
 
 void GaugeWidget::setValue() {
@@ -88,15 +95,18 @@ void GaugeWidget::setValue() {
 // needle update and it doesn't make sense to keep redrawing it.
 void GaugeWidget::drawScaleContents(QPainter* painter, const QPointF& center,
                                     double radius) const {
+    (void)center;
+    (void)radius;
+
     if (!showValueText) {
-        // Lifted from the Qwt Dial example code
-        QRectF rect(0.0, 0.0, 2.0 * radius, 2.0 * radius - 10.0);
-        rect.moveCenter(center);
+        QRectF rect(boundingRect());
+        rect.setTop(scaleInnerRect().bottom());
+        rect.setHeight(rect.height() / 2);
 
         const QColor color = palette().color(QPalette::Text);
         painter->setPen(color);
 
-        const int flags = Qt::AlignBottom | Qt::AlignHCenter;
+        const int flags = Qt::AlignVCenter | Qt::AlignHCenter;
         painter->drawText(rect, flags, suffix);
     }
 }
@@ -110,15 +120,14 @@ void GaugeWidget::drawNeedle(QPainter* painter, const QPointF& center,
     QwtDial::drawNeedle(painter, center, radius, direction, colorGroup);
 
     if (showValueText) {
-        // Taken from Qwt example code's drawScaleContents and moved to this
-        // hook.
-        QRectF rect(0.0, 0.0, 2.0 * radius, 2.0 * radius - 10.0);
-        rect.moveCenter(center);
+        QRectF rect(boundingRect());
+        rect.setTop(scaleInnerRect().bottom());
+        rect.setHeight(rect.height() / 2);
 
         const QColor color = palette().color(QPalette::Text);
         painter->setPen(color);
 
-        const int flags = Qt::AlignBottom | Qt::AlignHCenter;
+        const int flags = Qt::AlignVCenter | Qt::AlignHCenter;
         QString stringValue;
         if (precisionSet) {
             stringValue = QString::number(value(), 'F', precision);
@@ -130,4 +139,8 @@ void GaugeWidget::drawNeedle(QPainter* painter, const QPointF& center,
         }
         painter->drawText(rect, flags, stringValue);
     }
+}
+
+QSize GaugeWidget::sizeHint() const {
+    return QSize(150, 150);
 }

@@ -49,6 +49,7 @@ protected:
     virtual void drawNeedle(QPainter* painter, const QPointF& center,
                             double radius, double direction,
                             QPalette::ColorGroup colorGroup ) const override;
+    virtual QSize sizeHint() const override;
 
 public:
     GaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
