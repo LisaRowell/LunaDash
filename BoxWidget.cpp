@@ -28,7 +28,7 @@
 #include <QStringView>
 #include <QWidget>
 
-const QVector<QString> BoxWidget::allowedAttrs = { "label" };
+const QVector<QString> BoxWidget::allowedAttrs = { "label", "flat" };
 const QVector<QString> BoxWidget::requiredAttrs = { };
 const QString BoxWidget::className = "Box";
 
@@ -39,6 +39,11 @@ BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
     const QString label = stringAttribute("label", xmlReader);
     if (!label.isEmpty()) {
         setTitle(label);
+    }
+    const bool flat = boolAttribute("flat", xmlReader, false);
+    if (flat) {
+        setFlat(true);
+        setStyleSheet("QGroupBox {border:0;}");
     }
 
     layout = new WidgetGrid(className);
