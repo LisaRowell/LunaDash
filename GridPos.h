@@ -29,6 +29,8 @@ class GridPos : public XMLSourcedEntity {
 private:
     unsigned row_;
     unsigned col_;
+    unsigned rowSpan_;
+    unsigned colSpan_;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
@@ -37,6 +39,8 @@ public:
     GridPos(XMLFileReader &xmlReader);
     unsigned row() const;
     unsigned col() const;
+    unsigned rowSpan() const;
+    unsigned colSpan() const;
 };
 
 #endif // GRID_POS_H

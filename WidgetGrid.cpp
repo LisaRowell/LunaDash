@@ -121,8 +121,8 @@ void WidgetGrid::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                                    const QString &typeName,
                                    XMLFileReader &xmlReader) {
     if (gridPos) {
-        addWidget(widget, gridPos->row(), gridPos->col(),
-                  Qt::AlignTop | Qt::AlignLeft);
+        addWidget(widget, gridPos->row(), gridPos->col(), gridPos->rowSpan(),
+                  gridPos->colSpan(), Qt::AlignTop | Qt::AlignLeft);
     } else {
         missingGridPosWarning(typeName, xmlReader);
         // We're a little sloppy here and leak the widget, but it's no worse

@@ -83,13 +83,13 @@
             <GridPos row="0" col="1"/>
             <Range min="0" max="16"/>
         </Gauge>
-        <Label text="House Battery Bank Current:">
+        <Label text="Current:">
             <GridPos row="2" col="0"/>
         </Label>
         <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
             <GridPos row="2" col="1"/>
         </Number>
-        <Label text="House Battery Bank Power:">
+        <Label text="Power:">
             <GridPos row="3" col="0"/>
         </Label>
         <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
@@ -99,7 +99,7 @@
     <Box label="Engine Battery Bank">
         <GridPos row="1" col="1"/>
         <Gauge variable="engineBatteryBankVoltage" precision="2" suffix=" V">
-            <GridPos row="0" col="0"/>
+            <GridPos row="0" col="0" colSpan="2"/>
             <Range min="0" max="16"/>
         </Gauge>
         <Label text="Min Voltage:">

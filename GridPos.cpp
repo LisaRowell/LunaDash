@@ -23,7 +23,9 @@
 #include <QVector>
 #include <QString>
 
-const QVector<QString> GridPos::allowedAttrs = { "row", "col" };
+const QVector<QString> GridPos::allowedAttrs = {
+    "row", "col", "rowSpan", "colSpan"
+};
 const QVector<QString> GridPos::requiredAttrs = { "row", "col" };
 
 GridPos::GridPos(XMLFileReader &xmlReader)
@@ -31,6 +33,8 @@ GridPos::GridPos(XMLFileReader &xmlReader)
     checkAttrs(xmlReader);
     row_ = unsignedAttribute("row", xmlReader);
     col_ = unsignedAttribute("col", xmlReader);
+    rowSpan_ = unsignedAttribute("rowSpan", xmlReader, 1);
+    colSpan_ = unsignedAttribute("colSpan", xmlReader, 1);
 
     ignoreChildElements(xmlReader, "GridPos");
 }
@@ -41,4 +45,12 @@ unsigned GridPos::row() const {
 
 unsigned GridPos::col() const {
     return col_;
+}
+
+unsigned GridPos::rowSpan() const {
+    return rowSpan_;
+}
+
+unsigned GridPos::colSpan() const {
+    return colSpan_;
 }
