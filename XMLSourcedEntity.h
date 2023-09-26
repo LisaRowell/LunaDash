@@ -65,6 +65,8 @@ protected:
                                    unsigned short defaultValue) const;
     bool boolAttribute(const QString &name, const XMLFileReader &xmlReader,
                        bool defaultValue = false) const;
+    double doubleAttribute(const QString &name, const XMLFileReader &xmlReader,
+                           bool *valid) const;
     QString stringElement(const QString &attributeName,
                           XMLFileReader &xmlReader);
     void unsupportedChildElement(const QString &parentName,

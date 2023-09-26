@@ -23,6 +23,7 @@
 #include "NumberWidget.h"
 #include "BoolWidget.h"
 #include "LabelIndicatorWidget.h"
+#include "GaugeWidget.h"
 #include "BoxWidget.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
@@ -55,6 +56,9 @@ bool WidgetGrid::handleXMLElement(const QStringView &name,
         return true;
     } else if (name.compare("LabelIndicator") == 0) {
         addLabelIndicatorWidget(xmlReader, variables, widgetStyles);
+        return true;
+    } else if (name.compare("Gauge") == 0) {
+        addGaugeWidget(xmlReader, variables);
         return true;
     } else if (name.compare("Box") == 0) {
         addBoxWidget(xmlReader, variables, widgetStyles);
@@ -96,6 +100,13 @@ void WidgetGrid::addLabelIndicatorWidget(XMLFileReader &xmlReader,
         = new LabelIndicatorWidget(xmlReader, variables, widgetStyles);
     addWidgetToLayout(labelIndicatorWidget, labelIndicatorWidget->gridPos(),
                       "LabelIndicator", xmlReader);
+}
+
+void WidgetGrid::addGaugeWidget(XMLFileReader &xmlReader,
+                                const Variables &variables) {
+    GaugeWidget *gaugeWidget = new GaugeWidget(xmlReader, variables);
+    addWidgetToLayout(gaugeWidget, gaugeWidget->gridPos(), "Gauge",
+                      xmlReader);
 }
 
 void WidgetGrid::addBoxWidget(XMLFileReader &xmlReader,

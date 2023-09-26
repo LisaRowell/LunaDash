@@ -149,6 +149,25 @@ bool XMLSourcedEntity::boolAttribute(const QString &name,
     }
 }
 
+double XMLSourcedEntity::doubleAttribute(const QString &name,
+                                         const XMLFileReader &xmlReader,
+                                         bool *valid) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+    if (!attribute.isEmpty()) {
+        double value = attribute.toDouble(valid);
+        if (valid) {
+            return value;
+        } else {
+            badUnsignedAttrWarning(name, attribute, xmlReader);
+            return 0;
+        }
+    } else {
+        *valid = false;
+        return 0;
+    }
+}
+
 QString XMLSourcedEntity::stringElement(const QString &attributeName,
                                         XMLFileReader &xmlReader) {
     verifyLoneAttribute(attributeName, xmlReader);

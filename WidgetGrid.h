@@ -44,6 +44,7 @@ private:
                       WidgetStyles &widgetStyles);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                            const QString &typeName, XMLFileReader &xmlReader);
+    void addGaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;
 

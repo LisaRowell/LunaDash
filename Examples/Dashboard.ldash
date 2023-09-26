@@ -75,18 +75,14 @@
     </LabelIndicator>
     <Box label="House Battery Bank">
         <GridPos row="1" col="0"/>
-        <Label text="House Battery Bank SoC:">
+        <Gauge variable="houseBatteryBankSoC" precision="1" suffix="%">
             <GridPos row="0" col="0"/>
-        </Label>
-        <Number variable="houseBatteryBankSoC" precision="1" suffix="%">
+            <Range min="0" max="100"/>
+        </Gauge>
+        <Gauge variable="houseBatteryBankVoltage" precision="1" suffix=" V">
             <GridPos row="0" col="1"/>
-        </Number>
-        <Label text="House Battery Bank Voltage:">
-            <GridPos row="1" col="0"/>
-        </Label>
-        <Number variable="houseBatteryBankVoltage" precision="1" suffix=" V">
-            <GridPos row="1" col="1"/>
-        </Number>
+            <Range min="0" max="16"/>
+        </Gauge>
         <Label text="House Battery Bank Current:">
             <GridPos row="2" col="0"/>
         </Label>
@@ -102,19 +98,17 @@
     </Box>
     <Box label="Engine Battery Bank">
         <GridPos row="1" col="1"/>
-        <Label text="Engine Battery Bank Voltage:">
+        <Gauge variable="engineBatteryBankVoltage" precision="2" suffix=" V">
             <GridPos row="0" col="0"/>
-        </Label>
-        <Number variable="engineBatteryBankVoltage" precision="2" suffix=" V">
-            <GridPos row="0" col="1"/>
-        </Number>
-        <Label text="Engine Battery Bank Min Voltage:">
+            <Range min="0" max="16"/>
+        </Gauge>
+        <Label text="Min Voltage:">
             <GridPos row="1" col="0"/>
         </Label>
         <Number variable="engineBatteryBankMinVoltage" precision="2" suffix=" V">
             <GridPos row="1" col="1"/>
         </Number>
-        <Label text="Engine Battery Bank Max Voltage:">
+        <Label text="Max Voltage:">
             <GridPos row="2" col="0"/>
         </Label>
         <Number variable="engineBatteryBankMaxVoltage" precision="2" suffix=" V">

@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+CONFIG += c++17 qwt
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -15,6 +15,7 @@ SOURCES += \
     ClientId.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
+    GaugeWidget.cpp \
     GridPos.cpp \
     JSONDecoder.cpp \
     JSONField.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
     LabelWidget.cpp \
     MQTTClient.cpp \
     NumberWidget.cpp \
+    Range.cpp \
     StringVariable.cpp \
     TextWidget.cpp \
     TLSInfo.cpp \
@@ -45,6 +47,7 @@ HEADERS += \
     ClientId.h \
     Dashboard.h \
     DoubleVariable.h \
+    GaugeWidget.h \
     GridPos.h \
     JSONDecoder.h \
     JSONField.h \
@@ -52,6 +55,7 @@ HEADERS += \
     LabelWidget.h \
     MQTTClient.h \
     NumberWidget.h \
+    Range.h \
     StringVariable.h \
     TLSInfo.h \
     TextWidget.h \
