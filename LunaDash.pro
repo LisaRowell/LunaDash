@@ -15,6 +15,7 @@ SOURCES += \
     ClientId.cpp \
     Dashboard.cpp \
     DoubleVariable.cpp \
+    DurationDescriber.cpp \
     GaugeWidget.cpp \
     GridPos.cpp \
     JSONDecoder.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     TextWidget.cpp \
     TLSInfo.cpp \
     Topic.cpp \
+    Transformer.cpp \
     UserId.cpp \
     ValuedWidget.cpp \
     Variable.cpp \
@@ -47,6 +49,7 @@ HEADERS += \
     ClientId.h \
     Dashboard.h \
     DoubleVariable.h \
+    DurationDescriber.h \
     GaugeWidget.h \
     GridPos.h \
     JSONDecoder.h \
@@ -60,6 +63,7 @@ HEADERS += \
     TLSInfo.h \
     TextWidget.h \
     Topic.h \
+    Transformer.h \
     UserId.h \
     ValuedWidget.h \
     Variable.h \

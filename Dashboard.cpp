@@ -22,6 +22,7 @@
 #include "MQTTClient.h"
 #include "Variables.h"
 #include "WidgetGrid.h"
+#include "DurationDescriber.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -47,6 +48,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             new WidgetStyle(xmlReader, widgetStyles);
         } else if (elementName.compare("MQTTBroker") == 0) {
             new MQTTClient(xmlReader, variables);
+        } else if (elementName.compare("DurationDescriber") == 0) {
+            new DurationDescriber(xmlReader, variables);
         } else {
             const bool handled
                 = layout->handleXMLElement(elementName, xmlReader, variables,
