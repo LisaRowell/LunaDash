@@ -56,6 +56,14 @@
                 </Field>
             </JSON>
         </Topic>
+        <Topic path="N/c8df84ac7a73/battery/289/TimeToGo">
+            <JSON>
+                <Field label="value">
+                    <!-- String used due to Victron sending a zero length payload -->
+                    <String name="houseBatteryBankTimeToGoSecOrNull"/>
+                </Field>
+            </JSON>
+        </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/TimeSinceLastFullCharge">
             <JSON>
                 <Field label="value">
@@ -127,6 +135,9 @@
             </JSON>
         </Topic>
     </MQTTBroker>
+    <DurationDescriber seconds="houseBatteryBankTimeToGoSecOrNull">
+        <String name="houseBatteryBankTimeToGo"/>
+    </DurationDescriber>
     <DurationDescriber seconds="houseBatteryBankSecsSinceLastFullCharge">
         <String name="houseBatteryBankTimeSinceLastFullCharge"/>
     </DurationDescriber>
@@ -180,6 +191,9 @@
             <Label text="Time Remaining:">
                 <GridPos row="4" col="0"/>
             </Label>
+            <Text variable="houseBatteryBankTimeToGo">
+                <GridPos row="4" col="1"/>
+            </Text>
             <Label text="Time Since Last Full Charge:">
                 <GridPos row="5" col="0"/>
             </Label>

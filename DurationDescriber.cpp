@@ -60,7 +60,7 @@ void DurationDescriber::recalculate() {
 
             publishResult(description);
         } else {
-            publishResult("");
+            publishResult("---");
         }
     } else {
         // It shouldn't be possible to not have a secondsVariable and still
