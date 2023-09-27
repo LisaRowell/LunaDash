@@ -54,7 +54,7 @@ BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
                                                       variables,
                                                       widgetStyles);
         if (!handled) {
-            handleChildElement(xmlReader, "Label");
+            handleChildElement(xmlReader, "Box");
         }
     }
 
