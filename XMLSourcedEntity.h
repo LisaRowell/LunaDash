@@ -49,6 +49,9 @@ private:
 
 protected:
     void checkAttrs(const XMLFileReader &xmlReader);
+    void checkAttrs(const XMLFileReader &xmlReader,
+                    const QVector<QString> &allowedAttrs,
+                    const QVector<QString> &requiredAttrs);
     void ignoreChildElements(XMLFileReader &xmlReader,
                              const QString &parentName);
     QString stringAttribute(const QString &name,

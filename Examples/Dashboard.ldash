@@ -134,6 +134,13 @@
                 </Field>
             </JSON>
         </Topic>
+        <Topic path="N/c8df84ac7a73/solarcharger/291/State">
+            <JSON>
+                <Field label="value">
+                    <Double name="centerBiminiMPPTState"/>
+                </Field>
+            </JSON>
+        </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/Dc/0/Current">
             <JSON>
                 <Field label="value">
@@ -169,6 +176,20 @@
     <DurationDescriber seconds="houseBatteryBankSecsSinceLastFullCharge">
         <String name="houseBatteryBankTimeSinceLastFullCharge"/>
     </DurationDescriber>
+    <StringDecoder string="centerBiminiMPPTState">
+        <Case value="0" result="Not Charging"/>
+        <Case value="2" result="Fault"/>
+        <Case value="3" result="Bulk"/>
+        <Case value="4" result="Absorption"/>
+        <Case value="5" result="Float"/>
+        <Case value="7" result="Manual Equalize"/>
+        <Case value="245" result="Wake Up"/>
+        <Case value="247" result="Auto Equalize"/>
+        <Case value="252" result="External Control"/>
+        <Case value="255" result="Unavailable"/>
+        <Default result="Unknown"/>
+        <String name="centerBiminiMPPTStateDescription"/>
+    </StringDecoder>
     <LabelIndicator text="VRM" variable="connectionState">
         <GridPos row="0" col="0"/>
         <OnStyle base="LabelOval">
@@ -300,32 +321,38 @@
         <Tab title="Power">
             <Box label="Center Bimini Solar">
                 <GridPos row="0" col="0"/>
-                <Label text="Current:">
+                <Label text="State:">
                     <GridPos row="0" col="0"/>
+                </Label>
+                <Text variable="centerBiminiMPPTStateDescription">
+                    <GridPos row="0" col="1"/>
+                </Text>
+                <Label text="Current:">
+                    <GridPos row="1" col="0"/>
                 </Label>
                 <Number variable="centerBiminiMPPTCurrent" precision="1"
                         suffix=" A">
-                    <GridPos row="0" col="1"/>
-                </Number>
-                <Label text="Power:">
-                    <GridPos row="1" col="0"/>
-                </Label>
-                <Number variable="centerBiminiMPPTPower" precision="0" suffix=" W">
                     <GridPos row="1" col="1"/>
                 </Number>
-                <Label text="Energy (Today):">
+                <Label text="Power:">
                     <GridPos row="2" col="0"/>
+                </Label>
+                <Number variable="centerBiminiMPPTPower" precision="0" suffix=" W">
+                    <GridPos row="2" col="1"/>
+                </Number>
+                <Label text="Energy (Today):">
+                    <GridPos row="3" col="0"/>
                 </Label>
                 <Number variable="centerBiminiMPPTEnergyToday" precision="2"
                         suffix=" kWh">
-                    <GridPos row="2" col="1"/>
+                    <GridPos row="3" col="1"/>
                 </Number>
                 <Label text="PV Voltage:">
-                    <GridPos row="3" col="0"/>
+                    <GridPos row="4" col="0"/>
                 </Label>
                 <Number variable="centerBiminiMPPTPVVoltage" precision="1"
                         suffix=" V">
-                    <GridPos row="3" col="1"/>
+                    <GridPos row="4" col="1"/>
                 </Number>
             </Box>
         </Tab>

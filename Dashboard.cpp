@@ -20,6 +20,7 @@
 
 #include "DurationDescriber.h"
 #include "MQTTClient.h"
+#include "StringDecoder.h"
 #include "Variables.h"
 #include "WidgetGrid.h"
 #include "WidgetStyle.h"
@@ -51,6 +52,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             new MQTTClient(xmlReader, variables);
         } else if (elementName.compare("DurationDescriber") == 0) {
             new DurationDescriber(xmlReader, variables);
+        } else if (elementName.compare("StringDecoder") == 0) {
+            new StringDecoder(xmlReader, variables);
         } else {
             const bool handled
                 = layout->handleXMLElement(elementName, xmlReader, variables,

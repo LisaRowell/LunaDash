@@ -42,7 +42,11 @@ protected:
                                  const QString transformerName,
                                  const XMLFileReader &xmlReader,
                                  const Variables &variables);
-    void parseChildElements(XMLFileReader &xmlReader, Variables &variables);
+    void parseChildElements(const QString transformerName,
+                            XMLFileReader &xmlReader, Variables &variables);
+    void handleChildElement(const QStringView &elementName,
+                            const QString transformerName,
+                            XMLFileReader &xmlReader, Variables &variables);
     void publishResult(const QString &result);
     virtual void recalculate() = 0;
 

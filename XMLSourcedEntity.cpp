@@ -53,6 +53,28 @@ void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader) {
     }
 }
 
+void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader,
+                                  const QVector<QString> &allowedAttrs,
+                                  const QVector<QString> &requiredAttrs) {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QVector<QString> requiredNotFound(requiredAttrs);
+
+    for (auto iterator = attributes.begin(); iterator != attributes.end();
+         ++iterator) {
+        const QXmlStreamAttribute &attribute = *iterator;
+
+        if (!allowedAttrs.contains(attribute.name())) {
+            unsupportedAttrWarning(attribute, xmlReader);
+        }
+
+        requiredNotFound.removeOne(attribute.name());
+    }
+
+    if (requiredNotFound.count()) {
+        missingRequiredAttrError(requiredNotFound.first(), xmlReader);
+    }
+}
+
 void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
                                            const QString &parentName) {
     while (xmlReader.readNextStartElement()) {

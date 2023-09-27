@@ -16,11 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DURATION_DESCRIBER_H
-#define DURATION_DESCRIBER_H
+#ifndef STRING_DECODER_H
+#define STRING_DECODER_H
 
 #include "Transformer.h"
 
+#include <QMap>
 #include <QString>
 #include <QVector>
 
@@ -28,17 +29,21 @@ class Variable;
 class Variables;
 class XMLFileReader;
 
-class DurationDescriber : public Transformer {
+class StringDecoder : public Transformer {
 private:
-    Variable *secondsVariable;
+    Variable *inputVariable;
+    QMap<QString, QString> cases;
+    QString defaultValue;
 
+    void addCase(XMLFileReader &xmlReader);
+    void addDefault(XMLFileReader &xmlReader);
     virtual void recalculate() override;
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
 
 public:
-    DurationDescriber(XMLFileReader &xmlReader, Variables &variables);
+    StringDecoder(XMLFileReader &xmlReader, Variables &variables);
 };
 
-#endif // DURATION_DESCRIBER_H
+#endif // STRING_DECODER_H

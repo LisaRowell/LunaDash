@@ -36,7 +36,7 @@ DurationDescriber::DurationDescriber(XMLFileReader &xmlReader,
     secondsVariable = findSourceVariable("seconds", "DurationDescriber",
                                          xmlReader, variables);
 
-    parseChildElements(xmlReader, variables);
+    parseChildElements("DurationDescriber", xmlReader, variables);
 }
 
 void DurationDescriber::recalculate() {

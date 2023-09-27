@@ -35,9 +35,9 @@ Transformer::Transformer(const QVector<QString> &allowedAttrs,
 }
 
 Variable *Transformer::findSourceVariable(const QString &attributeName,
-                                     const QString transformerName,
-                                     const XMLFileReader &xmlReader,
-                                     const Variables &variables) {
+                                          const QString transformerName,
+                                          const XMLFileReader &xmlReader,
+                                          const Variables &variables) {
     const QString variableName = stringAttribute(attributeName, xmlReader);
     if (!variableName.isEmpty()) {
         Variable *variable = variables.find(variableName);
@@ -52,16 +52,23 @@ Variable *Transformer::findSourceVariable(const QString &attributeName,
     }
 }
 
-void Transformer::parseChildElements(XMLFileReader &xmlReader,
+void Transformer::parseChildElements(const QString transformerName,
+                                     XMLFileReader &xmlReader,
                                      Variables &variables) {
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();
-        if (elementName.compare("String") == 0) {
-            addStringVariable(xmlReader, variables);
-        } else {
-            unsupportedChildElement("DurationDescriber", xmlReader);
-            xmlReader.skipCurrentElement();
-        }
+        handleChildElement(elementName, transformerName, xmlReader, variables);
+    }
+}
+void Transformer::handleChildElement(const QStringView &elementName,
+                                     const QString transformerName,
+                                     XMLFileReader &xmlReader,
+                                     Variables &variables) {
+    if (elementName.compare("String") == 0) {
+        addStringVariable(xmlReader, variables);
+    } else {
+        unsupportedChildElement(transformerName, xmlReader);
+        xmlReader.skipCurrentElement();
     }
 }
 
