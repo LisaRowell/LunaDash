@@ -20,11 +20,13 @@
 #define TRANSFORMER_H
 
 #include "XMLSourcedEntity.h"
-#include "Variable.h"
-#include "Variables.h"
 
-#include <QVector>
+#include <QObject>
 #include <QString>
+#include <QVector>
+
+class Variable;
+class Variables;
 
 class Transformer : public QObject, public XMLSourcedEntity {
     Q_OBJECT

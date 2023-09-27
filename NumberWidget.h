@@ -24,6 +24,11 @@
 #include "Variables.h"
 
 #include <QLabel>
+#include <QString>
+#include <QVector>
+
+class XMLFileReader;
+class Variables;
 
 class NumberWidget : public QLabel, public ValuedWidget {
 private:

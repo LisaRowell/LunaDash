@@ -18,23 +18,23 @@
 
 #include "MQTTClient.h"
 
-#include "XMLSourcedEntity.h"
 #include "BoolVariable.h"
-#include "Variables.h"
-#include "Variable.h"
-#include "Topic.h"
-#include "XMLFileReader.h"
 #include "TLSInfo.h"
+#include "Topic.h"
+#include "Variable.h"
+#include "Variables.h"
+#include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
 #include <MQTTAsync.h>
 
-#include <QVector>
-#include <QString>
 #include <QByteArray>
-#include <QTextStream>
 #include <QMessageBox>
 #include <QObject>
+#include <QString>
 #include <QStringView>
+#include <QTextStream>
+#include <QVector>
 
 const QVector<QString> MQTTClient::allowedAttrs = { "server", "port" };
 const QVector<QString> MQTTClient::requiredAttrs = { "server" };

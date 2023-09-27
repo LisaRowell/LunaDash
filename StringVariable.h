@@ -20,11 +20,12 @@
 #define STRING_VARIABLE_H
 
 #include "Variable.h"
-#include "Variables.h"
-#include "XMLFileReader.h"
 
-#include <QString>
 #include <QObject>
+#include <QString>
+
+class Variables;
+class XMLFileReader;
 
 class StringVariable : public Variable {
     Q_OBJECT

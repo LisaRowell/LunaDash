@@ -20,13 +20,15 @@
 #define LABEL_INDICATOR_H
 
 #include "ValuedWidget.h"
-#include "XMLFileReader.h"
 #include "WidgetStyle.h"
-#include "WidgetStyles.h"
 
 #include <QLabel>
-#include <QVector>
 #include <QString>
+#include <QVector>
+
+class Variables;
+class WidgetStyles;
+class XMLFileReader;
 
 class LabelIndicatorWidget : public QLabel, public ValuedWidget {
 private:

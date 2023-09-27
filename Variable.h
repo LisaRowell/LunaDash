@@ -20,12 +20,12 @@
 #define VARIABLE_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
 #include <QObject>
+#include <QString>
+#include <QVector>
 
+class XMLFileReader;
 class Variables;
 
 class Variable : public QObject, public XMLSourcedEntity {

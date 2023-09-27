@@ -19,13 +19,13 @@
 #include "WidgetStyle.h"
 
 #include "WidgetStyles.h"
-#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
+#include <QVector>
 
 const QVector<QString> WidgetStyle::allowedAttrs = { "name", "base" };
 const QVector<QString> WidgetStyle::requiredAttrs = { };

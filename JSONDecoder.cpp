@@ -18,17 +18,17 @@
 
 #include "JSONDecoder.h"
 
-#include "XMLFileReader.h"
-#include "Variables.h"
 #include "JSONField.h"
+#include "Variables.h"
+#include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
-#include <QTextStream>
-#include <QMessageBox>
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMessageBox>
+#include <QString>
+#include <QTextStream>
+#include <QVector>
 
 const QVector<QString> JSONDecoder::allowedAttrs = { };
 const QVector<QString> JSONDecoder::requiredAttrs = { };

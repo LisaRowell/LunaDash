@@ -18,10 +18,10 @@
 
 #include "XMLFileReader.h"
 
-#include <QString>
 #include <QFile>
-#include <QTextStream>
 #include <QMessageBox>
+#include <QString>
+#include <QTextStream>
 #include <QXmlStreamReader>
 
 XMLFileReader::XMLFileReader(const QString &fileName)

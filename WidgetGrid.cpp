@@ -18,21 +18,22 @@
 
 #include "WidgetGrid.h"
 
-#include "LabelWidget.h"
-#include "TextWidget.h"
-#include "NumberWidget.h"
 #include "BoolWidget.h"
-#include "LabelIndicatorWidget.h"
-#include "GaugeWidget.h"
 #include "BoxWidget.h"
+#include "GaugeWidget.h"
+#include "GridPos.h"
+#include "LabelIndicatorWidget.h"
+#include "LabelWidget.h"
+#include "NumberWidget.h"
+#include "TextWidget.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
 
 #include <QGridLayout>
+#include <QMessageBox>
 #include <QString>
 #include <QStringView>
 #include <QTextStream>
-#include <QMessageBox>
 
 WidgetGrid::WidgetGrid(const QString &containerName, QWidget *parent)
     : QGridLayout(parent), containerName(containerName) {

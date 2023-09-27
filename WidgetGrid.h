@@ -19,14 +19,12 @@
 #ifndef WIDGET_GRID_H
 #define WIDGET_GRID_H
 
-#include "XMLFileReader.h"
-#include "GridPos.h"
-#include "Variables.h"
-#include "WidgetStyles.h"
-
 #include <QGridLayout>
-#include <QString>
-#include <QWidget>
+
+class GridPos;
+class Variables;
+class WidgetStyles;
+class XMLFileReader;
 
 class WidgetGrid : public QGridLayout {
 private:

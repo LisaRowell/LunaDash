@@ -23,14 +23,14 @@
 
 #include "Variables.h"
 #include "WidgetStyles.h"
-#include "GridPos.h"
-#include "XMLFileReader.h"
-#include "WidgetGrid.h"
 
 #include <QMainWindow>
+#include <QObject>
 #include <QString>
-#include <QFile>
-#include <QStringView>
+#include <QVector>
+
+class WidgetGrid;
+class XMLFileReader;
 
 class Dashboard : public QMainWindow, public XMLSourcedEntity {
     Q_OBJECT

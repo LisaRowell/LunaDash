@@ -19,9 +19,9 @@
 #ifndef XML_FILE_READER_H
 #define XML_FILE_READER_H
 
-#include <QXmlStreamReader>
-#include <QString>
 #include <QFile>
+#include <QString>
+#include <QXmlStreamReader>
 
 class XMLFileReader : public QXmlStreamReader {
 private:

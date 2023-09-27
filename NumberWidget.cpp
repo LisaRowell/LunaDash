@@ -18,8 +18,12 @@
 
 #include "NumberWidget.h"
 
-#include "XMLFileReader.h"
+#include "Variable.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
+
+#include <QString>
+#include <QVector>
 
 const QVector<QString> NumberWidget::allowedAttrs = {
     "variable", "precision", "suffix"

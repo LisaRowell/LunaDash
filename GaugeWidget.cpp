@@ -18,15 +18,16 @@
 
 #include "GaugeWidget.h"
 
-#include "XMLFileReader.h"
+#include "Variable.h"
 #include "Variables.h"
-
-#include <QVector>
-#include <QString>
-#include <QPainter>
+#include "XMLFileReader.h"
 
 #include <qwt_dial.h>
 #include <qwt_dial_needle.h>
+
+#include <QPainter>
+#include <QString>
+#include <QVector>
 
 const QVector<QString> GaugeWidget::allowedAttrs = {
     "variable", "precision", "suffix"

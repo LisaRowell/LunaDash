@@ -20,11 +20,8 @@
 #define WIDGET_H
 
 #include "XMLSourcedEntity.h"
-#include "GridPos.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
+class GridPos;
 
 class Widget : public XMLSourcedEntity {
 private:

@@ -17,8 +17,9 @@
  */
 
 #include "DoubleVariable.h"
-#include "XMLFileReader.h"
+
 #include "Variables.h"
+#include "XMLFileReader.h"
 
 #include <QString>
 

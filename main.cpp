@@ -20,9 +20,9 @@
 #include "XMLFileReader.h"
 
 #include <QApplication>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
 
 [[noreturn]] static void missingXMLDocumentError(const XMLFileReader &xmlReader);
 [[noreturn]] static void xmlDocumentTypeError(const XMLFileReader &xmlReader);

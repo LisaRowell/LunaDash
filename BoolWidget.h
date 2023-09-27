@@ -20,10 +20,11 @@
 #define BOOL_WIDGET_H
 
 #include "ValuedWidget.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
 
 #include <QLabel>
+
+class Variables;
+class XMLFileReader;
 
 class BoolWidget : public QLabel, public ValuedWidget {
 protected:

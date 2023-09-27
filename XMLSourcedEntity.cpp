@@ -17,15 +17,16 @@
  */
 
 #include "XMLSourcedEntity.h"
+
 #include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
-#include <QXmlStreamAttributes>
-#include <QXmlStreamAttribute>
-#include <QTextStream>
 #include <QMessageBox>
+#include <QString>
 #include <QStringView>
+#include <QTextStream>
+#include <QVector>
+#include <QXmlStreamAttribute>
+#include <QXmlStreamAttributes>
 
 XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
                                    const QVector<QString> &requiredAttrs)

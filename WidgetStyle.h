@@ -20,13 +20,12 @@
 #define WIDGET_STYLE_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
 
-
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 class WidgetStyles;
+class XMLFileReader;
 
 class WidgetStyle : public XMLSourcedEntity {
 private:
@@ -45,9 +44,6 @@ private:
     QString leftPadding_;
     QString rightPadding_;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
     void setBase(const XMLFileReader &xmlReader,
                  const WidgetStyles &widgetStyles);
     const QString backgroundColor() const;
@@ -64,6 +60,9 @@ private:
     [[noreturn]] void
     duplicateStyleNamesErrors(const QString &name,
                               const XMLFileReader &xmlReader) const;
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
     WidgetStyle();

@@ -20,14 +20,14 @@
 #define TOPIC_H
 
 #include "XMLSourcedEntity.h"
-#include "Variables.h"
-#include "XMLFileReader.h"
 
 #include <QObject>
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 class MQTTClient;
+class Variable;
+class Variables;
 
 class Topic : public QObject, public XMLSourcedEntity {
     Q_OBJECT
@@ -36,13 +36,13 @@ private:
     QString path_;
     MQTTClient *mqttClient_;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
     void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     void addBoolVariable(XMLFileReader &xmlReader, Variables &variables);
     void addJSONDecoder(XMLFileReader &xmlReader, Variables &variables);
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
     Topic(XMLFileReader &xmlReader, Variables &variables,

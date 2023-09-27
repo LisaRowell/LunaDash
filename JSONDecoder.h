@@ -20,13 +20,14 @@
 #define JSON_DECODER_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
-#include "JSONField.h"
 
 #include <QObject>
-#include <QVector>
 #include <QString>
+#include <QVector>
+
+class JSONField;
+class Variables;
+class XMLFileReader;
 
 class JSONDecoder : public QObject, public XMLSourcedEntity {
     Q_OBJECT
@@ -34,10 +35,10 @@ class JSONDecoder : public QObject, public XMLSourcedEntity {
 private:
     QVector<JSONField *> fields;
 
+    void addField(XMLFileReader &xmlReader, Variables &variables);
+
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
-
-    void addField(XMLFileReader &xmlReader, Variables &variables);
 
 public:
     JSONDecoder(XMLFileReader &xmlReader, Variables &variables);

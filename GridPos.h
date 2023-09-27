@@ -20,10 +20,11 @@
 #define GRID_POS_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
+
+class XMLFileReader;
 
 class GridPos : public XMLSourcedEntity {
 private:

@@ -18,20 +18,21 @@
 
 #include "Dashboard.h"
 
-#include "XMLFileReader.h"
+#include "DurationDescriber.h"
 #include "MQTTClient.h"
 #include "Variables.h"
 #include "WidgetGrid.h"
-#include "DurationDescriber.h"
+#include "WidgetStyle.h"
+#include "XMLFileReader.h"
 
-#include <QFile>
-#include <QMessageBox>
-#include <QString>
-#include <QTextStream>
-#include <QStringView>
-#include <QShortcut>
-#include <QKeySequence>
 #include <QApplication>
+#include <QFile>
+#include <QKeySequence>
+#include <QMessageBox>
+#include <QShortcut>
+#include <QString>
+#include <QStringView>
+#include <QTextStream>
 
 const QVector<QString> Dashboard::allowedAttrs = { };
 const QVector<QString> Dashboard::requiredAttrs = { };

@@ -20,23 +20,24 @@
 #define DURATION_DESCRIBER_H
 
 #include "Transformer.h"
-#include "Variable.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
+
+class Variable;
+class Variables;
+class XMLFileReader;
 
 class DurationDescriber : public Transformer {
 private:
     Variable *secondsVariable;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
     virtual void recalculate() override;
     void unknownVariableWarning(const QString &variableName,
                                 const XMLFileReader &xmlReader) const;
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
     DurationDescriber(XMLFileReader &xmlReader, Variables &variables);

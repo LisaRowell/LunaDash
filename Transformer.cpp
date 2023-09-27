@@ -18,16 +18,16 @@
 
 #include "Transformer.h"
 
-#include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
+#include "StringVariable.h"
 #include "Variable.h"
 #include "Variables.h"
-#include "StringVariable.h"
+#include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QString>
-#include <QVector>
-#include <QTextStream>
 #include <QMessageBox>
+#include <QString>
+#include <QTextStream>
+#include <QVector>
 
 Transformer::Transformer(const QVector<QString> &allowedAttrs,
                          const QVector<QString> &requiredAttrs)

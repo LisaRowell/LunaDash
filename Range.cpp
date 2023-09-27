@@ -20,8 +20,8 @@
 
 #include "XMLSourcedEntity.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 const QVector<QString> Range::allowedAttrs = { "min", "max" };
 const QVector<QString> Range::requiredAttrs = { "min", "max" };

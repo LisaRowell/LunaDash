@@ -18,12 +18,13 @@
 
 #include "DurationDescriber.h"
 
-#include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
+#include "Variable.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 const QVector<QString> DurationDescriber::allowedAttrs = { "seconds" };
 const QVector<QString> DurationDescriber::requiredAttrs = { "seconds" };

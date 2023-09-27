@@ -20,20 +20,22 @@
 #define MQTT_CLIENT_H
 
 #include "XMLSourcedEntity.h"
-#include "Variables.h"
-#include "BoolVariable.h"
-#include "Topic.h"
-#include "XMLFileReader.h"
+
 #include "ClientId.h"
-#include "UserId.h"
 #include "TLSInfo.h"
+#include "UserId.h"
 
 #include <MQTTAsync.h>
 
-#include <QVector>
-#include <QString>
-#include <QObject>
 #include <QMap>
+#include <QObject>
+#include <QString>
+#include <QVector>
+
+class BoolVariable;
+class Topic;
+class Variables;
+class XMLFileReader;
 
 class MQTTClient : public QObject, public XMLSourcedEntity {
     Q_OBJECT
@@ -47,9 +49,6 @@ private:
     MQTTAsync handle;
     QVector<BoolVariable *> statusVariables;
     QMap<QString, Topic *> topics;
-
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
 
     void parseAttributes(XMLFileReader &xmlReader);
     void startConnection();
@@ -80,6 +79,9 @@ private:
                                          MQTTAsync_successData *response);
     static void subscribeFailureCallback(void *context,
                                          MQTTAsync_failureData *response);
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
     MQTTClient(XMLFileReader &xmlReader, Variables &variables);

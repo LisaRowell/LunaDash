@@ -20,13 +20,15 @@
 #define JSON_FIELD_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
 
 #include <QObject>
-#include <QString>
 #include <QJsonValue>
-#include <QJsonObject>
+#include <QString>
+
+class Variables;
+class XMLFileReader;
+
+class QJsonObject;
 
 class JSONField : public QObject, public XMLSourcedEntity {
     Q_OBJECT
@@ -35,9 +37,6 @@ private:
     QString label;
     QJsonValue::Type type;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
     void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     void addBoolVariable(XMLFileReader &xmlReader, Variables &variables);
@@ -45,6 +44,9 @@ private:
     void receivedValueForDouble(QJsonValue &value);
     void receivedValueForBool(QJsonValue &value);
     void multipleVariableWarning(XMLFileReader &xmlReader) const;
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
     JSONField(XMLFileReader &xmlReader, Variables &variables);

@@ -20,14 +20,16 @@
 #define BOX_WIDGET_H
 
 #include "Widget.h"
-#include "WidgetGrid.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
-#include "WidgetStyles.h"
 
 #include <QGroupBox>
-#include <QVector>
+
 #include <QString>
+#include <QVector>
+
+class Variables;
+class WidgetGrid;
+class WidgetStyles;
+class XMLFileReader;
 
 class BoxWidget : public QGroupBox, public Widget {
 private:

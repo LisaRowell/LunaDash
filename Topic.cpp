@@ -18,18 +18,18 @@
 
 #include "Topic.h"
 
-#include "XMLSourcedEntity.h"
-#include "Variables.h"
-#include "Variable.h"
-#include "StringVariable.h"
-#include "DoubleVariable.h"
 #include "BoolVariable.h"
+#include "DoubleVariable.h"
 #include "JSONDecoder.h"
+#include "StringVariable.h"
+#include "Variable.h"
+#include "Variables.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
-#include <QString>
 #include <QObject>
+#include <QString>
+#include <QVector>
 
 const QVector<QString> Topic::allowedAttrs = { "path" };
 const QVector<QString> Topic::requiredAttrs = { "path" };

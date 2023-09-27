@@ -18,16 +18,16 @@
 
 #include "ClientId.h"
 
-#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
+#include <QHostInfo>
+#include <QMessageBox>
+#include <QRandomGenerator>
 #include <QString>
 #include <QStringView>
 #include <QTextStream>
-#include <QMessageBox>
-#include <QHostInfo>
-#include <QRandomGenerator>
+#include <QVector>
 
 const QVector<QString> ClientId::allowedAttrs = {
     "id", "randomize", "hostPrefix"

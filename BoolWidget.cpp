@@ -18,12 +18,13 @@
 
 #include "BoolWidget.h"
 
-#include "XMLFileReader.h"
+#include "Variable.h"
 #include "Variables.h"
+#include "XMLFileReader.h"
 
 BoolWidget::BoolWidget(XMLFileReader &xmlReader, const Variables &variables)
     : ValuedWidget("Bool", xmlReader, variables) {
-    setValue();
+    BoolWidget::setValue();
 
     // Loop through the child elements, any that are there are for Widget
     while (xmlReader.readNextStartElement()) {

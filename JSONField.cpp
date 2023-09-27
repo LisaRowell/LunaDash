@@ -18,19 +18,19 @@
 
 #include "JSONField.h"
 
-#include "XMLFileReader.h"
-#include "Variables.h"
-#include "XMLSourcedEntity.h"
-#include "StringVariable.h"
-#include "DoubleVariable.h"
 #include "BoolVariable.h"
+#include "DoubleVariable.h"
+#include "StringVariable.h"
+#include "Variables.h"
+#include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
-#include <QString>
-#include <QJsonValue>
 #include <QJsonObject>
-#include <QTextStream>
+#include <QJsonValue>
 #include <QMessageBox>
+#include <QString>
+#include <QTextStream>
+#include <QVector>
 
 const QVector<QString> JSONField::allowedAttrs = { "label" };
 const QVector<QString> JSONField::requiredAttrs = { "label" };

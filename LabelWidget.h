@@ -21,11 +21,11 @@
 
 #include "Widget.h"
 
-#include "XMLFileReader.h"
-
 #include <QLabel>
 #include <QString>
 #include <QVector>
+
+class XMLFileReader;
 
 class LabelWidget : public QLabel, public Widget {
 private:

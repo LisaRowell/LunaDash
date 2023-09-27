@@ -20,10 +20,11 @@
 #define RANGE_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
+
+class XMLFileReader;
 
 class Range : XMLSourcedEntity {
 private:

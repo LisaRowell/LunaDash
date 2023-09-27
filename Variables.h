@@ -19,10 +19,10 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-#include "Variable.h"
-
 #include <QMap>
 #include <QString>
+
+class Variable;
 
 class Variables {
 private:

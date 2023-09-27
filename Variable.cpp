@@ -21,10 +21,10 @@
 #include "Variables.h"
 #include "XMLFileReader.h"
 
-#include <QVector>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
+#include <QVector>
 
 const QVector<QString> Variable::allowedAttrs = { "name" };
 const QVector<QString> Variable::requiredAttrs = { "name" };

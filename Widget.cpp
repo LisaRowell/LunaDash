@@ -18,9 +18,9 @@
 
 #include "Widget.h"
 
-#include "XMLSourcedEntity.h"
 #include "GridPos.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
 #include <QString>
 #include <QVector>

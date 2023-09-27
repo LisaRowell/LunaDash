@@ -18,15 +18,15 @@
 
 #include "BoxWidget.h"
 
-#include "WidgetGrid.h"
-#include "XMLFileReader.h"
 #include "Variables.h"
+#include "WidgetGrid.h"
 #include "WidgetStyles.h"
+#include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
 #include <QStringView>
 #include <QWidget>
+#include <QVector>
 
 const QVector<QString> BoxWidget::allowedAttrs = { "label", "flat" };
 const QVector<QString> BoxWidget::requiredAttrs = { };

@@ -18,6 +18,8 @@
 
 #include "Variables.h"
 
+#include "Variable.h"
+
 #include <QString>
 
 Variables::Variables() {

@@ -23,8 +23,8 @@
 #include "Variables.h"
 #include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 TextWidget::TextWidget(XMLFileReader &xmlReader, const Variables &variables)
     : ValuedWidget("Text", xmlReader, variables) {

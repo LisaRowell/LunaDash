@@ -18,24 +18,24 @@
 
 #include "ValuedWidget.h"
 
-#include "Widget.h"
-#include "Variables.h"
 #include "Variable.h"
+#include "Variables.h"
+#include "Widget.h"
 #include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
-#include <QObject>
-#include <QTextStream>
 #include <QMessageBox>
+#include <QObject>
+#include <QString>
+#include <QTextStream>
+#include <QVector>
 
 const QVector<QString> ValuedWidget::baseAllowedAttrs = { "variable" };
 const QVector<QString> ValuedWidget::baseRequiredAttrs = { };
 
 ValuedWidget::ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
                            const Variables &variables,
-                           const QVector<QString> allowedAttrs,
-                           const QVector<QString> requiredAttrs)
+                           const QVector<QString> &allowedAttrs,
+                           const QVector<QString> &requiredAttrs)
     : Widget(allowedAttrs, requiredAttrs) {
     checkAttrs(xmlReader);
 

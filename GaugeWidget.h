@@ -20,14 +20,15 @@
 #define GAUGE_WIDGET_H
 
 #include "ValuedWidget.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
 #include "Range.h"
 
 #include <qwt_dial.h>
 
 #include <QString>
 #include <QVector>
+
+class Variables;
+class XMLFileReader;
 
 class GaugeWidget : public QwtDial, public ValuedWidget {
 private:
@@ -37,10 +38,10 @@ private:
     bool precisionSet;
     unsigned precision;
 
+    void initGauge();
+
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
-
-    void initGauge();
 
 protected:
     virtual void setValue() override;

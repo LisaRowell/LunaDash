@@ -20,8 +20,8 @@
 
 #include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 const QVector<QString> GridPos::allowedAttrs = {
     "row", "col", "rowSpan", "colSpan"

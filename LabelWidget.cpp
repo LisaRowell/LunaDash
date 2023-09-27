@@ -18,11 +18,11 @@
 
 #include "LabelWidget.h"
 
-#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 const QVector<QString> LabelWidget::allowedAttrs = { "text" };
 const QVector<QString> LabelWidget::requiredAttrs = { "text" };

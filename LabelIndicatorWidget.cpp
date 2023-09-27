@@ -19,12 +19,13 @@
 #include "LabelIndicatorWidget.h"
 
 #include "ValuedWidget.h"
-#include "XMLFileReader.h"
+#include "Variable.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
+#include "XMLFileReader.h"
 
-#include <QVector>
 #include <QString>
+#include <QVector>
 
 const QVector<QString> LabelIndicatorWidget::allowedAttrs = { "text", "variable" };
 const QVector<QString> LabelIndicatorWidget::requiredAttrs = { };

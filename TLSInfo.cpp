@@ -18,14 +18,14 @@
 
 #include "TLSInfo.h"
 
-#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
+#include <QByteArray>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
-#include <QByteArray>
+#include <QVector>
 
 const QVector<QString> TLSInfo::allowedAttrs = { };
 const QVector<QString> TLSInfo::requiredAttrs = { };

@@ -19,10 +19,10 @@
 #ifndef WIDGET_STYLES_H
 #define WIDGET_STYLES_H
 
-#include "WidgetStyle.h"
-
 #include <QMap>
 #include <QString>
+
+class WidgetStyle;
 
 class WidgetStyles {
 private:

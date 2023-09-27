@@ -20,13 +20,14 @@
 #define VALUED_WIDGET_H
 
 #include "Widget.h"
-#include "Variable.h"
-#include "Variables.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
 #include <QObject>
+#include <QString>
+#include <QVector>
+
+class Variable;
+class Variables;
+class XMLFileReader;
 
 class ValuedWidget : public QObject, public Widget {
     Q_OBJECT
@@ -47,8 +48,8 @@ protected:
 public:
     ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
                  const Variables &variables,
-                 const QVector<QString> allowedAttrs = baseAllowedAttrs,
-                 const QVector<QString> requiredAttrs = baseRequiredAttrs);
+                 const QVector<QString> &allowedAttrs = baseAllowedAttrs,
+                 const QVector<QString> &requiredAttrs = baseRequiredAttrs);
 
 public slots:
     void valueChanged();

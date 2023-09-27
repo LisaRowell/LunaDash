@@ -20,11 +20,11 @@
 #define TEXT_WIDGET_H
 
 #include "ValuedWidget.h"
-#include "Variables.h"
-#include "XMLFileReader.h"
 
 #include <QLabel>
-#include <QString>
+
+class Variables;
+class XMLFileReader;
 
 class TextWidget : public QLabel, public ValuedWidget {
 protected:

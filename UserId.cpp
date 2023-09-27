@@ -18,13 +18,13 @@
 
 #include "UserId.h"
 
-#include "XMLSourcedEntity.h"
 #include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
-#include <QVector>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
+#include <QVector>
 
 const QVector<QString> UserId::allowedAttrs = { "name", "password" };
 const QVector<QString> UserId::requiredAttrs = { "name" };

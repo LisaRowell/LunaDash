@@ -20,11 +20,12 @@
 #define USER_ID_H
 
 #include "XMLSourcedEntity.h"
-#include "XMLFileReader.h"
 
-#include <QVector>
-#include <QString>
 #include <QByteArray>
+#include <QString>
+#include <QVector>
+
+class XMLFileReader;
 
 class UserId : public XMLSourcedEntity {
 private:

@@ -19,18 +19,15 @@
 #ifndef XML_SOURCED_ENTITY_H
 #define XML_SOURCED_ENTITY_H
 
-#include "XMLFileReader.h"
-
-#include <QVector>
 #include <QString>
-#include <QXmlStreamAttributes>
-#include <QXmlStreamAttribute>
+#include <QVector>
+
+class XMLFileReader;
+
+class QXmlStreamAttribute;
 
 class XMLSourcedEntity {
 private:
-    const QVector<QString> &allowedAttrs;
-    const QVector<QString> &requiredAttrs;
-
     void verifyLoneAttribute(const QString &attributeName,
                              const XMLFileReader &xmlReader);
     void unsupportedAttrWarning(const QXmlStreamAttribute &attribute,
@@ -46,6 +43,9 @@ private:
                               const XMLFileReader &xmlReader) const;
     void badBoolAttrWarning(const QString &name, const QStringView &attribute,
                             const XMLFileReader &xmlReader) const;
+
+    const QVector<QString> &allowedAttrs;
+    const QVector<QString> &requiredAttrs;
 
 protected:
     void checkAttrs(const XMLFileReader &xmlReader);

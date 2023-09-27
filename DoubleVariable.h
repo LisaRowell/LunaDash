@@ -20,11 +20,12 @@
 #define DOUBLE_VARIABLE_H
 
 #include "Variable.h"
-#include "XMLFileReader.h"
-#include "Variables.h"
 
 #include <QObject>
 #include <QString>
+
+class Variables;
+class XMLFileReader;
 
 class DoubleVariable : public Variable {
     Q_OBJECT
