@@ -42,7 +42,7 @@ ValuedWidget::ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
     const QString variableName = stringAttribute("variable", xmlReader);
     if (!variableName.isEmpty()) {
         variable = variables.find(variableName);
-        if (variable != NULL) {
+        if (variable != nullptr) {
             connect(variable, &Variable::valueChangedSignal,
                     this, &ValuedWidget::valueChanged);
         } else {
@@ -64,7 +64,7 @@ ValuedWidget::unknownVariableWarning(const QString &widgetType,
     QString warningStr;
     QTextStream warningStream(&warningStr);
 
-    warningStream << widgetType <<" with an unknown variable '"
+    warningStream << widgetType << " with an unknown variable '"
                   << variableName << "' in file " << xmlReader.fileReference()
                   << ":" << Qt::endl;
     warningStream << "Ignored.";
