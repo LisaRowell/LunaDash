@@ -55,6 +55,8 @@ GaugeWidget::GaugeWidget(XMLFileReader &xmlReader, const Variables &variables)
 }
 
 void GaugeWidget::initGauge() {
+    setMinimumSize(150, 150);
+
     setOrigin(135.0);
     setScaleArc(0.0, 270.0);
 
