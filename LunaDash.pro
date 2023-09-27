@@ -26,6 +26,8 @@ SOURCES += \
     NumberWidget.cpp \
     Range.cpp \
     StringVariable.cpp \
+    TabBarWidget.cpp \
+    TabWidget.cpp \
     TextWidget.cpp \
     TLSInfo.cpp \
     Topic.cpp \
@@ -61,6 +63,8 @@ HEADERS += \
     Range.h \
     StringVariable.h \
     TLSInfo.h \
+    TabBarWidget.h \
+    TabWidget.h \
     TextWidget.h \
     Topic.h \
     Transformer.h \

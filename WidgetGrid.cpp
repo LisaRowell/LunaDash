@@ -25,6 +25,7 @@
 #include "LabelIndicatorWidget.h"
 #include "LabelWidget.h"
 #include "NumberWidget.h"
+#include "TabBarWidget.h"
 #include "TextWidget.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
@@ -63,6 +64,9 @@ bool WidgetGrid::handleXMLElement(const QStringView &name,
         return true;
     } else if (name.compare("Box") == 0) {
         addBoxWidget(xmlReader, variables, widgetStyles);
+        return true;
+    } else if (name.compare("TabBar") == 0) {
+        addTabBarWidget(xmlReader, variables, widgetStyles);
         return true;
     } else {
         return false;
@@ -116,6 +120,15 @@ void WidgetGrid::addBoxWidget(XMLFileReader &xmlReader,
     BoxWidget *boxWidget
         = new BoxWidget(xmlReader, variables, widgetStyles);
     addWidgetToLayout(boxWidget, boxWidget->gridPos(), "Box", xmlReader);
+}
+
+void WidgetGrid::addTabBarWidget(XMLFileReader &xmlReader,
+                                 const Variables &variables,
+                                 WidgetStyles &widgetStyles) {
+    TabBarWidget *tabBarWidget
+        = new TabBarWidget(xmlReader, variables, widgetStyles);
+    addWidgetToLayout(tabBarWidget, tabBarWidget->gridPos(), "TabBar",
+                      xmlReader);
 }
 
 void WidgetGrid::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,

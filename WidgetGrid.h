@@ -40,6 +40,8 @@ private:
                                  WidgetStyles &widgetStyles);
     void addBoxWidget(XMLFileReader &xmlReader, const Variables &variables,
                       WidgetStyles &widgetStyles);
+    void addTabBarWidget(XMLFileReader &xmlReader, const Variables &variables,
+                         WidgetStyles &widgetStyles);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                            const QString &typeName, XMLFileReader &xmlReader);
     void addGaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
