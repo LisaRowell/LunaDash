@@ -16,33 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef STRING_VARIABLE_H
-#define STRING_VARIABLE_H
+#ifndef ADDER_H
+#define ADDER_H
 
-#include "Variable.h"
+#include "Transformer.h"
 
-#include <QObject>
 #include <QString>
+#include <QVector>
 
-class Variables;
-class XMLFileReader;
+class Variable;
 
-class StringVariable : public Variable {
-    Q_OBJECT
-
+class Adder : public Transformer {
 private:
-    QString value_;
+    QVector<Variable *> addendVariables;
+
+    void addAddend(XMLFileReader &xmlReader, Variables &variables);
+    virtual void recalculate() override;
+
+    static const QVector<QString> allowedAttrs;
+    static const QVector<QString> requiredAttrs;
 
 public:
-    StringVariable(XMLFileReader &xmlReader, Variables &variables,
-                   const QString &initialValue = "");
-    virtual const QString string() const override;
-    virtual double doubleValue(bool *valid) const override;
-    virtual bool boolValue(bool *valid) const override;
-
-public slots:
-    void newStringValue(const QString &value);
-    void newDoubleValue(double value);
+    Adder(XMLFileReader &xmlReader, Variables &variables);
 };
 
-#endif // STRING_VARIABLE_H
+#endif // ADDER_H

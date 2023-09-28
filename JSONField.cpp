@@ -61,7 +61,7 @@ void JSONField::addStringVariable(XMLFileReader &xmlReader,
         StringVariable *variable = new StringVariable(xmlReader, variables);
         variables.addVariable(variable);
         connect(this, &JSONField::stringFieldChangedSignal,
-                variable, &StringVariable::newValue);
+                variable, &StringVariable::newStringValue);
         type = QJsonValue::String;
     } else {
         multipleVariableWarning(xmlReader);

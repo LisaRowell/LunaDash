@@ -62,7 +62,7 @@ void Topic::addStringVariable(XMLFileReader &xmlReader,
     StringVariable *variable = new StringVariable(xmlReader, variables);
     variables.addVariable(variable);
     connect(this, &Topic::messageReceivedSignal,
-            variable, &StringVariable::newValue);
+            variable, &StringVariable::newStringValue);
 }
 
 void Topic::addDoubleVariable(XMLFileReader &xmlReader,

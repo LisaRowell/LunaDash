@@ -61,8 +61,14 @@ bool StringVariable::boolValue(bool *valid) const  {
     }
 }
 
-void StringVariable::newValue(const QString &value) {
+void StringVariable::newStringValue(const QString &value) {
     hasValue_ = true;
     value_ = value;
+    valueChanged();
+}
+
+void StringVariable::newDoubleValue(double value) {
+    hasValue_ = true;
+    value_ = QString::number(value);
     valueChanged();
 }

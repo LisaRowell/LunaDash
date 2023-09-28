@@ -18,6 +18,7 @@
 
 #include "Transformer.h"
 
+#include "DoubleVariable.h"
 #include "StringVariable.h"
 #include "Variable.h"
 #include "Variables.h"
@@ -66,6 +67,8 @@ void Transformer::handleChildElement(const QStringView &elementName,
                                      Variables &variables) {
     if (elementName.compare("String") == 0) {
         addStringVariable(xmlReader, variables);
+    } else if (elementName.compare("Double") == 0) {
+        addDoubleVariable(xmlReader, variables);
     } else {
         unsupportedChildElement(transformerName, xmlReader);
         xmlReader.skipCurrentElement();
@@ -77,9 +80,20 @@ void Transformer::addStringVariable(XMLFileReader &xmlReader,
     StringVariable *variable = new StringVariable(xmlReader, variables);
     variables.addVariable(variable);
     connect(this, &Transformer::newStringValueSignal,
-            variable, &StringVariable::newValue);
+            variable, &StringVariable::newStringValue);
+    connect(this, &Transformer::newDoubleValueSignal,
+            variable, &StringVariable::newDoubleValue);
 }
 
+void Transformer::addDoubleVariable(XMLFileReader &xmlReader,
+                                    Variables &variables) {
+    DoubleVariable *variable = new DoubleVariable(xmlReader, variables);
+    variables.addVariable(variable);
+    connect(this, &Transformer::newStringValueSignal,
+            variable, &DoubleVariable::newStringValue);
+    connect(this, &Transformer::newDoubleValueSignal,
+            variable, &DoubleVariable::newDoubleValue);
+}
 
 void Transformer::inputChanged() {
     recalculate();
@@ -87,6 +101,10 @@ void Transformer::inputChanged() {
 
 void Transformer::publishResult(const QString &result) {
     emit newStringValueSignal(result);
+}
+
+void Transformer::publishResult(double result) {
+    emit newDoubleValueSignal(result);
 }
 
 void

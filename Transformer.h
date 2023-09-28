@@ -33,6 +33,7 @@ class Transformer : public QObject, public XMLSourcedEntity {
 
 private:
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);
+    void addDoubleVariable(XMLFileReader &xmlReader, Variables &variables);
     void unknownVariableWarning(const QString &transformerName,
                                 const QString &variableName,
                                 const XMLFileReader &xmlReader) const;
@@ -48,6 +49,7 @@ protected:
                             const QString transformerName,
                             XMLFileReader &xmlReader, Variables &variables);
     void publishResult(const QString &result);
+    void publishResult(double result);
     virtual void recalculate() = 0;
 
 public:
@@ -58,7 +60,8 @@ public slots:
     void inputChanged();
 
 signals:
-    void newStringValueSignal(const QString &description);
+    void newStringValueSignal(const QString &value);
+    void newDoubleValueSignal(double value);
 };
 
 #endif // TRANSFORMER_H
