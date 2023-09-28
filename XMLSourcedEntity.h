@@ -44,11 +44,7 @@ private:
     void badBoolAttrWarning(const QString &name, const QStringView &attribute,
                             const XMLFileReader &xmlReader) const;
 
-    const QVector<QString> &allowedAttrs;
-    const QVector<QString> &requiredAttrs;
-
 protected:
-    void checkAttrs(const XMLFileReader &xmlReader);
     void checkAttrs(const XMLFileReader &xmlReader,
                     const QVector<QString> &allowedAttrs,
                     const QVector<QString> &requiredAttrs);
@@ -75,9 +71,10 @@ protected:
     void unsupportedChildElement(const QString &parentName,
                                  const XMLFileReader &xmlReader) const;
 
+    static const QVector<QString> emptyAttrsList;
+
 public:
-    XMLSourcedEntity(const QVector<QString> &allowedAttrs,
-                     const QVector<QString> &requiredAttrs);
+    XMLSourcedEntity();
 };
 
 #endif // XML_SOURCED_ENTITY_H

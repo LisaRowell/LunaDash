@@ -25,14 +25,13 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> NumberWidget::allowedAttrs = {
-    "variable", "precision", "suffix"
+const QVector<QString> NumberWidget::additionalAllowedAttrs = {
+    "precision", "suffix"
 };
-const QVector<QString> NumberWidget::requiredAttrs = { };
 
 NumberWidget::NumberWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Number", xmlReader, variables, allowedAttrs,
-                   requiredAttrs),
+    : ValuedWidget("Number", xmlReader, variables, additionalAllowedAttrs,
+                   emptyAttrsList),
       precisionSet(false) {
     NumberWidget::setValue();
 

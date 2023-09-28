@@ -20,7 +20,6 @@
 
 #include "Variable.h"
 #include "Variables.h"
-#include "Widget.h"
 #include "XMLFileReader.h"
 
 #include <QMessageBox>
@@ -30,14 +29,17 @@
 #include <QVector>
 
 const QVector<QString> ValuedWidget::baseAllowedAttrs = { "variable" };
-const QVector<QString> ValuedWidget::baseRequiredAttrs = { };
+const QVector<QString> ValuedWidget::baseRequiredAttrs = {};
 
 ValuedWidget::ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
                            const Variables &variables,
-                           const QVector<QString> &allowedAttrs,
-                           const QVector<QString> &requiredAttrs)
-    : Widget(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+                           const QVector<QString> &additionalAllowedAttrs,
+                           const QVector<QString> &additionalRequiredAttrs) {
+    const QVector<QString> allowedAttrs = baseAllowedAttrs
+                                          + additionalAllowedAttrs;
+    const QVector<QString> requiredAttrs = baseRequiredAttrs
+                                           + additionalRequiredAttrs;
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
 
     const QString variableName = stringAttribute("variable", xmlReader);
     if (!variableName.isEmpty()) {

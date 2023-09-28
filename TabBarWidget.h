@@ -35,9 +35,6 @@ private:
     void addTabWidget(XMLFileReader &xmlReader, const Variables &variables,
                       WidgetStyles &widgetStyles);
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
 public:
     TabBarWidget(XMLFileReader &xmlReader, const Variables &variables,
                  WidgetStyles &widgetStyles);

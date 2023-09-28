@@ -28,29 +28,9 @@
 #include <QXmlStreamAttribute>
 #include <QXmlStreamAttributes>
 
-XMLSourcedEntity::XMLSourcedEntity(const QVector<QString> &allowedAttrs,
-                                   const QVector<QString> &requiredAttrs)
-    : allowedAttrs(allowedAttrs), requiredAttrs(requiredAttrs) {
-}
+const QVector<QString> XMLSourcedEntity::emptyAttrsList = {};
 
-void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader) {
-    const QXmlStreamAttributes &attributes = xmlReader.attributes();
-    QVector<QString> requiredNotFound(requiredAttrs);
-
-    for (auto iterator = attributes.begin(); iterator != attributes.end();
-         ++iterator) {
-        const QXmlStreamAttribute &attribute = *iterator;
-
-        if (!allowedAttrs.contains(attribute.name())) {
-            unsupportedAttrWarning(attribute, xmlReader);
-        }
-
-        requiredNotFound.removeOne(attribute.name());
-    }
-
-    if (requiredNotFound.count()) {
-        missingRequiredAttrError(requiredNotFound.first(), xmlReader);
-    }
+XMLSourcedEntity::XMLSourcedEntity() {
 }
 
 void XMLSourcedEntity::checkAttrs(const XMLFileReader &xmlReader,

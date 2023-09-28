@@ -41,7 +41,6 @@ private:
                            QString &serverName) const;
 
     static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
 
 public:
     ClientId();

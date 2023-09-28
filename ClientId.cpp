@@ -32,11 +32,10 @@
 const QVector<QString> ClientId::allowedAttrs = {
     "id", "randomize", "hostPrefix"
 };
-const QVector<QString> ClientId::requiredAttrs = { };
 
 ClientId::ClientId()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), set_(false),
-      base("LunaDash"), randomize(false), prefixWithHostName(false) {
+    : set_(false), base("LunaDash"), randomize(false),
+      prefixWithHostName(false) {
     buildId();
 }
 
@@ -45,10 +44,10 @@ void ClientId::set(XMLFileReader &xmlReader, QString &serverName) {
         multipleIdWarning(xmlReader, serverName);
         xmlReader.skipCurrentElement();
     } else {
-        checkAttrs(xmlReader);
+        checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
 
         set_ = true;
-        base = stringAttribute("id", xmlReader);
+        base = stringAttribute("id", xmlReader, "LunaDash");
         randomize = boolAttribute("randomize", xmlReader, false);
         prefixWithHostName = boolAttribute("hostPrefix", xmlReader, false);
         buildId();

@@ -44,8 +44,6 @@ private:
     void initWindow();
     void createShortcuts();
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
     static const QString className;
 
 public:

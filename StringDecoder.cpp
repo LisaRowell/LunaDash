@@ -29,11 +29,10 @@
 const QVector<QString> StringDecoder::allowedAttrs = { "string" };
 const QVector<QString> StringDecoder::requiredAttrs = { "string" };
 
-StringDecoder::StringDecoder(XMLFileReader &xmlReader, Variables &variables)
-    : Transformer(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
-    inputVariable = findSourceVariable("string", "StringDecoder",
-                                         xmlReader, variables);
+StringDecoder::StringDecoder(XMLFileReader &xmlReader, Variables &variables) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
+    inputVariable = findSourceVariable("string", "StringDecoder", xmlReader,
+                                       variables);
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();

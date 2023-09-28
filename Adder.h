@@ -33,9 +33,6 @@ private:
     void addAddend(XMLFileReader &xmlReader, Variables &variables);
     virtual void recalculate() override;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
 public:
     Adder(XMLFileReader &xmlReader, Variables &variables);
 };

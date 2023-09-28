@@ -29,14 +29,13 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> GaugeWidget::allowedAttrs = {
-    "variable", "precision", "suffix"
+const QVector<QString> GaugeWidget::additionalAllowedAttrs = {
+    "precision", "suffix"
 };
-const QVector<QString> GaugeWidget::requiredAttrs = { };
 
 GaugeWidget::GaugeWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Number", xmlReader, variables, allowedAttrs,
-                   requiredAttrs), showValueText(true) {
+    : ValuedWidget("Number", xmlReader, variables, additionalAllowedAttrs,
+                   emptyAttrsList), showValueText(true) {
     GaugeWidget::setValue();
 
     suffix = stringAttribute("suffix", xmlReader);

@@ -29,13 +29,11 @@
 #include <QVector>
 
 const QVector<QString> BoxWidget::allowedAttrs = { "label", "flat" };
-const QVector<QString> BoxWidget::requiredAttrs = { };
 const QString BoxWidget::className = "Box";
 
 BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
-                     WidgetStyles &widgetStyles)
-    : Widget(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+                     WidgetStyles &widgetStyles) {
+    checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
     const QString label = stringAttribute("label", xmlReader);
     if (!label.isEmpty()) {
         setTitle(label);

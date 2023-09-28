@@ -27,10 +27,9 @@
 const QVector<QString> LabelWidget::allowedAttrs = { "text" };
 const QVector<QString> LabelWidget::requiredAttrs = { "text" };
 
-LabelWidget::LabelWidget(XMLFileReader &xmlReader)
-    : Widget(allowedAttrs, requiredAttrs) {
+LabelWidget::LabelWidget(XMLFileReader &xmlReader) {
     // We should have just a single 'text' attribute.
-    checkAttrs(xmlReader);
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     const QString label = stringAttribute("text", xmlReader);
     setText(label);
 

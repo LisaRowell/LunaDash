@@ -25,9 +25,7 @@
 #include <QString>
 #include <QVector>
 
-Widget::Widget(const QVector<QString> &allowedAttrs,
-               const QVector<QString> &requiredAttrs)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), gridPos_(nullptr) {
+Widget::Widget() : gridPos_(nullptr) {
 }
 
 void Widget::handleChildElement(XMLFileReader &xmlReader,

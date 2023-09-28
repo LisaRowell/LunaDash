@@ -37,9 +37,6 @@ private:
     void multipleTLSWarning(XMLFileReader &xmlReader,
                             QString &serverName) const;
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
 public:
     TLSInfo();
     void set(XMLFileReader &xmlReader, QString &serverName);

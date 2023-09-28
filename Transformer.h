@@ -53,8 +53,7 @@ protected:
     virtual void recalculate() = 0;
 
 public:
-    Transformer(const QVector<QString> &allowedAttrs,
-                const QVector<QString> &requiredAttrs);
+    Transformer();
 
 public slots:
     void inputChanged();

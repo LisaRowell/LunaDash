@@ -32,9 +32,8 @@ const QVector<QString> TabWidget::requiredAttrs = { "title" };
 const QString TabWidget::className = "Tab";
 
 TabWidget::TabWidget(XMLFileReader &xmlReader, const Variables &variables,
-                     WidgetStyles &widgetStyles)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+                     WidgetStyles &widgetStyles) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     title_ = stringAttribute("title", xmlReader);
 
     layout = new WidgetGrid(className);

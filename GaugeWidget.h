@@ -40,8 +40,7 @@ private:
 
     void initGauge();
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
+    static const QVector<QString> additionalAllowedAttrs;
 
 protected:
     virtual void setValue() override;

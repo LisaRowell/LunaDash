@@ -39,8 +39,7 @@
 const QVector<QString> MQTTClient::allowedAttrs = { "server", "port" };
 const QVector<QString> MQTTClient::requiredAttrs = { "server" };
 
-MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables) {
     connect(this, &MQTTClient::connectFailureSignal,
             this, &MQTTClient::connectFailure);
     connect(this, &MQTTClient::connectedSignal, this, &MQTTClient::connected);
@@ -79,7 +78,7 @@ MQTTClient::MQTTClient(XMLFileReader &xmlReader,  Variables &variables)
 }
 
 void MQTTClient::parseAttributes(XMLFileReader &xmlReader) {
-    checkAttrs(xmlReader);
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
 
     serverName = stringAttribute("server", xmlReader);
     port = ushortAttribute("port", xmlReader, 1883);

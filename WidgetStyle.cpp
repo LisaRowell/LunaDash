@@ -28,19 +28,17 @@
 #include <QVector>
 
 const QVector<QString> WidgetStyle::allowedAttrs = { "name", "base" };
-const QVector<QString> WidgetStyle::requiredAttrs = { };
 
-WidgetStyle::WidgetStyle()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), base(nullptr) {
+WidgetStyle::WidgetStyle() : base(nullptr) {
 }
 
-WidgetStyle::WidgetStyle(XMLFileReader &xmlReader, WidgetStyles &widgetStyles)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+WidgetStyle::WidgetStyle(XMLFileReader &xmlReader,
+                         WidgetStyles &widgetStyles) {
     set(xmlReader, widgetStyles);
 }
 
 void WidgetStyle::set(XMLFileReader &xmlReader, WidgetStyles &widgetStyles) {
-    checkAttrs(xmlReader);
+    checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
 
     name_ = stringAttribute("name", xmlReader);
 

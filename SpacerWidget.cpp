@@ -25,14 +25,10 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> SpacerWidget::allowedAttrs = { };
-const QVector<QString> SpacerWidget::requiredAttrs = { };
-
 SpacerWidget::SpacerWidget(XMLFileReader &xmlReader)
     : QSpacerItem(10, 10, QSizePolicy::MinimumExpanding,
-                  QSizePolicy::MinimumExpanding),
-      Widget(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+                  QSizePolicy::MinimumExpanding) {
+    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
     while (xmlReader.readNextStartElement()) {
         handleChildElement(xmlReader, "Spacer");

@@ -28,9 +28,8 @@ const QVector<QString> GridPos::allowedAttrs = {
 };
 const QVector<QString> GridPos::requiredAttrs = { "row", "col" };
 
-GridPos::GridPos(XMLFileReader &xmlReader)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+GridPos::GridPos(XMLFileReader &xmlReader) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     row_ = unsignedAttribute("row", xmlReader);
     col_ = unsignedAttribute("col", xmlReader);
     rowSpan_ = unsignedAttribute("rowSpan", xmlReader, 1);

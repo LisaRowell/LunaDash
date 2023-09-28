@@ -25,12 +25,8 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> Adder::allowedAttrs = { };
-const QVector<QString> Adder::requiredAttrs = { };
-
-Adder::Adder(XMLFileReader &xmlReader, Variables &variables)
-    : Transformer(allowedAttrs, requiredAttrs){
-    checkAttrs(xmlReader);
+Adder::Adder(XMLFileReader &xmlReader, Variables &variables) {
+    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();

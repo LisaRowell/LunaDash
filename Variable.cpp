@@ -31,8 +31,8 @@ const QVector<QString> Variable::requiredAttrs = { "name" };
 
 Variable::Variable(const QString &typeName, XMLFileReader &xmlReader,
                    Variables &variables)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), hasValue_(false) {
-    checkAttrs(xmlReader);
+    : hasValue_(false) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     name_ = stringAttribute("name", xmlReader);
 
     // Make sure that the user hasn't defined multiple variables with the same

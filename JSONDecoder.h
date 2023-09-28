@@ -37,9 +37,6 @@ private:
 
     void addField(XMLFileReader &xmlReader, Variables &variables);
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
 public:
     JSONDecoder(XMLFileReader &xmlReader, Variables &variables);
 

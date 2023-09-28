@@ -36,14 +36,14 @@
 #include <QStringView>
 #include <QTextStream>
 
-const QVector<QString> Dashboard::allowedAttrs = { };
-const QVector<QString> Dashboard::requiredAttrs = { };
 const QString Dashboard::className = "Dashboard";
 
 Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
-    : QMainWindow(parent), XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+    : QMainWindow(parent) {
     initWindow();
     createShortcuts();
+
+    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();

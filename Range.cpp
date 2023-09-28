@@ -26,11 +26,11 @@
 const QVector<QString> Range::allowedAttrs = { "min", "max" };
 const QVector<QString> Range::requiredAttrs = { "min", "max" };
 
-Range::Range() : XMLSourcedEntity(allowedAttrs, requiredAttrs), set_(false) {
+Range::Range() : set_(false) {
 }
 
 void Range::set(XMLFileReader &xmlReader) {
-    checkAttrs(xmlReader);
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
 
     set_ = true;
     bool minValid;

@@ -48,8 +48,8 @@ protected:
 public:
     ValuedWidget(const QString &widgetType, XMLFileReader &xmlReader,
                  const Variables &variables,
-                 const QVector<QString> &allowedAttrs = baseAllowedAttrs,
-                 const QVector<QString> &requiredAttrs = baseRequiredAttrs);
+                 const QVector<QString> &additionalAllowedAttrs = emptyAttrsList,
+                 const QVector<QString> &additionalRequiredAttrs = emptyAttrsList);
 
 public slots:
     void valueChanged();

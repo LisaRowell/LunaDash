@@ -26,10 +26,6 @@
 #include <QVector>
 
 class SpacerWidget : public QSpacerItem, public Widget {
-private:
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-
 public:
     SpacerWidget(XMLFileReader &xmlReader);
 };

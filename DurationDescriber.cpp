@@ -30,9 +30,8 @@ const QVector<QString> DurationDescriber::allowedAttrs = { "seconds" };
 const QVector<QString> DurationDescriber::requiredAttrs = { "seconds" };
 
 DurationDescriber::DurationDescriber(XMLFileReader &xmlReader,
-                                     Variables &variables)
-    : Transformer(allowedAttrs, requiredAttrs), secondsVariable(nullptr) {
-    checkAttrs(xmlReader);
+                                     Variables &variables) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     secondsVariable = findSourceVariable("seconds", "DurationDescriber",
                                          xmlReader, variables);
 

@@ -30,9 +30,7 @@
 #include <QTextStream>
 #include <QVector>
 
-Transformer::Transformer(const QVector<QString> &allowedAttrs,
-                         const QVector<QString> &requiredAttrs)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
+Transformer::Transformer() {
 }
 
 Variable *Transformer::findSourceVariable(const QString &attributeName,

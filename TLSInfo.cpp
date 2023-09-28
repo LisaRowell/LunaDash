@@ -27,11 +27,7 @@
 #include <QTextStream>
 #include <QVector>
 
-const QVector<QString> TLSInfo::allowedAttrs = { };
-const QVector<QString> TLSInfo::requiredAttrs = { };
-
-TLSInfo::TLSInfo()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs),  set_(false) {
+TLSInfo::TLSInfo() : set_(false) {
     makeCStrings();
 }
 
@@ -40,7 +36,7 @@ void TLSInfo::set(XMLFileReader &xmlReader, QString &serverName) {
         multipleTLSWarning(xmlReader, serverName);
         xmlReader.skipCurrentElement();
     } else {
-        checkAttrs(xmlReader);
+        checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
         set_ = true;
 

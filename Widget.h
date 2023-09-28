@@ -28,8 +28,7 @@ private:
     GridPos *gridPos_;
 
 public:
-    Widget(const QVector<QString> &allowedAttrs,
-           const QVector<QString> &requiredAttrs);
+    Widget();
     void handleChildElement(XMLFileReader &xmlReader,
                             const QString &parentName);
     const GridPos *gridPos() const;

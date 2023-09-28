@@ -27,15 +27,15 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> LabelIndicatorWidget::allowedAttrs = { "text", "variable" };
-const QVector<QString> LabelIndicatorWidget::requiredAttrs = { };
+const QVector<QString> LabelIndicatorWidget::additionalAllowedAttrs = {
+    "text"
+};
 
 LabelIndicatorWidget::LabelIndicatorWidget(XMLFileReader &xmlReader,
                                            const Variables &variables,
                                            WidgetStyles &widgetStyles)
-    : ValuedWidget("LabelIndicator", xmlReader, variables, allowedAttrs,
-                   requiredAttrs) {
-    checkAttrs(xmlReader);
+    : ValuedWidget("LabelIndicator", xmlReader, variables,
+                   additionalAllowedAttrs, emptyAttrsList) {
     const QString label = stringAttribute("text", xmlReader);
     setText(label);
 

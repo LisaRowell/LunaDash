@@ -36,8 +36,8 @@ const QVector<QString> JSONField::allowedAttrs = { "label" };
 const QVector<QString> JSONField::requiredAttrs = { "label" };
 
 JSONField::JSONField(XMLFileReader &xmlReader, Variables &variables)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), type(QJsonValue::Undefined) {
-    checkAttrs(xmlReader);
+    : type(QJsonValue::Undefined) {
+    checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
     label = stringAttribute("label", xmlReader);
 
     while (xmlReader.readNextStartElement()) {

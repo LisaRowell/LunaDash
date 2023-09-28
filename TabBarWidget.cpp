@@ -27,14 +27,10 @@
 #include <QString>
 #include <QVector>
 
-const QVector<QString> TabBarWidget::allowedAttrs = { };
-const QVector<QString> TabBarWidget::requiredAttrs = { };
-
 TabBarWidget::TabBarWidget(XMLFileReader &xmlReader,
                            const Variables &variables,
-                           WidgetStyles &widgetStyles)
-    : Widget(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+                           WidgetStyles &widgetStyles) {
+    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();

@@ -30,12 +30,8 @@
 #include <QTextStream>
 #include <QVector>
 
-const QVector<QString> JSONDecoder::allowedAttrs = { };
-const QVector<QString> JSONDecoder::requiredAttrs = { };
-
-JSONDecoder::JSONDecoder(XMLFileReader &xmlReader, Variables &variables)
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs) {
-    checkAttrs(xmlReader);
+JSONDecoder::JSONDecoder(XMLFileReader &xmlReader, Variables &variables) {
+    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 
     // Loop through the child elements
     while (xmlReader.readNextStartElement()) {

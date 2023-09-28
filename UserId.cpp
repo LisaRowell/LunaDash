@@ -29,8 +29,7 @@
 const QVector<QString> UserId::allowedAttrs = { "name", "password" };
 const QVector<QString> UserId::requiredAttrs = { "name" };
 
-UserId::UserId()
-    : XMLSourcedEntity(allowedAttrs, requiredAttrs), set_(false) {
+UserId::UserId() : set_(false) {
     makeCStrings();
 }
 
@@ -39,7 +38,7 @@ void UserId::set(XMLFileReader &xmlReader, QString &serverName) {
         multipleUserWarning(xmlReader, serverName);
         xmlReader.skipCurrentElement();
     } else {
-        checkAttrs(xmlReader);
+        checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
 
         set_ = true;
         name = stringAttribute("name", xmlReader);

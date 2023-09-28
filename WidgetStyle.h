@@ -62,7 +62,6 @@ private:
                               const XMLFileReader &xmlReader) const;
 
     static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
 
 public:
     WidgetStyle();
