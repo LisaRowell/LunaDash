@@ -26,6 +26,7 @@ SOURCES += \
     MQTTClient.cpp \
     NumberWidget.cpp \
     Range.cpp \
+    SpacerWidget.cpp \
     StringDecoder.cpp \
     StringVariable.cpp \
     TabBarWidget.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     MQTTClient.h \
     NumberWidget.h \
     Range.h \
+    SpacerWidget.h \
     StringDecoder.h \
     StringVariable.h \
     TLSInfo.h \

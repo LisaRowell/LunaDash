@@ -396,110 +396,110 @@
                     <GridPos row="0" col="1"/>
                     <Range min="11" max="16"/>
                 </Gauge>
-                <Box flat="true">
-                    <GridPos row="1" col="0" colSpan="2"/>
-                    <Label text="Current:">
-                        <GridPos row="0" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
-                        <GridPos row="0" col="1"/>
-                    </Number>
-                    <Label text="Power:">
-                        <GridPos row="1" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
-                        <GridPos row="1" col="1"/>
-                    </Number>
-                    <Label text="Amp Hours Consumed:">
-                        <GridPos row="2" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankAmpHoursConsumed" precision="0"
-                            suffix=" Ah">
-                        <GridPos row="2" col="1"/>
-                    </Number>
-                    <Label text="House Battery Temp:">
-                        <GridPos row="3" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankTemperature" precision="0"
-                            suffix="° C">
-                        <GridPos row="3" col="1"/>
-                    </Number>
-                    <Label text="Time Remaining:">
-                        <GridPos row="4" col="0"/>
-                    </Label>
-                    <Text variable="houseBatteryBankTimeToGo">
-                        <GridPos row="4" col="1"/>
-                    </Text>
-                    <Label text="Time Since Last Full Charge:">
-                        <GridPos row="5" col="0"/>
-                    </Label>
-                    <Text variable="houseBatteryBankTimeSinceLastFullCharge">
-                        <GridPos row="5" col="1"/>
-                    </Text>
-                    <Label text="Min Voltage:">
-                        <GridPos row="6" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankMinVoltage" precision="2"
-                            suffix=" V">
-                        <GridPos row="6" col="1"/>
-                    </Number>
-                    <Label text="Max Voltage:">
-                        <GridPos row="7" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankMaxVoltage" precision="2"
-                            suffix=" V">
-                        <GridPos row="7" col="1"/>
-                    </Number>
-                    <Label text="Last Discharge:">
-                        <GridPos row="8" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankLastDischarge" precision="0"
-                            suffix=" Ah">
-                        <GridPos row="8" col="1"/>
-                    </Number>
-                    <Label text="Deepest Discharge:">
-                        <GridPos row="9" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankDeepestDischarge" precision="0"
-                            suffix=" Ah">
-                        <GridPos row="9" col="1"/>
-                    </Number>
-                    <Label text="Charge Cycles:">
-                        <GridPos row="10" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankChargeCycles" precision="0">
-                        <GridPos row="10" col="1"/>
-                    </Number>
-                    <Label text="Synchronizations:">
-                        <GridPos row="11" col="0"/>
-                    </Label>
-                    <Number variable="houseBatteryBankSynchronizations" precision="0">
-                        <GridPos row="11" col="1"/>
-                    </Number>
-                </Box>
+                <Label text="Current:">
+                    <GridPos row="1" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankCurrent" precision="1" suffix=" A">
+                    <GridPos row="1" col="1"/>
+                </Number>
+                <Label text="Power:">
+                    <GridPos row="2" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
+                    <GridPos row="2" col="1"/>
+                </Number>
+                <Label text="Amp Hours Consumed:">
+                    <GridPos row="3" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankAmpHoursConsumed" precision="0"
+                        suffix=" Ah">
+                    <GridPos row="3" col="1"/>
+                </Number>
+                <Label text="House Battery Temp:">
+                    <GridPos row="4" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankTemperature" precision="0"
+                        suffix="° C">
+                    <GridPos row="4" col="1"/>
+                </Number>
+                <Label text="Time Remaining:">
+                    <GridPos row="5" col="0"/>
+                </Label>
+                <Text variable="houseBatteryBankTimeToGo">
+                    <GridPos row="5" col="1"/>
+                </Text>
+                <Label text="Time Since Last Full Charge:">
+                    <GridPos row="6" col="0"/>
+                </Label>
+                <Text variable="houseBatteryBankTimeSinceLastFullCharge">
+                    <GridPos row="6" col="1"/>
+                </Text>
+                <Label text="Min Voltage:">
+                    <GridPos row="7" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankMinVoltage" precision="2"
+                        suffix=" V">
+                    <GridPos row="7" col="1"/>
+                </Number>
+                <Label text="Max Voltage:">
+                    <GridPos row="8" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankMaxVoltage" precision="2"
+                        suffix=" V">
+                    <GridPos row="8" col="1"/>
+                </Number>
+                <Label text="Last Discharge:">
+                    <GridPos row="9" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankLastDischarge" precision="0"
+                        suffix=" Ah">
+                    <GridPos row="9" col="1"/>
+                </Number>
+                <Label text="Deepest Discharge:">
+                    <GridPos row="10" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankDeepestDischarge" precision="0"
+                        suffix=" Ah">
+                    <GridPos row="10" col="1"/>
+                </Number>
+                <Label text="Charge Cycles:">
+                    <GridPos row="11" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankChargeCycles" precision="0">
+                    <GridPos row="11" col="1"/>
+                </Number>
+                <Label text="Synchronizations:">
+                    <GridPos row="12" col="0"/>
+                </Label>
+                <Number variable="houseBatteryBankSynchronizations" precision="0">
+                    <GridPos row="12" col="1"/>
+                </Number>
+                <Spacer>
+                    <GridPos row="13" col="1" colSpan="2"/>
+                </Spacer>
             </Box>
             <Box label="Engine Battery Bank">
                 <GridPos row="0" col="1"/>
                 <Gauge variable="engineBatteryBankVoltage" precision="2" suffix=" V">
-                    <GridPos row="0" col="0"/>
+                    <GridPos row="0" col="0" colSpan="2"/>
                     <Range min="11" max="16"/>
                 </Gauge>
-                <Box flat="true">
+                <Label text="Min Voltage:">
                     <GridPos row="1" col="0"/>
-                    <Label text="Min Voltage:">
-                        <GridPos row="1" col="0"/>
-                    </Label>
-                    <Number variable="engineBatteryBankMinVoltage" precision="2" suffix=" V">
-                        <GridPos row="1" col="1"/>
-                    </Number>
-                    <Label text="Max Voltage:">
-                        <GridPos row="2" col="0"/>
-                    </Label>
-                    <Number variable="engineBatteryBankMaxVoltage" precision="2"
-                            suffix=" V">
-                        <GridPos row="2" col="1"/>
-                    </Number>
-                </Box>
+                </Label>
+                <Number variable="engineBatteryBankMinVoltage" precision="2" suffix=" V">
+                    <GridPos row="1" col="1"/>
+                </Number>
+                <Label text="Max Voltage:">
+                    <GridPos row="2" col="0"/>
+                </Label>
+                <Number variable="engineBatteryBankMaxVoltage" precision="2"
+                        suffix=" V">
+                    <GridPos row="2" col="1"/>
+                </Number>
+                <Spacer>
+                    <GridPos row="2" col="1" colSpan="2"/>
+                </Spacer>
             </Box>
         </Tab>
         <Tab title="Power">
@@ -669,6 +669,9 @@
                         suffix=" kWh">
                     <GridPos row="2" col="1"/>
                 </Number>
+                <Spacer>
+                    <GridPos row="3" col="0" colSpan="2"/>
+                </Spacer>
             </Box>
             <Box label="Summary">
                 <GridPos row="2" col="1"/>
@@ -696,6 +699,9 @@
                 <Number variable="houseBatteryBankPower" precision="0" suffix=" W">
                     <GridPos row="3" col="1"/>
                 </Number>
+                <Spacer>
+                    <GridPos row="4" col="0" colSpan="2"/>
+                </Spacer>
             </Box>
         </Tab>
     </TabBar>

@@ -42,8 +42,10 @@ private:
                       WidgetStyles &widgetStyles);
     void addTabBarWidget(XMLFileReader &xmlReader, const Variables &variables,
                          WidgetStyles &widgetStyles);
+    void addSpacerWidget(XMLFileReader &xmlReader);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
-                           const QString &typeName, XMLFileReader &xmlReader);
+                           const QString &typeName, XMLFileReader &xmlReader,
+                           bool allowStretch = false);
     void addGaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;

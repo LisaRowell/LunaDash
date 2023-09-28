@@ -44,6 +44,9 @@ BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
     if (flat) {
         setFlat(true);
         setStyleSheet("QGroupBox {border:0;}");
+        expandable_ = false;
+    } else {
+        expandable_ = true;
     }
 
     layout = new WidgetGrid(className);
@@ -59,4 +62,8 @@ BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
     }
 
     setLayout(layout);
+}
+
+bool BoxWidget::expandable() const {
+    return expandable_;
 }

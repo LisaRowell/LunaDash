@@ -25,6 +25,7 @@
 #include "LabelIndicatorWidget.h"
 #include "LabelWidget.h"
 #include "NumberWidget.h"
+#include "SpacerWidget.h"
 #include "TabBarWidget.h"
 #include "TextWidget.h"
 #include "Variables.h"
@@ -67,6 +68,9 @@ bool WidgetGrid::handleXMLElement(const QStringView &name,
         return true;
     } else if (name.compare("TabBar") == 0) {
         addTabBarWidget(xmlReader, variables, widgetStyles);
+        return true;
+    } else if (name.compare("Spacer") == 0) {
+        addSpacerWidget(xmlReader);
         return true;
     } else {
         return false;
@@ -119,7 +123,8 @@ void WidgetGrid::addBoxWidget(XMLFileReader &xmlReader,
                               WidgetStyles &widgetStyles) {
     BoxWidget *boxWidget
         = new BoxWidget(xmlReader, variables, widgetStyles);
-    addWidgetToLayout(boxWidget, boxWidget->gridPos(), "Box", xmlReader);
+    addWidgetToLayout(boxWidget, boxWidget->gridPos(), "Box", xmlReader,
+                      boxWidget->expandable());
 }
 
 void WidgetGrid::addTabBarWidget(XMLFileReader &xmlReader,
@@ -128,15 +133,37 @@ void WidgetGrid::addTabBarWidget(XMLFileReader &xmlReader,
     TabBarWidget *tabBarWidget
         = new TabBarWidget(xmlReader, variables, widgetStyles);
     addWidgetToLayout(tabBarWidget, tabBarWidget->gridPos(), "TabBar",
-                      xmlReader);
+                      xmlReader, true);
+}
+
+void WidgetGrid::addSpacerWidget(XMLFileReader &xmlReader) {
+    SpacerWidget *spacerWidget
+        = new SpacerWidget(xmlReader);
+    const GridPos *gridPos = spacerWidget->gridPos();
+    if (gridPos) {
+        addItem(spacerWidget, gridPos->row(), gridPos->col(), gridPos->rowSpan(),
+                gridPos->colSpan());
+    } else {
+        missingGridPosWarning("Spacer", xmlReader);
+        // We're a little sloppy here and leak the widget, but it's no worse
+        // memory wise than having a configured one.
+    }
 }
 
 void WidgetGrid::addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                                    const QString &typeName,
-                                   XMLFileReader &xmlReader) {
+                                   XMLFileReader &xmlReader,
+                                   bool allowStretch) {
+    Qt::Alignment alignment;
+    if (allowStretch) {
+        alignment = Qt::Alignment();
+    } else {
+        alignment = Qt::AlignTop | Qt::AlignLeft;
+    }
+
     if (gridPos) {
         addWidget(widget, gridPos->row(), gridPos->col(), gridPos->rowSpan(),
-                  gridPos->colSpan(), Qt::AlignTop | Qt::AlignLeft);
+                  gridPos->colSpan(), alignment);
     } else {
         missingGridPosWarning(typeName, xmlReader);
         // We're a little sloppy here and leak the widget, but it's no worse

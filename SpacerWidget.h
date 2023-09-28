@@ -16,34 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOX_WIDGET_H
-#define BOX_WIDGET_H
+#ifndef SPACER_WIDGET_H
+#define SPACER_WIDGET_H
 
 #include "Widget.h"
 
-#include <QGroupBox>
-
+#include <QSpacerItem>
 #include <QString>
 #include <QVector>
 
-class Variables;
-class WidgetGrid;
-class WidgetStyles;
-class XMLFileReader;
-
-class BoxWidget : public QGroupBox, public Widget {
+class SpacerWidget : public QSpacerItem, public Widget {
 private:
-    WidgetGrid *layout;
-    bool expandable_;
-
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
-    static const QString className;
 
 public:
-    BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
-              WidgetStyles &widgetStyles);
-    bool expandable() const;
+    SpacerWidget(XMLFileReader &xmlReader);
 };
 
-#endif // BOX_WIDGET_H
+#endif // SPACER_WIDGET_H

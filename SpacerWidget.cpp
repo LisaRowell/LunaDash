@@ -16,34 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOX_WIDGET_H
-#define BOX_WIDGET_H
+#include "SpacerWidget.h"
 
 #include "Widget.h"
-
-#include <QGroupBox>
+#include "XMLFileReader.h"
+#include "XMLSourcedEntity.h"
 
 #include <QString>
 #include <QVector>
 
-class Variables;
-class WidgetGrid;
-class WidgetStyles;
-class XMLFileReader;
+const QVector<QString> SpacerWidget::allowedAttrs = { };
+const QVector<QString> SpacerWidget::requiredAttrs = { };
 
-class BoxWidget : public QGroupBox, public Widget {
-private:
-    WidgetGrid *layout;
-    bool expandable_;
+SpacerWidget::SpacerWidget(XMLFileReader &xmlReader)
+    : QSpacerItem(10, 10, QSizePolicy::MinimumExpanding,
+                  QSizePolicy::MinimumExpanding),
+      Widget(allowedAttrs, requiredAttrs) {
+    checkAttrs(xmlReader);
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
-    static const QString className;
-
-public:
-    BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
-              WidgetStyles &widgetStyles);
-    bool expandable() const;
-};
-
-#endif // BOX_WIDGET_H
+    while (xmlReader.readNextStartElement()) {
+        handleChildElement(xmlReader, "Spacer");
+    }
+}
