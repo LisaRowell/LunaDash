@@ -91,3 +91,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 unix:!macx: LIBS += -lpaho-mqtt3as
+
+DISTFILES += \
+    COPYING \
+    Examples/Dashboard.ldash
