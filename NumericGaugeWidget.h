@@ -16,23 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NUMBER_WIDGET_H
-#define NUMBER_WIDGET_H
+#ifndef NUMERIC_GAUGE_WIDGET_H
+#define NUMERIC_GAUGE_WIDGET_H
 
 #include "ValuedWidget.h"
 
-#include <QLabel>
 #include <QString>
 #include <QVector>
+#include <QWidget>
 
 class XMLFileReader;
 class Variables;
 
-class NumberWidget : public QLabel, public ValuedWidget {
+class QLabel;
+class QVBoxLayout;
+
+class NumericGaugeWidget : public QWidget, public ValuedWidget {
 private:
     QString suffix;
     bool precisionSet;
     unsigned precision;
+    QVBoxLayout *layout;
+    QLabel *valueWidget;
+
+    void addLabel(XMLFileReader &xmlReader);
 
     static const QVector<QString> additionalAllowedAttrs;
 
@@ -40,7 +47,8 @@ protected:
     virtual void setValue() override;
 
 public:
-    NumberWidget(XMLFileReader &xmlReader, const Variables &variables);
+    NumericGaugeWidget(XMLFileReader &xmlReader,
+                       const Variables &variables);
 };
 
-#endif // NUMBER_WIDGET_H
+#endif // NUMERIC_GAUGE_WIDGET_H

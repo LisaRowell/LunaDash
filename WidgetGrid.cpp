@@ -25,11 +25,13 @@
 #include "LabelIndicatorWidget.h"
 #include "LabelWidget.h"
 #include "NumberWidget.h"
+#include "NumericGaugeWidget.h"
 #include "SpacerWidget.h"
 #include "TabBarWidget.h"
 #include "TextWidget.h"
 #include "Variables.h"
 #include "WidgetStyles.h"
+#include "XMLFileReader.h"
 
 #include <QGridLayout>
 #include <QMessageBox>
@@ -62,6 +64,9 @@ bool WidgetGrid::handleXMLElement(const QStringView &name,
         return true;
     } else if (name.compare("Gauge") == 0) {
         addGaugeWidget(xmlReader, variables);
+        return true;
+    } else if (name.compare("NumericGauge") == 0) {
+        addNumericGaugeWidget(xmlReader, variables);
         return true;
     } else if (name.compare("Box") == 0) {
         addBoxWidget(xmlReader, variables, widgetStyles);
@@ -116,6 +121,14 @@ void WidgetGrid::addGaugeWidget(XMLFileReader &xmlReader,
     GaugeWidget *gaugeWidget = new GaugeWidget(xmlReader, variables);
     addWidgetToLayout(gaugeWidget, gaugeWidget->gridPos(), "Gauge",
                       xmlReader);
+}
+
+void WidgetGrid::addNumericGaugeWidget(XMLFileReader &xmlReader,
+                                       const Variables &variables) {
+    NumericGaugeWidget *numericGaugeWidget
+        = new NumericGaugeWidget(xmlReader, variables);
+    addWidgetToLayout(numericGaugeWidget, numericGaugeWidget->gridPos(),
+                      "Gauge", xmlReader);
 }
 
 void WidgetGrid::addBoxWidget(XMLFileReader &xmlReader,

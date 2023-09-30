@@ -47,6 +47,8 @@ private:
                            const QString &typeName, XMLFileReader &xmlReader,
                            bool allowStretch = false);
     void addGaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
+    void addNumericGaugeWidget(XMLFileReader &xmlReader,
+                               const Variables &variables);
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;
 

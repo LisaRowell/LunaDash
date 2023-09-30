@@ -25,6 +25,7 @@ SOURCES += \
     LabelWidget.cpp \
     MQTTClient.cpp \
     NumberWidget.cpp \
+    NumericGaugeWidget.cpp \
     Range.cpp \
     SpacerWidget.cpp \
     StringDecoder.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     LabelWidget.h \
     MQTTClient.h \
     NumberWidget.h \
+    NumericGaugeWidget.h \
     Range.h \
     SpacerWidget.h \
     StringDecoder.h \
