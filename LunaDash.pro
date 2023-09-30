@@ -8,40 +8,43 @@ CONFIG += c++17 qwt
 # In order to do so, uncomment the following line.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += \
+    MQTT Transformers Variables Widgets
+
 SOURCES += \
-    Adder.cpp \
-    BoolVariable.cpp \
-    BoolWidget.cpp \
-    BoxWidget.cpp \
-    ClientId.cpp \
     Dashboard.cpp \
-    DoubleVariable.cpp \
-    DurationDescriber.cpp \
-    GaugeWidget.cpp \
-    GridPos.cpp \
-    JSONDecoder.cpp \
-    JSONField.cpp \
-    LabelIndicatorWidget.cpp \
-    LabelWidget.cpp \
-    MQTTClient.cpp \
-    NumberWidget.cpp \
-    NumericGaugeWidget.cpp \
-    Range.cpp \
-    SpacerWidget.cpp \
-    StringDecoder.cpp \
-    StringVariable.cpp \
-    TabBarWidget.cpp \
-    TabWidget.cpp \
-    TextWidget.cpp \
-    TLSInfo.cpp \
-    Topic.cpp \
-    Transformer.cpp \
-    UserId.cpp \
-    ValuedWidget.cpp \
-    Variable.cpp \
+    MQTT/ClientId.cpp \
+    MQTT/JSONDecoder.cpp \
+    MQTT/JSONField.cpp \
+    MQTT/MQTTClient.cpp \
+    MQTT/TLSInfo.cpp \
+    MQTT/Topic.cpp \
+    MQTT/UserId.cpp \
+    Transformers/Adder.cpp \
+    Transformers/DurationDescriber.cpp \
+    Transformers/StringDecoder.cpp \
+    Transformers/Transformer.cpp \
     Variables.cpp \
-    Widget.cpp \
+    Variables/BoolVariable.cpp \
+    Variables/DoubleVariable.cpp \
+    Variables/StringVariable.cpp \
+    Variables/Variable.cpp \
     WidgetGrid.cpp \
+    Widgets/BoolWidget.cpp \
+    Widgets/BoxWidget.cpp \
+    Widgets/GaugeWidget.cpp \
+    Widgets/GridPos.cpp \
+    Widgets/LabelIndicatorWidget.cpp \
+    Widgets/LabelWidget.cpp \
+    Widgets/NumberWidget.cpp \
+    Widgets/NumericGaugeWidget.cpp \
+    Widgets/Range.cpp \
+    Widgets/SpacerWidget.cpp \
+    Widgets/TabBarWidget.cpp \
+    Widgets/TabWidget.cpp \
+    Widgets/TextWidget.cpp \
+    Widgets/ValuedWidget.cpp \
+    Widgets/Widget.cpp \
     WidgetStyle.cpp \
     WidgetStyles.cpp \
     XMLFileReader.cpp \
@@ -49,39 +52,39 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
-    Adder.h \
-    BoolVariable.h \
-    BoolWidget.h \
-    BoxWidget.h \
-    ClientId.h \
     Dashboard.h \
-    DoubleVariable.h \
-    DurationDescriber.h \
-    GaugeWidget.h \
-    GridPos.h \
-    JSONDecoder.h \
-    JSONField.h \
-    LabelIndicatorWidget.h \
-    LabelWidget.h \
-    MQTTClient.h \
-    NumberWidget.h \
-    NumericGaugeWidget.h \
-    Range.h \
-    SpacerWidget.h \
-    StringDecoder.h \
-    StringVariable.h \
-    TLSInfo.h \
-    TabBarWidget.h \
-    TabWidget.h \
-    TextWidget.h \
-    Topic.h \
-    Transformer.h \
-    UserId.h \
-    ValuedWidget.h \
-    Variable.h \
+    MQTT/ClientId.h \
+    MQTT/JSONDecoder.h \
+    MQTT/JSONField.h \
+    MQTT/MQTTClient.h \
+    MQTT/TLSInfo.h \
+    MQTT/Topic.h \
+    MQTT/UserId.h \
+    Transformers/Adder.h \
+    Transformers/DurationDescriber.h \
+    Transformers/StringDecoder.h \
+    Transformers/Transformer.h \
     Variables.h \
-    Widget.h \
+    Variables/BoolVariable.h \
+    Variables/DoubleVariable.h \
+    Variables/StringVariable.h \
+    Variables/Variable.h \
     WidgetGrid.h \
+    Widgets/BoolWidget.h \
+    Widgets/BoxWidget.h \
+    Widgets/GaugeWidget.h \
+    Widgets/GridPos.h \
+    Widgets/LabelIndicatorWidget.h \
+    Widgets/LabelWidget.h \
+    Widgets/NumberWidget.h \
+    Widgets/NumericGaugeWidget.h \
+    Widgets/Range.h \
+    Widgets/SpacerWidget.h \
+    Widgets/TabBarWidget.h \
+    Widgets/TabWidget.h \
+    Widgets/TextWidget.h \
+    Widgets/ValuedWidget.h \
+    Widgets/Widget.h \
     WidgetStyle.h \
     WidgetStyles.h \
     XMLFileReader.h \
