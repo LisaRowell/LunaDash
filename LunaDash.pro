@@ -21,8 +21,10 @@ SOURCES += \
     MQTT/Topic.cpp \
     MQTT/UserId.cpp \
     Transformers/Adder.cpp \
+    Transformers/Concatenator.cpp \
     Transformers/DurationDescriber.cpp \
     Transformers/StringDecoder.cpp \
+    Transformers/StringInput.cpp \
     Transformers/Transformer.cpp \
     Variables.cpp \
     Variables/BoolVariable.cpp \
@@ -61,8 +63,10 @@ HEADERS += \
     MQTT/Topic.h \
     MQTT/UserId.h \
     Transformers/Adder.h \
+    Transformers/Concatenator.h \
     Transformers/DurationDescriber.h \
     Transformers/StringDecoder.h \
+    Transformers/StringInput.h \
     Transformers/Transformer.h \
     Variables.h \
     Variables/BoolVariable.h \

@@ -19,6 +19,7 @@
 #include "Dashboard.h"
 
 #include "Adder.h"
+#include "Concatenator.h"
 #include "DurationDescriber.h"
 #include "MQTTClient.h"
 #include "StringDecoder.h"
@@ -57,6 +58,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             new StringDecoder(xmlReader, variables);
         } else if (elementName.compare("Adder") == 0) {
             new Adder(xmlReader, variables);
+        } else if (elementName.compare("Concatenator") == 0) {
+            new Concatenator(xmlReader, variables);
         } else {
             const bool handled
                 = layout->handleXMLElement(elementName, xmlReader, variables,

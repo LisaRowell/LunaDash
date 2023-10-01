@@ -374,6 +374,26 @@
         <Addend variable="windGeneratorPower"/>
         <Double name="totalGeneratedPower"/>
     </Adder>
+    <Concatenator>
+        <Input text="Center Bimini Solar - "/>
+        <Input variable="centerBiminiMPPTStateDescription"/>
+        <String name="centerBiminiSolarSectionLabel"/>
+    </Concatenator>
+    <Concatenator>
+        <Input text="Starboard Aft Bimini Solar - "/>
+        <Input variable="stbdAftBiminiMPPTStateDescription"/>
+        <String name="stbdAftBiminiSolarSectionLabel"/>
+    </Concatenator>
+    <Concatenator>
+        <Input text="Center Aft Bimini Solar - "/>
+        <Input variable="centerAftBiminiMPPTStateDescription"/>
+        <String name="centerAftBiminiSolarSectionLabel"/>
+    </Concatenator>
+    <Concatenator>
+        <Input text="Port Aft Bimini Solar - "/>
+        <Input variable="portAftBiminiMPPTStateDescription"/>
+        <String name="portAftBiminiSolarSectionLabel"/>
+    </Concatenator>
     <LabelIndicator text="VRM" variable="connectionState">
         <GridPos row="0" col="0"/>
         <OnStyle base="LabelOval">
@@ -500,119 +520,95 @@
             </Box>
         </Tab>
         <Tab title="Power">
-            <Box label="Center Bimini Solar">
+            <Box labelVariable="centerBiminiSolarSectionLabel">
                 <GridPos row="0" col="0"/>
-                <Label text="State:">
-                    <GridPos row="0" col="0"/>
-                </Label>
-                <Text variable="centerBiminiMPPTStateDescription">
-                    <GridPos row="0" col="1"/>
-                </Text>
                 <NumericGauge variable="centerBiminiMPPTCurrent" precision="1"
                               suffix=" A">
-                    <GridPos row="1" col="0"/>
+                    <GridPos row="0" col="0"/>
                     <Label text="Current"/>
                 </NumericGauge>
                 <NumericGauge variable="centerBiminiMPPTPower" precision="0"
                               suffix=" W">
-                    <GridPos row="1" col="1"/>
+                    <GridPos row="0" col="1"/>
                     <Label text="Power"/>
                 </NumericGauge>
                 <NumericGauge variable="centerBiminiMPPTEnergyToday"
                               precision="2" suffix=" kWh">
-                    <GridPos row="2" col="0"/>
+                    <GridPos row="1" col="0"/>
                     <Label text="Energy (Today)"/>
                 </NumericGauge>
                 <NumericGauge variable="centerBiminiMPPTPVVoltage"
                               precision="1" suffix=" V">
-                    <GridPos row="2" col="1"/>
+                    <GridPos row="1" col="1"/>
                     <Label text="PV Voltage"/>
                 </NumericGauge>
             </Box>
-            <Box label="Starboard Aft Bimini Solar">
+            <Box labelVariable="stbdAftBiminiSolarSectionLabel">
                 <GridPos row="1" col="0"/>
-                <Label text="State:">
-                    <GridPos row="0" col="0"/>
-                </Label>
-                <Text variable="stbdAftBiminiMPPTStateDescription">
-                    <GridPos row="0" col="1"/>
-                </Text>
                 <NumericGauge variable="stbdAftBiminiMPPTCurrent" precision="1"
                               suffix=" A">
-                    <GridPos row="1" col="0"/>
+                    <GridPos row="0" col="0"/>
                     <Label text="Current"/>
                 </NumericGauge>
                 <NumericGauge variable="stbdAftBiminiMPPTPower" precision="0"
                               suffix=" W">
-                    <GridPos row="1" col="1"/>
+                    <GridPos row="0" col="1"/>
                     <Label text="Power"/>
                 </NumericGauge>
                 <NumericGauge variable="stbdAftBiminiMPPTEnergyToday"
                               precision="2" suffix=" kWh">
-                    <GridPos row="2" col="0"/>
+                    <GridPos row="1" col="0"/>
                     <Label text="Energy (Today)"/>
                 </NumericGauge>
                 <NumericGauge variable="stbdAftBiminiMPPTPVVoltage"
                               precision="1" suffix=" V">
-                    <GridPos row="2" col="1"/>
+                    <GridPos row="1" col="1"/>
                     <Label text="PV Voltage"/>
                 </NumericGauge>
             </Box>
-            <Box label="Center Aft Bimini Solar">
+            <Box labelVariable="centerAftBiminiSolarSectionLabel">
                 <GridPos row="2" col="0"/>
-                <Label text="State:">
-                    <GridPos row="0" col="0"/>
-                </Label>
-                <Text variable="centerAftBiminiMPPTStateDescription">
-                    <GridPos row="0" col="1"/>
-                </Text>
                 <NumericGauge variable="centerAftBiminiMPPTCurrent" precision="1"
                               suffix=" A">
-                    <GridPos row="1" col="0"/>
+                    <GridPos row="0" col="0"/>
                     <Label text="Current"/>
                 </NumericGauge>
                 <NumericGauge variable="centerAftBiminiMPPTPower" precision="0"
                               suffix=" W">
-                    <GridPos row="1" col="1"/>
+                    <GridPos row="0" col="1"/>
                     <Label text="Power"/>
                 </NumericGauge>
                 <NumericGauge variable="centerAftBiminiMPPTEnergyToday"
                               precision="2" suffix=" kWh">
-                    <GridPos row="2" col="0"/>
+                    <GridPos row="1" col="0"/>
                     <Label text="Energy (Today)"/>
                 </NumericGauge>
                 <NumericGauge variable="centerAftBiminiMPPTPVVoltage"
                               precision="1" suffix=" V">
-                    <GridPos row="2" col="1"/>
+                    <GridPos row="1" col="1"/>
                     <Label text="PV Voltage"/>
                 </NumericGauge>
             </Box>
-            <Box label="Port Aft Bimini Solar">
+            <Box labelVariable="portAftBiminiSolarSectionLabel">
                 <GridPos row="0" col="1"/>
-                <Label text="State:">
-                    <GridPos row="0" col="0"/>
-                </Label>
-                <Text variable="portAftBiminiMPPTStateDescription">
-                    <GridPos row="0" col="1"/>
-                </Text>
                 <NumericGauge variable="portAftBiminiMPPTCurrent" precision="1"
                               suffix=" A">
-                    <GridPos row="1" col="0"/>
+                    <GridPos row="0" col="0"/>
                     <Label text="Current"/>
                 </NumericGauge>
                 <NumericGauge variable="portAftBiminiMPPTPower" precision="0"
                               suffix=" W">
-                    <GridPos row="1" col="1"/>
+                    <GridPos row="0" col="1"/>
                     <Label text="Power"/>
                 </NumericGauge>
                 <NumericGauge variable="portAftBiminiMPPTEnergyToday"
                               precision="2" suffix=" kWh">
-                    <GridPos row="2" col="0"/>
+                    <GridPos row="1" col="0"/>
                     <Label text="Energy (Today)"/>
                 </NumericGauge>
                 <NumericGauge variable="portAftBiminiMPPTPVVoltage"
                               precision="1" suffix=" V">
-                    <GridPos row="2" col="1"/>
+                    <GridPos row="1" col="1"/>
                     <Label text="PV Voltage"/>
                 </NumericGauge>
             </Box>
@@ -633,9 +629,6 @@
                     <GridPos row="1" col="0"/>
                     <Label text="Energy (Historic)"/>
                 </NumericGauge>
-                <Spacer>
-                    <GridPos row="2" col="0" colSpan="2"/>
-                </Spacer>
             </Box>
             <Box label="Summary">
                 <GridPos row="2" col="1"/>
@@ -659,9 +652,6 @@
                     <GridPos row="1" col="1"/>
                     <Label text="House Battery Power"/>
                 </NumericGauge>
-                <Spacer>
-                    <GridPos row="2" col="0" colSpan="2"/>
-                </Spacer>
             </Box>
         </Tab>
     </TabBar>

@@ -50,6 +50,8 @@ protected:
                     const QVector<QString> &requiredAttrs);
     void ignoreChildElements(XMLFileReader &xmlReader,
                              const QString &parentName);
+    bool hasAttribute(const QString &name,
+                      const XMLFileReader &xmlReader) const;
     QString stringAttribute(const QString &name,
                             const XMLFileReader &xmlReader,
                             QString defaultValue = "") const;

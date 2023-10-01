@@ -16,47 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOX_WIDGET_H
-#define BOX_WIDGET_H
+#ifndef STRING_INPUT_H
+#define STRING_INPUT_H
 
-#include "Widget.h"
-
-#include <QGroupBox>
+#include "XMLSourcedEntity.h"
 
 #include <QObject>
 #include <QString>
 #include <QVector>
 
+class Transformer;
 class Variable;
 class Variables;
-class WidgetGrid;
-class WidgetStyles;
 class XMLFileReader;
 
-class BoxWidget : public QGroupBox, public Widget {
+class StringInput : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:
-    WidgetGrid *layout;
-    bool expandable_;
-    Variable *labelVariable;
+    bool isConstant;
+    union {
+        const Variable *variable;
+        const QString *string;
+    } input;
 
-    void initTitle(const XMLFileReader &xmlReader,
-                   const Variables &variables);
-    void labelAndLabelVariableWarning(const XMLFileReader &xmlReader) const;
-    void unknownLabelVariableWarning(const QString &variableName,
-                                     const XMLFileReader &xmlReader) const;
+    void attributeWarning(const QString &transformerName,
+                          const XMLFileReader &xmlReader) const;
+    void unknownVariableWarning(const QString &variableName,
+                                const XMLFileReader &xmlReader,
+                                const QString &transformerName) const;
 
     static const QVector<QString> allowedAttrs;
-    static const QString className;
 
 public:
-    BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
-              WidgetStyles &widgetStyles);
-    bool expandable() const;
+    StringInput(XMLFileReader &xmlReader, Variables &variables,
+                const QString &transformerName);
+    const QString value() const;
 
 public slots:
-    void updateTitle();
+    void variableChanged();
+
+signals:
+    void inputChangedSignal();
 };
 
-#endif // BOX_WIDGET_H
+#endif // STRING_INPUT_H

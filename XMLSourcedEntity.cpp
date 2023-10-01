@@ -63,6 +63,14 @@ void XMLSourcedEntity::ignoreChildElements(XMLFileReader &xmlReader,
     }
 }
 
+bool XMLSourcedEntity::hasAttribute(const QString &name,
+                                    const XMLFileReader &xmlReader) const {
+    const QXmlStreamAttributes &attributes = xmlReader.attributes();
+    QStringView attribute = attributes.value(name);
+
+    return !attribute.isEmpty();
+}
+
 QString XMLSourcedEntity::stringAttribute(const QString &name,
                                           const XMLFileReader &xmlReader,
                                           const QString defaultValue) const {

@@ -18,26 +18,30 @@
 
 #include "BoxWidget.h"
 
+#include "Variable.h"
 #include "Variables.h"
 #include "WidgetGrid.h"
 #include "WidgetStyles.h"
 #include "XMLFileReader.h"
 
+#include <QMessageBox>
 #include <QString>
 #include <QStringView>
+#include <QTextStream>
 #include <QWidget>
 #include <QVector>
 
-const QVector<QString> BoxWidget::allowedAttrs = { "label", "flat" };
+const QVector<QString> BoxWidget::allowedAttrs = {
+    "label", "labelVariable", "flat"
+};
 const QString BoxWidget::className = "Box";
 
 BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
-                     WidgetStyles &widgetStyles) {
+                     WidgetStyles &widgetStyles) : labelVariable(nullptr) {
     checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
-    const QString label = stringAttribute("label", xmlReader);
-    if (!label.isEmpty()) {
-        setTitle(label);
-    }
+
+    BoxWidget::initTitle(xmlReader, variables);
+
     const bool flat = boolAttribute("flat", xmlReader, false);
     if (flat) {
         setFlat(true);
@@ -62,6 +66,66 @@ BoxWidget::BoxWidget(XMLFileReader &xmlReader, const Variables &variables,
     setLayout(layout);
 }
 
+void BoxWidget::initTitle(const XMLFileReader &xmlReader,
+                          const Variables &variables) {
+    const QString labelText = stringAttribute("label", xmlReader);
+    const QString labelVariableName = stringAttribute("labelVariable", xmlReader);
+    if (!labelText.isEmpty()) {
+        setTitle(labelText);
+        if (!labelVariableName.isEmpty()) {
+            labelAndLabelVariableWarning(xmlReader);
+        }
+    } else if (!labelVariableName.isEmpty()) {
+        labelVariable = variables.find(labelVariableName);
+        if (labelVariable != nullptr) {
+            connect(labelVariable, &Variable::valueChangedSignal,
+                    this, &BoxWidget::updateTitle);
+            updateTitle();
+        } else {
+            unknownLabelVariableWarning(labelVariableName, xmlReader);
+            setTitle("");
+        }
+    } else {
+        setTitle("");
+    }
+}
+
 bool BoxWidget::expandable() const {
     return expandable_;
+}
+
+void BoxWidget::updateTitle() {
+    if (labelVariable != nullptr && labelVariable->hasValue()) {
+        setTitle(labelVariable->string());
+    } else {
+        setTitle("");
+    }
+}
+
+void
+BoxWidget::labelAndLabelVariableWarning(const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Box with both a 'label' and a 'labelVariable' in file "
+                  << xmlReader.fileReference() << ":" << Qt::endl;
+    warningStream << "Ignored variable.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Label and Label Variable Warning", warningStr);
+}
+
+void
+BoxWidget::unknownLabelVariableWarning(const QString &variableName,
+                                       const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Box with an unknown label variable '" << variableName
+                  << "' in file " << xmlReader.fileReference() << ":"
+                  << Qt::endl;
+    warningStream << "Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Unknown Variable Warning", warningStr);
 }
