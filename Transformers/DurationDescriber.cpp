@@ -51,7 +51,7 @@ void DurationDescriber::recalculate() {
             if (hours >= 23.95) {
                 description = QString::number(days, 'F', 1) + " days";
             } else if (minutes >= 59.95) {
-                description = QString::number(minutes, 'F', 1) + " hours";
+                description = QString::number(hours, 'F', 1) + " hours";
             } else if (seconds >= 59.95) {
                 description = QString::number(minutes, 'F', 1) + " min";
             } else {
