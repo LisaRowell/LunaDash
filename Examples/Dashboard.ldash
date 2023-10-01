@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Dashboard>
+<Dashboard title="Luna Moth">
     <Style name="LabelOval">
         <BorderRadius>8px</BorderRadius>
         <LeftPadding>5px</LeftPadding>

@@ -36,15 +36,17 @@
 #include <QString>
 #include <QStringView>
 #include <QTextStream>
+#include <QVector>
 
+const QVector<QString> Dashboard::allowedAttrs = { "title" };
 const QString Dashboard::className = "Dashboard";
 
 Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
     : QMainWindow(parent) {
-    initWindow();
-    createShortcuts();
+    checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
 
-    checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
+    initWindow(xmlReader);
+    createShortcuts();
 
     while (xmlReader.readNextStartElement()) {
         const QStringView &elementName = xmlReader.name();
@@ -75,8 +77,13 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
 Dashboard::~Dashboard() { 
 }
 
-void Dashboard::initWindow() {
-    setWindowTitle("Luna");
+void Dashboard::initWindow(XMLFileReader &xmlReader) {
+    const QString title = stringAttribute("title", xmlReader);
+    if (!title.isEmpty()) {
+        setWindowTitle(title);
+    } else {
+        setWindowTitle("LunaDash");
+    }
 
     mainWidget = new QWidget();
     setCentralWidget(mainWidget);

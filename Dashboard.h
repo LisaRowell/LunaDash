@@ -41,9 +41,10 @@ private:
     QWidget *mainWidget;
     WidgetGrid *layout;
 
-    void initWindow();
+    void initWindow(XMLFileReader &xmlReader);
     void createShortcuts();
 
+    static const QVector<QString> allowedAttrs;
     static const QString className;
 
 public:
