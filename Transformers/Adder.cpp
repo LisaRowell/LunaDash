@@ -33,7 +33,7 @@ Adder::Adder(XMLFileReader &xmlReader, Variables &variables) {
         if (elementName.compare("Addend") == 0) {
             addAddend(xmlReader, variables);
         } else {
-            handleChildElement(elementName, "StringDecoder", xmlReader,
+            handleChildElement(elementName, "Adder", xmlReader,
                                variables);
         }
     }

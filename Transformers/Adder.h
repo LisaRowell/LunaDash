@@ -21,7 +21,6 @@
 
 #include "Transformer.h"
 
-#include <QString>
 #include <QVector>
 
 class Variable;
