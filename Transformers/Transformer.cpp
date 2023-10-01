@@ -43,6 +43,8 @@ Variable *Transformer::findSourceVariable(const QString &attributeName,
         if (variable != nullptr) {
             connect(variable, &Variable::valueChangedSignal,
                     this, &Transformer::inputChanged);
+        } else {
+            unknownVariableWarning(transformerName, variableName, xmlReader);
         }
         return variable;
     } else {
