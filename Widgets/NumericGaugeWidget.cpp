@@ -33,9 +33,9 @@ const QVector<QString> NumericGaugeWidget::additionalAllowedAttrs = {
 
 NumericGaugeWidget::NumericGaugeWidget(XMLFileReader &xmlReader,
                                        const Variables &variables)
-    : ValuedWidget("Number", xmlReader, variables, additionalAllowedAttrs,
-                   emptyAttrsList),
-    precisionSet(false) {
+    : ValuedWidget("NumericGauge", xmlReader, variables,
+                   additionalAllowedAttrs, emptyAttrsList),
+      precisionSet(false) {
     layout = new QVBoxLayout();
     layout->setSpacing(0);
     layout->setContentsMargins(0,0,0,0);
