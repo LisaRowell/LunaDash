@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RANGE_H
-#define RANGE_H
+#ifndef SCALE_STEPS_H
+#define SCALE_STEPS_H
 
 #include "XMLSourcedEntity.h"
 
@@ -26,19 +26,20 @@
 
 class XMLFileReader;
 
-class Range : XMLSourcedEntity {
+class ScaleSteps : XMLSourcedEntity {
 private:
-    double min_;
-    double max_;
+    unsigned major_;
+    unsigned minor_;
 
+    static const unsigned defaultMajorSteps = 10;
+    static const unsigned defaultMinorSteps = 5;
     static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
 
 public:
-    Range(double min = 0, double max = 100);
+    ScaleSteps();
     void set(XMLFileReader &xmlReader);
-    double min() const;
-    double max() const;
+    unsigned major() const;
+    unsigned minor() const;
 };
 
-#endif // RANGE_H
+#endif // SCALE_STEPS_H

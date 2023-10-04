@@ -20,7 +20,7 @@
 
 #include "BoolWidget.h"
 #include "BoxWidget.h"
-#include "GaugeWidget.h"
+#include "DialGaugeWidget.h"
 #include "GridPos.h"
 #include "LabelIndicatorWidget.h"
 #include "LabelWidget.h"
@@ -62,11 +62,11 @@ bool WidgetGrid::handleXMLElement(const QStringView &name,
     } else if (name.compare("LabelIndicator") == 0) {
         addLabelIndicatorWidget(xmlReader, variables, widgetStyles);
         return true;
-    } else if (name.compare("Gauge") == 0) {
-        addGaugeWidget(xmlReader, variables);
-        return true;
     } else if (name.compare("NumericGauge") == 0) {
         addNumericGaugeWidget(xmlReader, variables);
+        return true;
+    } else if (name.compare("DialGauge") == 0) {
+        addDialGaugeWidget(xmlReader, variables);
         return true;
     } else if (name.compare("Box") == 0) {
         addBoxWidget(xmlReader, variables, widgetStyles);
@@ -116,19 +116,20 @@ void WidgetGrid::addLabelIndicatorWidget(XMLFileReader &xmlReader,
                       "LabelIndicator", xmlReader);
 }
 
-void WidgetGrid::addGaugeWidget(XMLFileReader &xmlReader,
-                                const Variables &variables) {
-    GaugeWidget *gaugeWidget = new GaugeWidget(xmlReader, variables);
-    addWidgetToLayout(gaugeWidget, gaugeWidget->gridPos(), "Gauge",
-                      xmlReader);
-}
-
 void WidgetGrid::addNumericGaugeWidget(XMLFileReader &xmlReader,
                                        const Variables &variables) {
     NumericGaugeWidget *numericGaugeWidget
         = new NumericGaugeWidget(xmlReader, variables);
     addWidgetToLayout(numericGaugeWidget, numericGaugeWidget->gridPos(),
                       "Gauge", xmlReader);
+}
+
+void WidgetGrid::addDialGaugeWidget(XMLFileReader &xmlReader,
+                                    const Variables &variables) {
+    DialGaugeWidget *dialGaugeWidget
+        = new DialGaugeWidget(xmlReader, variables);
+    addWidgetToLayout(dialGaugeWidget, dialGaugeWidget->gridPos(),
+                      "DialGauge", xmlReader);
 }
 
 void WidgetGrid::addBoxWidget(XMLFileReader &xmlReader,

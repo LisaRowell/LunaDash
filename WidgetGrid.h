@@ -43,12 +43,13 @@ private:
     void addTabBarWidget(XMLFileReader &xmlReader, const Variables &variables,
                          WidgetStyles &widgetStyles);
     void addSpacerWidget(XMLFileReader &xmlReader);
+    void addNumericGaugeWidget(XMLFileReader &xmlReader,
+                               const Variables &variables);
+    void addDialGaugeWidget(XMLFileReader &xmlReader,
+                            const Variables &variables);
     void addWidgetToLayout(QWidget *widget, const GridPos *gridPos,
                            const QString &typeName, XMLFileReader &xmlReader,
                            bool allowStretch = false);
-    void addGaugeWidget(XMLFileReader &xmlReader, const Variables &variables);
-    void addNumericGaugeWidget(XMLFileReader &xmlReader,
-                               const Variables &variables);
     void missingGridPosWarning(const QString &widgetType,
                                const XMLFileReader &xmlReader) const;
 

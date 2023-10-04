@@ -26,24 +26,25 @@
 const QVector<QString> Range::allowedAttrs = { "min", "max" };
 const QVector<QString> Range::requiredAttrs = { "min", "max" };
 
-Range::Range() : set_(false) {
+Range::Range(double min, double max) : min_(min), max_(max) {
 }
 
 void Range::set(XMLFileReader &xmlReader) {
     checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
 
-    set_ = true;
     bool minValid;
-    min_ = doubleAttribute("min", xmlReader, &minValid);
+    const double newMin = doubleAttribute("min", xmlReader, &minValid);
+    if (minValid) {
+        min_ = newMin;
+    }
+
     bool maxValid;
-    max_ = doubleAttribute("max", xmlReader, &maxValid);
-    set_ = minValid && maxValid;
+    const double newMax = doubleAttribute("max", xmlReader, &maxValid);
+    if (maxValid) {
+        max_ = newMax;
+    }
 
     ignoreChildElements(xmlReader, "Range");
-}
-
-bool Range::isSet() const {
-    return set_;
 }
 
 double Range::min() const {

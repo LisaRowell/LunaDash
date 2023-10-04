@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17 qwt
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -34,13 +34,14 @@ SOURCES += \
     WidgetGrid.cpp \
     Widgets/BoolWidget.cpp \
     Widgets/BoxWidget.cpp \
-    Widgets/GaugeWidget.cpp \
+    Widgets/DialGaugeWidget.cpp \
     Widgets/GridPos.cpp \
     Widgets/LabelIndicatorWidget.cpp \
     Widgets/LabelWidget.cpp \
     Widgets/NumberWidget.cpp \
     Widgets/NumericGaugeWidget.cpp \
     Widgets/Range.cpp \
+    Widgets/ScaleSteps.cpp \
     Widgets/SpacerWidget.cpp \
     Widgets/TabBarWidget.cpp \
     Widgets/TabWidget.cpp \
@@ -76,13 +77,14 @@ HEADERS += \
     WidgetGrid.h \
     Widgets/BoolWidget.h \
     Widgets/BoxWidget.h \
-    Widgets/GaugeWidget.h \
+    Widgets/DialGaugeWidget.h \
     Widgets/GridPos.h \
     Widgets/LabelIndicatorWidget.h \
     Widgets/LabelWidget.h \
     Widgets/NumberWidget.h \
     Widgets/NumericGaugeWidget.h \
     Widgets/Range.h \
+    Widgets/ScaleSteps.h \
     Widgets/SpacerWidget.h \
     Widgets/TabBarWidget.h \
     Widgets/TabWidget.h \

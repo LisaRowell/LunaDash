@@ -16,29 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RANGE_H
-#define RANGE_H
+#include "ScaleSteps.h"
 
+#include "XMLFileReader.h"
 #include "XMLSourcedEntity.h"
 
+#include <QMessageBox>
 #include <QString>
+#include <QTextStream>
 #include <QVector>
 
-class XMLFileReader;
+const QVector<QString> ScaleSteps::allowedAttrs = { "major", "minor" };
 
-class Range : XMLSourcedEntity {
-private:
-    double min_;
-    double max_;
+ScaleSteps::ScaleSteps()
+    : major_(defaultMajorSteps), minor_(defaultMinorSteps) {
+}
 
-    static const QVector<QString> allowedAttrs;
-    static const QVector<QString> requiredAttrs;
+void ScaleSteps::set(XMLFileReader &xmlReader) {
+    checkAttrs(xmlReader, allowedAttrs, emptyAttrsList);
 
-public:
-    Range(double min = 0, double max = 100);
-    void set(XMLFileReader &xmlReader);
-    double min() const;
-    double max() const;
-};
+    major_ = unsignedAttribute("major", xmlReader, defaultMajorSteps);
+    minor_ = unsignedAttribute("minor", xmlReader, defaultMinorSteps);
 
-#endif // RANGE_H
+    ignoreChildElements(xmlReader, "ScaleSteps");
+}
+
+unsigned ScaleSteps::major() const {
+    return major_;
+}
+
+unsigned ScaleSteps::minor() const {
+    return minor_;
+}

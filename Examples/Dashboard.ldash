@@ -408,14 +408,20 @@
         <Tab title="Batteries">
             <Box label="House Battery Bank">
                 <GridPos row="0" col="0"/>
-                <Gauge variable="houseBatteryBankSoC" precision="1" suffix="%">
+                <DialGauge variable="houseBatteryBankSoC" precision="1"
+                           suffix="%">
                     <GridPos row="0" col="0"/>
                     <Range min="0" max="100"/>
-                </Gauge>
-                <Gauge variable="houseBatteryBankVoltage" precision="2" suffix=" V">
+                    <ScaleSteps major="10" minor="1"/>
+                    <Label text="SoC"/>
+                </DialGauge>
+                <DialGauge variable="houseBatteryBankVoltage" precision="2"
+                           suffix=" V">
                     <GridPos row="0" col="1"/>
                     <Range min="11" max="16"/>
-                </Gauge>
+                    <ScaleSteps major="5" minor="1"/>
+                    <Label text="Voltage"/>
+                </DialGauge>
                 <Label text="Time Remaining:">
                     <GridPos row="1" col="0"/>
                 </Label>
@@ -497,10 +503,13 @@
             </Box>
             <Box label="Engine Battery Bank">
                 <GridPos row="0" col="1"/>
-                <Gauge variable="engineBatteryBankVoltage" precision="2" suffix=" V">
+                <DialGauge variable="engineBatteryBankVoltage" precision="2"
+                           suffix=" V">
                     <GridPos row="0" col="0" colSpan="2"/>
                     <Range min="11" max="16"/>
-                </Gauge>
+                    <ScaleSteps major="5" minor="1"/>
+                    <Label text="Voltage"/>
+                </DialGauge>
                 <Label text="Min Voltage:">
                     <GridPos row="1" col="0"/>
                 </Label>
