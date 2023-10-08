@@ -20,14 +20,18 @@
 
 #include "Range.h"
 #include "ScaleSteps.h"
+#include "ScaleThreshold.h"
+#include "ScaleThresholds.h"
 #include "Variable.h"
 #include "XMLFileReader.h"
 
+#include <QColor>
 #include <QPainter>
 #include <QPen>
 #include <QString>
 #include <QtMath>
 #include <QVector>
+#include <QDebug>  // Delete me
 
 const QVector<QString> DialGaugeWidget::additionalAllowedAttrs = {
     "precision", "suffix"
@@ -47,6 +51,8 @@ DialGaugeWidget::DialGaugeWidget(XMLFileReader &xmlReader,
             label = stringElement("text", xmlReader);
         } else if (elementName.compare("Range") == 0) {
             range.set(xmlReader);
+        } else if (elementName.compare("Thresholds") == 0) {
+            scaleThresholds.set(xmlReader);
         } else if (elementName.compare("ScaleSteps") == 0) {
             scaleSteps.set(xmlReader);
         } else {
@@ -92,6 +98,7 @@ void DialGaugeWidget::paintEvent(QPaintEvent *event) {
     drawNeedleAxle(painter);
     drawValue(painter);
     drawLabel(painter);
+    drawThresholds(painter);
 }
 
 void DialGaugeWidget::drawOutline(QPainter &painter) {
@@ -246,7 +253,8 @@ void DialGaugeWidget::drawValue(QPainter &painter) {
         valueString.append(suffix);
     }
 
-    painter.setPen(Qt::black);
+    const QColor &displayColor = scaleThresholds.colorForValue(value);
+    painter.setPen(displayColor);
     QFont font = painter.font();
     const int pointSize = font.pointSize() + 2;
     font.setPointSize(pointSize);
@@ -273,4 +281,64 @@ void DialGaugeWidget::drawLabel(QPainter &painter)
     painter.drawText(labelRect, Qt::AlignCenter, label);
 
     painter.restore();
+}
+
+void DialGaugeWidget::drawThresholds(QPainter &painter) {
+    static QRect bounds(-50, -50, 100, 100);
+
+    if (scaleThresholds.configured()) {
+        painter.save();
+
+        QPen pen;
+        pen.setWidth(6);
+        pen.setCapStyle(Qt::FlatCap);
+        pen.setColor(Qt::red);
+        painter.setPen(pen);
+
+        int lastQtAngle = startQtAngle;
+        bool atEndOfScale = false;
+        for (unsigned thresholdIndex = 0;
+             thresholdIndex < scaleThresholds.count() && !atEndOfScale;
+             thresholdIndex++) {
+            const ScaleThreshold *threshold =
+                scaleThresholds.threshold(thresholdIndex);
+            const double thresholdValue = threshold->value();
+            if (thresholdValue < range.min()) {
+                continue;
+            } else {
+                const QColor &color = threshold->color();
+                pen.setColor(color);
+                painter.setPen(pen);
+
+                int thresholdQtAngle;
+                if (thresholdValue > range.max()) {
+                    atEndOfScale = true;
+                    thresholdQtAngle = endQtAngle;
+                } else {
+                    thresholdQtAngle = qtAngleForValue(thresholdValue);
+                }
+
+                const int angleDiff = lastQtAngle - thresholdQtAngle;
+                painter.drawArc(bounds, lastQtAngle, -angleDiff);
+                lastQtAngle = thresholdQtAngle;
+            }
+        }
+
+        if (!atEndOfScale) {
+            pen.setColor(scaleThresholds.overColor());
+            painter.setPen(pen);
+            const int angleDiff = lastQtAngle - endQtAngle;
+            painter.drawArc(bounds, lastQtAngle, -(int)angleDiff);
+        }
+
+        painter.restore();
+    }
+}
+
+int DialGaugeWidget::qtAngleForValue(double value) {
+    const int gaugeSpan = startQtAngle - endQtAngle;
+    const double amountInRange = value - range.min();
+    const double rangeAmount = range.max() - range.min();
+    const int qtAngleFromStart = (gaugeSpan * amountInRange) / rangeAmount;
+    return startQtAngle - qtAngleFromStart;
 }

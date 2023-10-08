@@ -412,6 +412,11 @@
                            suffix="%">
                     <GridPos row="0" col="0"/>
                     <Range min="0" max="100"/>
+                    <Thresholds>
+                        <UpTo value="50" color="red"/>
+                        <UpTo value="70" color="yellow"/>
+                        <Over color="green"/>
+                    </Thresholds>
                     <ScaleSteps major="10" minor="1"/>
                     <Label text="SoC"/>
                 </DialGauge>
@@ -419,6 +424,11 @@
                            suffix=" V">
                     <GridPos row="0" col="1"/>
                     <Range min="11" max="16"/>
+                    <Thresholds>
+                        <UpTo value="12.20" color="red"/>
+                        <UpTo value="12.45" color="yellow"/>
+                        <Over color="green"/>
+                    </Thresholds>
                     <ScaleSteps major="5" minor="1"/>
                     <Label text="Voltage"/>
                 </DialGauge>
@@ -507,6 +517,11 @@
                            suffix=" V">
                     <GridPos row="0" col="0" colSpan="2"/>
                     <Range min="11" max="16"/>
+                    <Thresholds>
+                        <UpTo value="12.20" color="red"/>
+                        <UpTo value="12.45" color="yellow"/>
+                        <Over color="green"/>
+                    </Thresholds>
                     <ScaleSteps major="5" minor="1"/>
                     <Label text="Voltage"/>
                 </DialGauge>

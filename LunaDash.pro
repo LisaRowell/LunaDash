@@ -42,6 +42,8 @@ SOURCES += \
     Widgets/NumericGaugeWidget.cpp \
     Widgets/Range.cpp \
     Widgets/ScaleSteps.cpp \
+    Widgets/ScaleThreshold.cpp \
+    Widgets/ScaleThresholds.cpp \
     Widgets/SpacerWidget.cpp \
     Widgets/TabBarWidget.cpp \
     Widgets/TabWidget.cpp \
@@ -85,6 +87,8 @@ HEADERS += \
     Widgets/NumericGaugeWidget.h \
     Widgets/Range.h \
     Widgets/ScaleSteps.h \
+    Widgets/ScaleThreshold.h \
+    Widgets/ScaleThresholds.h \
     Widgets/SpacerWidget.h \
     Widgets/TabBarWidget.h \
     Widgets/TabWidget.h \

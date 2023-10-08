@@ -23,6 +23,7 @@
 
 #include "Range.h"
 #include "ScaleSteps.h"
+#include "ScaleThresholds.h"
 
 #include <QString>
 #include <QVector>
@@ -36,6 +37,7 @@ private:
     bool precisionSet;
     unsigned precision;
     QString label;
+    ScaleThresholds scaleThresholds;
     double value;
 
     void drawOutline(QPainter &painter);
@@ -47,9 +49,16 @@ private:
     void drawNeedleAxle(QPainter &painter);
     void drawValue(QPainter &painter);
     void drawLabel(QPainter &painter);
+    void drawThresholds(QPainter &painter);
+    int qtAngleForValue(double value);
 
     static const int startAngle = 225;
+    // Qt angles increase counter clockwise with 0 at 3:00
+    static const int startQtAngle = ((360 - 225) + 90) * 16;
     static const int endAngle = 135;
+    // We use a negative end angle to make math easier
+    static const int endQtAngle = (90 - 135) * 16;
+    static const int oldEndAngle = -45;
     static const int scaleAngle = endAngle - startAngle + 360;
     static const QVector<QString> additionalAllowedAttrs;
 
