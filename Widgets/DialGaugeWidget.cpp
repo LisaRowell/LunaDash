@@ -102,6 +102,8 @@ void DialGaugeWidget::paintEvent(QPaintEvent *event) {
 }
 
 void DialGaugeWidget::drawOutline(QPainter &painter) {
+    static const QRect bounds(-97, -97, 194, 194);
+
     painter.save();
 
     QPen pen;
@@ -110,12 +112,12 @@ void DialGaugeWidget::drawOutline(QPainter &painter) {
     pen.setWidth(6);
     pen.setBrush(Qt::lightGray);
     painter.setPen(pen);
-    painter.drawEllipse(-97, -97, 194, 194);
+    painter.drawEllipse(bounds);
 
     pen.setWidth(2);
     pen.setBrush(Qt::gray);
     painter.setPen(pen);
-    painter.drawEllipse(-97, -97, 194, 194);
+    painter.drawEllipse(bounds);
 
     painter.restore();
 }
@@ -127,16 +129,15 @@ void DialGaugeWidget::drawScale(QPainter &painter) {
 }
 
 void DialGaugeWidget::drawScaleArc(QPainter &painter) {
+    static const QRect bounds(-56, -56, 112, 112);
+
     painter.save();
 
     QPen pen = QPen(Qt::black);
     pen.setWidth(0);
     painter.setPen(pen);
 
-    const int spanAngle = endAngle - startAngle + 360;
-
-    painter.drawArc(-56, -56, 112, 112, (-startAngle + 90) * 16,
-                    -spanAngle * 16);
+    painter.drawArc(bounds, startQtAngle, endQtAngle - startQtAngle);
 
     painter.restore();
 }
@@ -268,8 +269,7 @@ void DialGaugeWidget::drawValue(QPainter &painter) {
     painter.restore();
 }
 
-void DialGaugeWidget::drawLabel(QPainter &painter)
-{
+void DialGaugeWidget::drawLabel(QPainter &painter) {
     painter.save();
 
     painter.setPen(Qt::black);
