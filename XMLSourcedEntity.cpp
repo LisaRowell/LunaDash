@@ -170,7 +170,7 @@ double XMLSourcedEntity::doubleAttribute(const QString &name,
         if (valid) {
             return value;
         } else {
-            badUnsignedAttrWarning(name, attribute, xmlReader);
+            badDoubleAttrWarning(name, attribute, xmlReader);
             return 0;
         }
     } else {
@@ -268,6 +268,22 @@ XMLSourcedEntity::badUnsignedAttrWarning(const QString &name,
 
     QMessageBox messageBox;
     messageBox.warning(NULL, "Bad Unsigned Attribute Warning", warningStr);
+}
+
+void
+XMLSourcedEntity::badDoubleAttrWarning(const QString &name,
+                                       const QStringView &attribute,
+                                       const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "Bad " << xmlReader.name() << " " << name
+                  << " attribute '" << attribute << "' in file "
+                  << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Allowed values are decimal numbers. Ignored.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Double Attribute Warning", warningStr);
 }
 
 void

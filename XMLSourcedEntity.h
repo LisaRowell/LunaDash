@@ -38,6 +38,9 @@ private:
     void badUnsignedAttrWarning(const QString &name,
                                 const QStringView &attribute,
                                 const XMLFileReader &xmlReader) const;
+    void badDoubleAttrWarning(const QString &name,
+                              const QStringView &attribute,
+                              const XMLFileReader &xmlReader) const;
     void badUShortAttrWarning(const QString &name,
                               const QStringView &attribute,
                               const XMLFileReader &xmlReader) const;
