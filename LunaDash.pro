@@ -111,4 +111,5 @@ DISTFILES += \
     COPYING \
     LunaDash-icon-256x256.png \
     LunaDash.desktop \
+    LunaDash-ldash.xml \
     Examples/Dashboard.ldash

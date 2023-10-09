@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+    <mime-type type="application/x-ldash">
+        <glob-deleteall/>
+        <comment>LunaDash new file type</comment>
+        <glob pattern="*.ldash"/>
+	<icon name="application-x-ldash"/>
+    </mime-type>
+</mime-info>
