@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LunaDash
+Comment=An XML configured MQTT Dashboard.
+Exec=LunaDash %f
+Terminal=false
+Categories=Scuece;DataVisualization;
+Icon=/usr/share/pixmaps/LunaDash-icon-256x256.png
