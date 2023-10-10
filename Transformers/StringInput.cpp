@@ -49,6 +49,7 @@ StringInput::StringInput(XMLFileReader &xmlReader, Variables &variables,
         } else {
             const QString &variableName = stringAttribute("variable",
                                                           xmlReader);
+            isConstant = false;
             input.variable = variables.find(variableName);
             if (input.variable != nullptr) {
                 connect(input.variable, &Variable::valueChangedSignal,
