@@ -20,22 +20,41 @@
 #include "XMLFileReader.h"
 
 #include <QApplication>
+#include <QCommandLineParser>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QString>
 #include <QTextStream>
 
+static QString selectDashboardFile();
 [[noreturn]] static void missingXMLDocumentError(const XMLFileReader &xmlReader);
 [[noreturn]] static void xmlDocumentTypeError(const XMLFileReader &xmlReader);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication application(argc, argv);
+    QCoreApplication::setApplicationName("LunaDash");
+    QCoreApplication::setApplicationVersion("1.0");
 
-    // For now we default to loading the file 'Dashboard.ldash' in the working
-    // directory, but at some point this should change to a filename coming
-    // from arguements and the user should be able to double click a .ldash
-    // file to start running with that dashboard.
-    const QString configFileName = "Dashboard.ldash";
+    QCommandLineParser parser;
+    parser.setApplicationDescription("LunaDash MQTT Dashoard");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    parser.addPositionalArgument("dashboard", "Dashboard file to display.");
+
+    parser.process(application);
+
+    const QStringList args = parser.positionalArguments();
+
+    QString configFileName;
+    if (args.count() >= 1) {
+        configFileName = argv[1];
+    } else {
+        configFileName = selectDashboardFile();
+        if (configFileName.isEmpty()) {
+            exit(EXIT_SUCCESS);
+        }
+    }
 
     XMLFileReader xmlReader(configFileName);
     if (!xmlReader.readNextStartElement()) {
@@ -49,6 +68,22 @@ int main(int argc, char *argv[])
     dashboard.show();
 
     return application.exec();
+}
+
+static QString selectDashboardFile() {
+    QFileDialog fileSelector;
+
+    fileSelector.setFileMode(QFileDialog::ExistingFile);
+    fileSelector.setNameFilter("Dashboards (*.ldash)");
+    fileSelector.setViewMode(QFileDialog::Detail);
+
+    if (fileSelector.exec()) {
+        QStringList fileNames;
+        fileNames = fileSelector.selectedFiles();
+        return fileNames.first();
+    } else {
+        return "";
+    }
 }
 
 [[noreturn]] static void missingXMLDocumentError(const XMLFileReader &xmlReader) {
