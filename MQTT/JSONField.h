@@ -34,7 +34,7 @@ class JSONField : public QObject, public XMLSourcedEntity {
     Q_OBJECT
 
 private:
-    QString label;
+    QString name;
     QJsonValue::Type type;
 
     void addStringVariable(XMLFileReader &xmlReader, Variables &variables);

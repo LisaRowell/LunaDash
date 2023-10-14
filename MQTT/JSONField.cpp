@@ -32,13 +32,13 @@
 #include <QTextStream>
 #include <QVector>
 
-const QVector<QString> JSONField::allowedAttrs = { "label" };
-const QVector<QString> JSONField::requiredAttrs = { "label" };
+const QVector<QString> JSONField::allowedAttrs = { "name" };
+const QVector<QString> JSONField::requiredAttrs = { "name" };
 
 JSONField::JSONField(XMLFileReader &xmlReader, Variables &variables)
     : type(QJsonValue::Undefined) {
     checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
-    label = stringAttribute("label", xmlReader);
+    name = stringAttribute("name", xmlReader);
 
     while (xmlReader.readNextStartElement()) {
         if (xmlReader.name().compare("String") == 0) {
@@ -107,8 +107,8 @@ void JSONField::addBoolVariable(XMLFileReader &xmlReader,
 void JSONField::objectReceived(QJsonObject &object) {
     // Each field gets the JSON object and is responsible for pulling its
     // field out if it exists.
-    if (object.contains(label)) {
-        QJsonValue value = object.value(label);
+    if (object.contains(name)) {
+        QJsonValue value = object.value(name);
 
         // We handle values differently based on what type of field this is.
         switch (type) {
@@ -233,7 +233,7 @@ void JSONField::multipleVariableWarning(XMLFileReader &xmlReader) const {
     QString warningStr;
     QTextStream warningStream(&warningStr);
 
-    warningStream << "JSON field '" << label
+    warningStream << "JSON field '" << name
                   << "' has multiple variables in file "
                   << xmlReader.fileReference() << "." << Qt::endl;
     warningStream << "Ignored all but the first. "

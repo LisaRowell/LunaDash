@@ -7,7 +7,7 @@
         <TopPadding>3px</TopPadding>
         <BottomPadding>3px</BottomPadding>
     </Style>
-    <MQTTBroker server="mqtt23.victronenergy.com" port ="8883">
+    <MQTTBroker server="mqtt23.victronenergy.com" port="8883">
         <ClientId hostPrefix="true" id="Dash" randomize="true"/>
         <User name="XXXXX" password="XXXXX"/>
         <TLS>
@@ -16,49 +16,49 @@
         <StatusVariable name="connectionState"/>
         <Topic path="N/c8df84ac7a73/battery/289/Soc">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankSoC"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Voltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/ConsumedAmphours">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankAmpHoursConsumed"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/Dc/0/Temperature">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankTemperature"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/TimeToGo">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <!-- String used due to Victron sending a zero length payload -->
                     <String name="houseBatteryBankTimeToGoSecOrNull"/>
                 </Field>
@@ -66,231 +66,231 @@
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/TimeSinceLastFullCharge">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankSecsSinceLastFullCharge"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/MinimumVoltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankMinVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/MaximumVoltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankMaxVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/LastDischarge">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankLastDischarge"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/DeepestDischarge">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankDeepestDischarge"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/ChargeCycles">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankChargeCycles"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/battery/289/History/AutomaticSyncs">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="houseBatteryBankSynchronizations"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/Dc/1/Voltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="engineBatteryBankVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/History/MinimumStarterVoltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="engineBatteryBankMinVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/History/MaximumStarterVoltage">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="engineBatteryBankMaxVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/State">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerBiminiMPPTState"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerBiminiMPPTCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/Yield/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerBiminiMPPTPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/History/Daily/0/Yield">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerBiminiMPPTEnergyToday"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/291/Pv/V">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerBiminiMPPTPVVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/292/State">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="stbdAftBiminiMPPTState"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/292/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="stbdAftBiminiMPPTCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/292/Yield/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="stbdAftBiminiMPPTPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/292/History/Daily/0/Yield">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="stbdAftBiminiMPPTEnergyToday"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/292/Pv/V">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="stbdAftBiminiMPPTPVVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/293/State">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerAftBiminiMPPTState"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/293/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerAftBiminiMPPTCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/293/Yield/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerAftBiminiMPPTPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/293/History/Daily/0/Yield">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerAftBiminiMPPTEnergyToday"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/293/Pv/V">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="centerAftBiminiMPPTPVVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/294/State">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="portAftBiminiMPPTState"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/294/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="portAftBiminiMPPTCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/294/Yield/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="portAftBiminiMPPTPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/294/History/Daily/0/Yield">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="portAftBiminiMPPTEnergyToday"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/solarcharger/294/Pv/V">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="portAftBiminiMPPTPVVoltage"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/Dc/0/Current">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="windGeneratorCurrent"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/Dc/0/Power">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="windGeneratorPower"/>
                 </Field>
             </JSON>
         </Topic>
         <Topic path="N/c8df84ac7a73/dcsource/290/History/EnergyOut">
             <JSON>
-                <Field label="value">
+                <Field name="value">
                     <Double name="windGeneratorEnergyHistoric"/>
                 </Field>
             </JSON>
