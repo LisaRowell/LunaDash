@@ -61,6 +61,7 @@ void Transformer::parseChildElements(const QString transformerName,
         handleChildElement(elementName, transformerName, xmlReader, variables);
     }
 }
+
 void Transformer::handleChildElement(const QStringView &elementName,
                                      const QString transformerName,
                                      XMLFileReader &xmlReader,
