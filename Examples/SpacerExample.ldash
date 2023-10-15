@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard title="Spacer Example">
+    <Box label="Box 1 (3 lines no spacer)">
+        <GridPos row="0" col="0"/>
+        <Label text="Line 1">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Label text="Line 2">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Label text="Line 3">
+            <GridPos row="2" col="0"/>
+        </Label>
+    </Box>
+    <Box label="Box 2 (4 lines no spacer)">
+        <GridPos row="0" col="1"/>
+        <Label text="Line 1">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Label text="Line 2">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Label text="Line 3">
+            <GridPos row="2" col="0"/>
+        </Label>
+        <Label text="Line 4">
+            <GridPos row="3" col="0"/>
+        </Label>
+    </Box>
+    <Box label="Box 3 (3 lines with spacer)">
+        <GridPos row="1" col="0"/>
+        <Label text="Line 1">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Label text="Line 2">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Label text="Line 3">
+            <GridPos row="2" col="0"/>
+        </Label>
+        <Spacer>
+            <GridPos row="3" col="0"/>
+        </Spacer>
+    </Box>
+    <Box label="Box 4 (4 lines no spacer)">
+        <GridPos row="1" col="1"/>
+        <Label text="Line 1">
+            <GridPos row="0" col="0"/>
+        </Label>
+        <Label text="Line 2">
+            <GridPos row="1" col="0"/>
+        </Label>
+        <Label text="Line 3">
+            <GridPos row="2" col="0"/>
+        </Label>
+        <Label text="Line 4">
+            <GridPos row="3" col="0"/>
+        </Label>
+    </Box>
+</Dashboard>

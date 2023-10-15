@@ -109,7 +109,12 @@ unix:!macx: LIBS += -lpaho-mqtt3as
 
 DISTFILES += \
     COPYING \
+    README.md \
     LunaDash-icon-256x256.png \
     LunaDash.desktop \
     LunaDash-ldash.xml \
-    Examples/Dashboard.ldash
+    Examples/Dashboard.ldash \
+    Examples/SpacerExample.ldash \
+    Examples/Batteries.png \
+    Examples/Power.png \
+    SpacerExample.png
