@@ -560,12 +560,14 @@ with box #4.
 ### GridPos
 
 ```xml
-<GridPos row="row #" col="col #"/>
+<GridPos row="row #" col="col #" rowSpan="# rows" colSpan="# cols"/>
 ```
 
 An entity common to all widgets, with the exception of **Tab**s, which specifies
 where the widget should be displayed within its parent. The row and column
-numbers start with 0, 0 being in the upper left corner.
+numbers start with 0, 0 being in the upper left corner. The optional
+**rowSpan** and **colSpan** attributes can be used to tell the layout engine to
+allow the widget to occupy more than one row or column, the default being 1x1.
 
 ## Project Status
 Project is: Usable, but under active development.
