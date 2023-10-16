@@ -183,6 +183,10 @@ void MQTTClient::connectFailureCallbackInvoked(MQTTAsync_failureData *response) 
 // is -1 and the description is NULL. Hopefully this will improve in future
 // versions.
 void MQTTClient::connectFailure(int code, QString reason) {
+    (void)code;
+    (void)reason;
+
+#if 0
     QString description;
 
     switch (code) {
@@ -219,6 +223,7 @@ void MQTTClient::connectFailure(int code, QString reason) {
 
     QMessageBox messageBox;
     messageBox.warning(NULL, "MQTT Connect Failure", warningStr);
+#endif
 }
 
 void MQTTClient::connectedCallback(void *context, char *cause) {
