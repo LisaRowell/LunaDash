@@ -66,10 +66,10 @@ bool BoolVariable::boolValue(bool *valid) const  {
 }
 
 void BoolVariable::newStringValue(const QString &value) {
-    if (value == "true") {
+    if (value == "true" || value == "1") {
         value_ = true;
         hasValue_ = true;
-    } else if (value == "false") {
+    } else if (value == "false" || value == "0") {
         value_ = false;
         hasValue_ = true;
     } else {
