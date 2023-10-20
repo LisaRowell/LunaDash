@@ -118,7 +118,7 @@ void MQTTClient::startConnection() {
     }
 
     // Due to an incompatibility in the Paho library with C++, we can't use
-    // the default initializer, zero the structure and set each currently
+    // the default initializer. Zero the structure and set each currently
     // implement field. While the memset isn't theoretically needed, it's
     // an insurance policy against library changes that add options.
     MQTTAsync_connectOptions connectOptions;
@@ -146,7 +146,7 @@ void MQTTClient::startConnection() {
     connectOptions.context = this;
     connectOptions.serverURIcount = 0;
     connectOptions.serverURIs = NULL;
-    connectOptions.MQTTVersion = MQTTVERSION_DEFAULT;
+    connectOptions.MQTTVersion = MQTTVERSION_3_1_1;
     connectOptions.automaticReconnect = true;
     connectOptions.minRetryInterval = 1;
     connectOptions.maxRetryInterval = 60;
