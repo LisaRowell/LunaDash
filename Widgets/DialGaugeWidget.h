@@ -38,6 +38,7 @@ private:
     unsigned precision;
     QString label;
     ScaleThresholds scaleThresholds;
+    bool hasValidValue;
     double value;
 
     void drawOutline(QPainter &painter);

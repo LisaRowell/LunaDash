@@ -31,7 +31,6 @@
 #include <QString>
 #include <QtMath>
 #include <QVector>
-#include <QDebug>  // Delete me
 
 const QVector<QString> DialGaugeWidget::additionalAllowedAttrs = {
     "precision", "suffix"
@@ -65,12 +64,9 @@ DialGaugeWidget::DialGaugeWidget(XMLFileReader &xmlReader,
 
 void DialGaugeWidget::setValue() {
     if (variable != NULL && variable->hasValue()) {
-        bool valid;
-        value = variable->doubleValue(&valid);
-        if (!valid) {
-            value = 0;
-        }
+        value = variable->doubleValue(&hasValidValue);
     } else {
+        hasValidValue = false;
         value = 0;
     }
 
@@ -206,7 +202,15 @@ void DialGaugeWidget::drawNeedle(QPainter &painter) {
     QPolygon shadow;
     shadow << QPoint(-2, 0) << QPoint(2, 0) << QPoint(0, -58);
 
-    const double valueInRange = qMin(qMax(value, range.min()), range.max());
+    double valueInRange;
+    if (hasValidValue) {
+        valueInRange = qMin(qMax(value, range.min()), range.max());
+    } else {
+        // If the value that the gauge is displaying isn't valid, peg the needle
+        // to the minimum value postion.
+        valueInRange = range.min();
+    }
+
     const double angularScaleFactor = scaleAngle / (range.max() - range.min());
     const int degreesFromStart = angularScaleFactor *
                                  (valueInRange - range.min());
@@ -245,13 +249,17 @@ void DialGaugeWidget::drawValue(QPainter &painter) {
     painter.save();
 
     QString valueString;
-    if (precisionSet) {
-        valueString = QString::number(value, 'F', precision);
+    if (hasValidValue) {
+        if (precisionSet) {
+            valueString = QString::number(value, 'F', precision);
+        } else {
+            valueString = QString::number(value);
+        }
+        if (!suffix.isEmpty()) {
+            valueString.append(suffix);
+        }
     } else {
-        valueString = QString::number(value);
-    }
-    if (!suffix.isEmpty()) {
-        valueString.append(suffix);
+        valueString = "";
     }
 
     const QColor &displayColor = scaleThresholds.colorForValue(value);
