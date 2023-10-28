@@ -442,15 +442,17 @@ position. An optional number of decimal places can be specified by a
 ### Bool (Widget)
 
 ```xml
-<Bool variable="Input variable">
+<Bool variable="Input variable" true="Optional true text"
+      false="Optional false text">
     <GridPos ... />             <!-- (Occurrence: 1) -->
 </Bool>
 ```
 
 Define a widget to display the value of a **Bool** variable. If the variable
-is true, "true" is displayed, if false "false". If the variable is unset or if
-it's a **String** variable that does evaluate to true or false, a value of "" is
-displayed.
+is true, "true", or the value of the **true** attribute if given, is displayed.
+If the variable is false, "false", or the **false** attribute value, is
+displayed. If the variable is unset or if it's a **String** variable that does
+evaluate to true or false, a value of "" is displayed.
 
 ### LabelIndicator
 

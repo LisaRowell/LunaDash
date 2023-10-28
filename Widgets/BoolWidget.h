@@ -22,13 +22,19 @@
 #include "ValuedWidget.h"
 
 #include <QLabel>
+#include <QString>
+#include <QVector>
 
 class Variables;
 class XMLFileReader;
 
 class BoolWidget : public QLabel, public ValuedWidget {
 protected:
+    QString trueValue;
+    QString falseValue;
     virtual void setValue() override;
+
+    static const QVector<QString> additionalAllowedAttrs;
 
 public:
     BoolWidget(XMLFileReader &xmlReader, const Variables &variables);

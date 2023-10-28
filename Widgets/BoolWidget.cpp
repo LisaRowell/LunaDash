@@ -22,8 +22,15 @@
 #include "Variables.h"
 #include "XMLFileReader.h"
 
+const QVector<QString> BoolWidget::additionalAllowedAttrs = {
+    "true", "false"
+};
+
 BoolWidget::BoolWidget(XMLFileReader &xmlReader, const Variables &variables)
-    : ValuedWidget("Bool", xmlReader, variables) {
+    : ValuedWidget("Bool", xmlReader, variables, additionalAllowedAttrs,
+                   emptyAttrsList) {
+    trueValue = stringAttribute("true", xmlReader, "true");
+    falseValue = stringAttribute("false", xmlReader, "false");
     BoolWidget::setValue();
 
     // Loop through the child elements, any that are there are for Widget
@@ -38,9 +45,9 @@ void BoolWidget::setValue() {
         bool value = variable->boolValue(&valid);
         if (valid) {
             if (value) {
-                setText("true");
+                setText(trueValue);
             } else {
-                setText("false");
+                setText(falseValue);
             }
         } else {
             setText("");
