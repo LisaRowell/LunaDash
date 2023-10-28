@@ -28,6 +28,12 @@
 Widget::Widget() : gridPos_(nullptr) {
 }
 
+Widget::~Widget() {
+    if (gridPos_) {
+        delete gridPos_;
+    }
+}
+
 void Widget::handleChildElement(XMLFileReader &xmlReader,
                                 const QString &parentName) {
     if (xmlReader.name().compare("GridPos") == 0) {

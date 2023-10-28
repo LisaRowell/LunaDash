@@ -30,6 +30,7 @@ private:
 
 public:
     WidgetStyles();
+    ~WidgetStyles();
     bool styleExists(const QString &name) const;
     void addStyle(WidgetStyle *style);
     WidgetStyle *find(const QString &name) const;

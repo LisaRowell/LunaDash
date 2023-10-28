@@ -29,6 +29,7 @@ private:
 
 public:
     Widget();
+    ~Widget();
     void handleChildElement(XMLFileReader &xmlReader,
                             const QString &parentName);
     const GridPos *gridPos() const;

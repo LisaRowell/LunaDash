@@ -25,6 +25,11 @@
 WidgetStyles::WidgetStyles() {
 }
 
+WidgetStyles::~WidgetStyles() {
+    qDeleteAll(styles);
+    styles.clear();
+}
+
 bool WidgetStyles::styleExists(const QString &name) const {
     return styles.contains(name);
 }

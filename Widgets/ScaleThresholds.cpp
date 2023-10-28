@@ -29,6 +29,11 @@ ScaleThresholds::ScaleThresholds() {
     overColor_ = QColor("black");
 }
 
+ScaleThresholds::~ScaleThresholds() {
+    qDeleteAll(thresholds);
+    thresholds.clear();
+}
+
 void ScaleThresholds::set(XMLFileReader &xmlReader) {
     checkAttrs(xmlReader, emptyAttrsList, emptyAttrsList);
 

@@ -38,6 +38,7 @@ private:
 
 public:
     ScaleThresholds();
+    ~ScaleThresholds();
     void set(XMLFileReader &xmlReader);
     bool configured() const;
     const QColor &colorForValue(double value) const;
