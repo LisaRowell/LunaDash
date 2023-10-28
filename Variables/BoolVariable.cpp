@@ -34,10 +34,14 @@ void BoolVariable::set(bool value) {
 }
 
 const QString BoolVariable::string() const {
-    if (value_) {
-        return "true";
+    if (hasValue_) {
+        if (value_) {
+            return "true";
+        } else {
+            return "false";
+        }
     } else {
-        return "false";
+        return "";
     }
 }
 
