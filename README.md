@@ -298,7 +298,7 @@ given **Double** or **String** output variables.
 <Concatenator>
     <Input text="Constant string"/>     <!-- (Occurrence: 0 or more) -->
     <Input variable="Input variable"/>  <!-- (Occurrence: 0 or more) -->
-    <String ... />
+    <String ... />                      <!-- (Occurrence: typically 1) -->
 </Concatenator>
 ```
 
@@ -307,6 +307,17 @@ together, and assigns the result to the given **String** output variables. Input
 strings can either by constants, supplied with an **Input** entity with a
 **text** attribute, or variables, supplied with an **Input** entity with a
 **variable** attribute.
+
+### SuffixRemover
+
+```xml
+<SuffixRemover string="Input variable" suffix="Suffix string">
+    <String ... />                      <!-- (Occurrence: typically 1) -->
+</SuffixRemover>
+```
+
+Defines a Transformer which checks to see if the input string ends with the
+suffix given by the **suffix** attribute and if so, removes it.
 
 ### Style
 

@@ -23,6 +23,7 @@
 #include "DurationDescriber.h"
 #include "MQTTClient.h"
 #include "StringDecoder.h"
+#include "SuffixRemover.h"
 #include "Variables.h"
 #include "WidgetGrid.h"
 #include "WidgetStyle.h"
@@ -58,6 +59,8 @@ Dashboard::Dashboard(XMLFileReader &xmlReader, QWidget *parent)
             new DurationDescriber(xmlReader, variables);
         } else if (elementName.compare("StringDecoder") == 0) {
             new StringDecoder(xmlReader, variables);
+        } else if (elementName.compare("SuffixRemover") == 0) {
+            new SuffixRemover(xmlReader, variables);
         } else if (elementName.compare("Adder") == 0) {
             new Adder(xmlReader, variables);
         } else if (elementName.compare("Concatenator") == 0) {

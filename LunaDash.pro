@@ -25,6 +25,7 @@ SOURCES += \
     Transformers/DurationDescriber.cpp \
     Transformers/StringDecoder.cpp \
     Transformers/StringInput.cpp \
+    Transformers/SuffixRemover.cpp \
     Transformers/Transformer.cpp \
     Variables.cpp \
     Variables/BoolVariable.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     Transformers/DurationDescriber.h \
     Transformers/StringDecoder.h \
     Transformers/StringInput.h \
+    Transformers/SuffixRemover.h \
     Transformers/Transformer.h \
     Variables.h \
     Variables/BoolVariable.h \
