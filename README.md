@@ -495,7 +495,7 @@ by a red or green background on a label containing a server name. The above
 
 Display a large text version of a numeric value, specified by **variable**, with
 a box surrounding it and an optional text label beneath it, specified by a
-**Label** entity. Similar to a **Number** widget, the **DialGauge** can have
+**Label** entity. Similar to a **Number** widget, the **NumericGauge** can have
 a **precision** attribute specifying its number of decimal places and a text
 string, specified by the **suffix** attribute, to be appended to the value.
 
