@@ -24,46 +24,122 @@
 #include "XMLSourcedEntity.h"
 
 #include <QString>
+#include <QTextStream>
 #include <QVector>
+#include <QMessageBox>
 
-const QVector<QString> DurationDescriber::allowedAttrs = { "seconds" };
-const QVector<QString> DurationDescriber::requiredAttrs = { "seconds" };
+const QVector<QString> DurationDescriber::allowedAttrs = { "seconds", "minutes" };
+const QVector<QString> DurationDescriber::requiredAttrs = {};
 
 DurationDescriber::DurationDescriber(XMLFileReader &xmlReader,
                                      Variables &variables) {
     checkAttrs(xmlReader, allowedAttrs, requiredAttrs);
-    secondsVariable = findSourceVariable("seconds", "DurationDescriber",
-                                         xmlReader, variables);
+    bool hasSecondsAttr = hasAttribute("seconds", xmlReader);
+    bool hasMinutesAttr = hasAttribute("minutes", xmlReader);
+
+    if (hasSecondsAttr && hasMinutesAttr) {
+        hasSecondsAndMinutesWarning(xmlReader);
+    } else if (!hasSecondsAttr && !hasMinutesAttr) {
+        missingSecondsAndMinutesWarning(xmlReader);
+    }
+
+    if (hasSecondsAttr && !hasMinutesAttr) {
+        secondsVariable = findSourceVariable("seconds", "DurationDescriber",
+                                             xmlReader, variables);
+        minutesVariable = nullptr;
+    } else if (hasMinutesAttr) {
+        minutesVariable = findSourceVariable("minutes", "DurationDescriber",
+                                             xmlReader, variables);
+        secondsVariable = nullptr;
+    } else {
+        secondsVariable = nullptr;
+        minutesVariable = nullptr;
+    }
 
     parseChildElements("DurationDescriber", xmlReader, variables);
 }
 
 void DurationDescriber::recalculate() {
     if (secondsVariable) {
-        bool secondsValid;
-        const double seconds = secondsVariable->doubleValue(&secondsValid);
-        if (secondsValid) {
-            const double minutes = seconds / 60;
-            const double hours = minutes / 60;
-            const double days = hours / 24;
-
-            QString description;
-            if (hours >= 23.95) {
-                description = QString::number(days, 'F', 1) + " days";
-            } else if (minutes >= 59.95) {
-                description = QString::number(hours, 'F', 1) + " hours";
-            } else if (seconds >= 59.95) {
-                description = QString::number(minutes, 'F', 1) + " min";
-            } else {
-                description = QString::number(seconds, 'F', 0) + " sec";
-            }
-
-            publishResult(description);
-        } else {
-            publishResult("---");
-        }
+        recalculateSeconds();
+    } else if (minutesVariable) {
+        recalculateMinutes();
     } else {
-        // It shouldn't be possible to not have a secondsVariable and still
-        // get called to recalculate.
+        // It shouldn't be possible to have neither a secondsVariable nor a
+        // minutesVariable and still get called to recalculate.
     }
+}
+
+void DurationDescriber::recalculateSeconds() {
+    bool secondsValid;
+    const double seconds = secondsVariable->doubleValue(&secondsValid);
+    if (secondsValid) {
+        const double minutes = seconds / 60;
+        const double hours = minutes / 60;
+        const double days = hours / 24;
+
+        QString description;
+        if (hours >= 23.95) {
+            description = QString::number(days, 'F', 1) + " days";
+        } else if (minutes >= 59.95) {
+            description = QString::number(hours, 'F', 1) + " hours";
+        } else if (seconds >= 59.95) {
+            description = QString::number(minutes, 'F', 1) + " min";
+        } else {
+            description = QString::number(seconds, 'F', 0) + " sec";
+        }
+
+        publishResult(description);
+    } else {
+        publishResult("---");
+    }
+}
+
+void DurationDescriber::recalculateMinutes() {
+    bool minutesValid;
+    const double minutes = minutesVariable->doubleValue(&minutesValid);
+    if (minutesValid) {
+        const double hours = minutes / 60;
+        const double days = hours / 24;
+
+        QString description;
+        if (hours >= 23.95) {
+            description = QString::number(days, 'F', 1) + " days";
+        } else if (minutes >= 59.95) {
+            description = QString::number(hours, 'F', 1) + " hours";
+        } else {
+            description = QString::number(minutes, 'F', 1) + " min";
+        }
+
+        publishResult(description);
+    } else {
+        publishResult("---");
+    }
+}
+
+void
+DurationDescriber::hasSecondsAndMinutesWarning(const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "DurationDescriber with both seconds and minutes attributes in "
+                  << "file " << xmlReader.fileReference() << "." << Qt::endl;
+    warningStream << "Ignoring seconds.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Double Attribute Warning", warningStr);
+}
+
+void
+DurationDescriber::missingSecondsAndMinutesWarning(const XMLFileReader &xmlReader) const {
+    QString warningStr;
+    QTextStream warningStream(&warningStr);
+
+    warningStream << "DurationDescriber with neither a seconds or a minutes "
+                  << "attributes in file " << xmlReader.fileReference() << "."
+                  << Qt::endl;
+    warningStream << "Ignoring.";
+
+    QMessageBox messageBox;
+    messageBox.warning(NULL, "Bad Double Attribute Warning", warningStr);
 }

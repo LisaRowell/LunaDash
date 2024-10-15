@@ -246,15 +246,16 @@ Transformer. Variable names must be unique.
 ### DurationDescriber
 
 ```xml
-<DurationDescriber seconds="Variable name">
+<DurationDescriber seconds="Variable name" | minutes="Variable name>
     <String ... />                  <!-- (Occurrence: typically 1) -->
 </DurationDescriber>
 ```
 
-Defines a Transformer which takes updates from the supplied **seconds** variable
-and transforms it into descriptive text in minute, hour, and day ranges, storing
-the result in the **String** variable element. Multiple output variables could be
-defined, is supported, though not of particular value in most cases.
+Defines a Transformer which takes updates from the supplied **seconds** or
+**minutes** variable and transforms it into descriptive text in minute, hour, and
+day ranges, storing the result in the **String** variable element. Multiple output
+variables could be defined, and is supported, though not of particular value in most
+cases.
 
 ### StringDecoder
 

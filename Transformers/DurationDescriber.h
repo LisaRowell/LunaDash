@@ -31,11 +31,17 @@ class XMLFileReader;
 class DurationDescriber : public Transformer {
 private:
     Variable *secondsVariable;
+    Variable *minutesVariable;
 
     virtual void recalculate() override;
+    void recalculateSeconds();
+    void recalculateMinutes();
 
     static const QVector<QString> allowedAttrs;
     static const QVector<QString> requiredAttrs;
+
+    void hasSecondsAndMinutesWarning(const XMLFileReader &xmlReader) const;
+    void missingSecondsAndMinutesWarning(const XMLFileReader &xmlReader) const;
 
 public:
     DurationDescriber(XMLFileReader &xmlReader, Variables &variables);
